@@ -3,51 +3,60 @@
   <ID>DATABASE</ID>
   <OriginalElement>0671989b-0f58-41ae-8692-8943f6e13caa.SCHEMA:online_auctions.dbo</OriginalElement>
   <nodes>
-    <node x="593.3661327231121" y="88.77345537757435">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Modelo</node>
-    <node x="-294.3890160183066" y="280.0">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Utilizador</node>
-    <node x="269.5" y="280.0">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Leilao</node>
-    <node x="58.52517162471395" y="328.0">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Licitacao</node>
-    <node x="301.5" y="77.0">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Administrador</node>
-    <node x="613.8661327231121" y="304.0">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Produto</node>
+    <node x="-70.42934782608691" y="280.3615560640732">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Licitacao</node>
+    <node x="462.42976086136326" y="256.3615560640732">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Produto</node>
+    <node x="441.9297608613632" y="80.66361556064075">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Modelo</node>
+    <node x="124.17705949656761" y="232.36155606407323">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Leilao</node>
+    <node x="156.1770594965676" y="20.0">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Administrador</node>
+    <node x="720.1851093952097" y="292.3615560640732">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Link_Fotos</node>
+    <node x="-419.6710325911114" y="244.36155606407323">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Utilizador</node>
   </nodes>
   <notes />
   <edges>
     <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Leilao" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Utilizador" relationship="REFERENCES">
-      <point x="-117.5" y="-86.0" />
-      <point x="99.5" y="-74.0" />
+      <point x="-117.5" y="-85.5" />
+      <point x="99.5" y="-85.5" />
     </edge>
     <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Leilao" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Administrador" relationship="REFERENCES">
-      <point x="0.0" y="-116.5" />
-      <point x="0.0" y="68.5" />
+      <point x="0.0" y="-116.0" />
+      <point x="0.0" y="68.0" />
     </edge>
     <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Leilao" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Produto" relationship="REFERENCES">
-      <point x="78.33333333333334" y="-116.5" />
-      <point x="465.33333333333337" y="396.5" />
-      <point x="699.8661327231121" y="396.5" />
-      <point x="0.0" y="92.5" />
+      <point x="117.49994050343241" y="4.4393592679625726E-4" />
+      <point x="444.92929404214124" y="348.362" />
+      <point x="444.92929404214124" y="348.3615560640732" />
+      <point x="463.5760036047683" y="348.3615560640732" />
+      <point x="463.5760036047683" y="302.3617780320366" />
+      <point x="548.4292940421412" y="302.3617780320366" />
+      <point x="-4.668192220265155E-4" y="-91.9995560640732" />
     </edge>
     <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Licitacao" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Utilizador" relationship="REFERENCES">
-      <point x="-66.0" y="-12.0" />
+      <point x="-66.13872198869709" y="16.962778675888615" />
+      <point x="-220.67103259111138" y="365.32433473996184" />
       <point x="99.5" y="0.0" />
     </edge>
     <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Produto" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Modelo" relationship="REFERENCES">
-      <point x="0.0" y="-92.5" />
-      <point x="699.8661327231121" y="131.38672768878718" />
-      <point x="0.0" y="68.5" />
+      <point x="14.999533180777973" y="-92.0" />
+      <point x="14.99953318077803" y="68.0" />
     </edge>
     <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Licitacao" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Leilao" relationship="REFERENCES">
-      <point x="33.0" y="-68.5" />
-      <point x="157.52517162471395" y="396.5" />
-      <point x="387.0" y="396.5" />
-      <point x="0.0" y="116.5" />
+      <point x="66.0" y="0.0" />
+      <point x="-117.5" y="0.0" />
+    </edge>
+    <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Link_Fotos" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Produto" relationship="REFERENCES">
+      <point x="1.258581236243117E-4" y="-55.999556064073204" />
+      <point x="787.6852352533333" y="320.3617780320366" />
+      <point x="721.5454032213561" y="320.3617780320366" />
+      <point x="721.5454032213561" y="368.38455698267757" />
+      <point x="548.4292940421412" y="368.38455698267757" />
+      <point x="-4.668192220265155E-4" y="-91.9995560640732" />
     </edge>
   </edges>
-  <settings layout="Hierarchic" zoom="0.4932279909706547" showDependencies="false" x="193.5" y="282.0" />
-  <SelectedNodes>
-    <node>0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Utilizador</node>
-  </SelectedNodes>
+  <settings layout="Hierarchic" zoom="0.4235865494356578" showDependencies="false" x="346.0542739807364" y="371.83318755306664" />
+  <SelectedNodes />
   <Categories>
     <Category>Columns</Category>
+    <Category>Comments</Category>
     <Category>Key columns</Category>
     <Category>Virtual foreign keys</Category>
   </Categories>
