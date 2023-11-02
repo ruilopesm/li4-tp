@@ -9,8 +9,8 @@ CREATE TABLE [Utilizador]
     [Email]            VARCHAR(50) UNIQUE NOT NULL,
     [Password]         VARCHAR(50)        NOT NULL,
     [Data_Nascimento]  DATE               NOT NULL,
-    [Fundos_Livres]    MONEY              NOT NULL,
-    [Fundos_Pendentes] MONEY              NOT NULL,
+    [Fundos_Livres]    MONEY              NOT NULL DEFAULT 0,
+    [Fundos_Pendentes] MONEY              NOT NULL DEFAULT 0,
 );
 
 CREATE TABLE [Administrador]
@@ -35,8 +35,8 @@ CREATE TABLE [Produto]
     [Nome]      VARCHAR(50) NOT NULL,
     [Descricao] VARCHAR(50) NOT NULL,
     [ID_Modelo] INT         NOT NULL,
-    [Estado]    INT         NOT NULL,
-    [Condicao]  INT         NOT NULL,
+    [Estado]    TINYINT     NOT NULL,
+    [Condicao]  TINYINT     NOT NULL,
     FOREIGN KEY ([ID_Modelo]) REFERENCES [Modelo] ([ID]),
 )
 
@@ -47,7 +47,7 @@ CREATE TABLE [Leilao]
     [Data_Inicio]                 DATETIME NOT NULL,
     [Data_Fim]                    DATETIME NOT NULL,
     [Preco_Base]                  MONEY    NOT NULL,
-    [Estado]                      INT      NOT NULL,
+    [Estado]                      TINYINT  NOT NULL,
     [ID_Administrador_Publicador] INT      NOT NULL,
     [NIF_Vencedor]                INT,
     FOREIGN KEY ([ID_Produto]) REFERENCES [Produto] ([ID]),
@@ -65,5 +65,11 @@ CREATE TABLE [Licitacao]
     FOREIGN KEY ([ID_Utilizador]) REFERENCES [Utilizador] ([NIF]),
 )
 
-
+CREATE TABLE [Link_Fotos]
+(
+    [ID]         INT         NOT NULL PRIMARY KEY IDENTITY,
+    [ID_Produto] INT         NOT NULL,
+    [Link]       VARCHAR(50) NOT NULL,
+    FOREIGN KEY ([ID_Produto]) REFERENCES [Produto] ([ID]),
+)
 
