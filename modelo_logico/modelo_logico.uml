@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>0671989b-0f58-41ae-8692-8943f6e13caa.SCHEMA:online_auctions.dbo</OriginalElement>
+  <nodes>
+    <node x="593.3661327231121" y="88.77345537757435">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Modelo</node>
+    <node x="-294.3890160183066" y="280.0">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Utilizador</node>
+    <node x="269.5" y="280.0">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Leilao</node>
+    <node x="58.52517162471395" y="328.0">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Licitacao</node>
+    <node x="301.5" y="77.0">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Administrador</node>
+    <node x="613.8661327231121" y="304.0">0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Produto</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Leilao" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Utilizador" relationship="REFERENCES">
+      <point x="-117.5" y="-86.0" />
+      <point x="99.5" y="-74.0" />
+    </edge>
+    <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Leilao" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Administrador" relationship="REFERENCES">
+      <point x="0.0" y="-116.5" />
+      <point x="0.0" y="68.5" />
+    </edge>
+    <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Leilao" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Produto" relationship="REFERENCES">
+      <point x="78.33333333333334" y="-116.5" />
+      <point x="465.33333333333337" y="396.5" />
+      <point x="699.8661327231121" y="396.5" />
+      <point x="0.0" y="92.5" />
+    </edge>
+    <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Licitacao" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Utilizador" relationship="REFERENCES">
+      <point x="-66.0" y="-12.0" />
+      <point x="99.5" y="0.0" />
+    </edge>
+    <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Produto" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Modelo" relationship="REFERENCES">
+      <point x="0.0" y="-92.5" />
+      <point x="699.8661327231121" y="131.38672768878718" />
+      <point x="0.0" y="68.5" />
+    </edge>
+    <edge source="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Licitacao" target="0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Leilao" relationship="REFERENCES">
+      <point x="33.0" y="-68.5" />
+      <point x="157.52517162471395" y="396.5" />
+      <point x="387.0" y="396.5" />
+      <point x="0.0" y="116.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.4932279909706547" showDependencies="false" x="193.5" y="282.0" />
+  <SelectedNodes>
+    <node>0671989b-0f58-41ae-8692-8943f6e13caa.TABLE:online_auctions.dbo.Utilizador</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
