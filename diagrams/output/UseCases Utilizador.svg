@@ -202,7 +202,7 @@
     ><rect fill="none" x="0" width="876" height="679" y="0" clip-path="url(#clipPath1)"
     /></g
     ><g font-size="11px" transform="translate(140,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="418" xml:space="preserve" y="12" clip-path="url(#clipPath2)" stroke="none"
+    ><text x="417" xml:space="preserve" y="11" clip-path="url(#clipPath2)" stroke="none"
       >Sistema</text
     ></g
     ><g font-size="11px" transform="translate(21,299)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -222,9 +222,9 @@
     ><ellipse rx="72.5" fill="none" ry="20" clip-path="url(#clipPath4)" cx="72.5" cy="20"
     /></g
     ><g font-size="11px" transform="translate(190,25)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="26" xml:space="preserve" y="16" clip-path="url(#clipPath5)" stroke="none"
+    ><text x="24" xml:space="preserve" y="17" clip-path="url(#clipPath5)" stroke="none"
       >Listar os Leilões a</text
-      ><text x="48" xml:space="preserve" y="32" clip-path="url(#clipPath5)" stroke="none"
+      ><text x="49" xml:space="preserve" y="31" clip-path="url(#clipPath5)" stroke="none"
       >Decorrer</text
     ></g
     ><g font-size="11px" transform="translate(228,79)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -234,9 +234,9 @@
     ><ellipse rx="69" fill="none" ry="20" clip-path="url(#clipPath6)" cx="69" cy="20"
     /></g
     ><g font-size="11px" transform="translate(228,79)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="32" xml:space="preserve" y="16" clip-path="url(#clipPath7)" stroke="none"
+    ><text x="29" xml:space="preserve" y="17" clip-path="url(#clipPath7)" stroke="none"
       >Registar-se na</text
-      ><text x="40" xml:space="preserve" y="32" clip-path="url(#clipPath7)" stroke="none"
+      ><text x="39" xml:space="preserve" y="31" clip-path="url(#clipPath7)" stroke="none"
       >Plataforma</text
     ></g
     ><g font-size="11px" transform="translate(461,183)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -246,9 +246,9 @@
     ><ellipse rx="69" fill="none" ry="20" clip-path="url(#clipPath6)" cx="69" cy="20"
     /></g
     ><g font-size="11px" transform="translate(461,183)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="26" xml:space="preserve" y="16" clip-path="url(#clipPath7)" stroke="none"
+    ><text x="23" xml:space="preserve" y="17" clip-path="url(#clipPath7)" stroke="none"
       >Vizualizar Dados</text
-      ><text x="46" xml:space="preserve" y="32" clip-path="url(#clipPath7)" stroke="none"
+      ><text x="45" xml:space="preserve" y="31" clip-path="url(#clipPath7)" stroke="none"
       >Pessoais</text
     ></g
     ><g font-size="11px" transform="translate(510,132)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -258,9 +258,9 @@
     ><ellipse rx="86.5" fill="none" ry="20" clip-path="url(#clipPath8)" cx="86.5" cy="20"
     /></g
     ><g font-size="11px" transform="translate(510,132)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="23" xml:space="preserve" y="16" clip-path="url(#clipPath9)" stroke="none"
+    ><text x="19" xml:space="preserve" y="17" clip-path="url(#clipPath9)" stroke="none"
       >Vizualizar os Leilões que</text
-      ><text x="67" xml:space="preserve" y="32" clip-path="url(#clipPath9)" stroke="none"
+      ><text x="66" xml:space="preserve" y="31" clip-path="url(#clipPath9)" stroke="none"
       >Venceu</text
     ></g
     ><g font-size="11px" transform="translate(357,380)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -270,9 +270,9 @@
     ><ellipse rx="53" fill="none" ry="20" clip-path="url(#clipPath10)" cx="53" cy="20"
     /></g
     ><g font-size="11px" transform="translate(357,380)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="23" xml:space="preserve" y="16" clip-path="url(#clipPath11)" stroke="none"
+    ><text x="22" xml:space="preserve" y="17" clip-path="url(#clipPath11)" stroke="none"
       >Licitar num</text
-      ><text x="31" xml:space="preserve" y="32" clip-path="url(#clipPath11)" stroke="none"
+      ><text x="31" xml:space="preserve" y="31" clip-path="url(#clipPath11)" stroke="none"
       >Produto</text
     ></g
     ><g font-size="11px" transform="translate(372,249)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -282,9 +282,9 @@
     ><ellipse rx="62.5" fill="none" ry="20" clip-path="url(#clipPath12)" cx="62.5" cy="20"
     /></g
     ><g font-size="11px" transform="translate(372,249)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="26" xml:space="preserve" y="16" clip-path="url(#clipPath13)" stroke="none"
+    ><text x="25" xml:space="preserve" y="17" clip-path="url(#clipPath13)" stroke="none"
       >Alterar Dados</text
-      ><text x="39" xml:space="preserve" y="32" clip-path="url(#clipPath13)" stroke="none"
+      ><text x="39" xml:space="preserve" y="31" clip-path="url(#clipPath13)" stroke="none"
       >Pessoais</text
     ></g
     ><g font-size="11px" transform="translate(347,309)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -294,9 +294,9 @@
     ><ellipse rx="47" fill="none" ry="20" clip-path="url(#clipPath14)" cx="47" cy="20"
     /></g
     ><g font-size="11px" transform="translate(347,309)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="23" xml:space="preserve" y="16" clip-path="url(#clipPath15)" stroke="none"
+    ><text x="23" xml:space="preserve" y="17" clip-path="url(#clipPath15)" stroke="none"
       >Carregar</text
-      ><text x="27" xml:space="preserve" y="32" clip-path="url(#clipPath15)" stroke="none"
+      ><text x="27" xml:space="preserve" y="31" clip-path="url(#clipPath15)" stroke="none"
       >Fundos</text
     ></g
     ><g font-size="11px" transform="translate(390,446)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -306,9 +306,9 @@
     ><ellipse rx="46.5" fill="none" ry="20" clip-path="url(#clipPath16)" cx="46.5" cy="20"
     /></g
     ><g font-size="11px" transform="translate(390,446)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="23" xml:space="preserve" y="16" clip-path="url(#clipPath17)" stroke="none"
+    ><text x="23" xml:space="preserve" y="17" clip-path="url(#clipPath17)" stroke="none"
       >Levantar</text
-      ><text x="27" xml:space="preserve" y="32" clip-path="url(#clipPath17)" stroke="none"
+      ><text x="27" xml:space="preserve" y="31" clip-path="url(#clipPath17)" stroke="none"
       >Fundos</text
     ></g
     ><g font-size="11px" transform="translate(441,578)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -318,9 +318,9 @@
     ><ellipse rx="88.5" fill="none" ry="20" clip-path="url(#clipPath18)" cx="88.5" cy="20"
     /></g
     ><g font-size="11px" transform="translate(441,578)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="17" xml:space="preserve" y="16" clip-path="url(#clipPath19)" stroke="none"
+    ><text x="14" xml:space="preserve" y="17" clip-path="url(#clipPath19)" stroke="none"
       >Histórico de Licitações num</text
-      ><text x="73" xml:space="preserve" y="32" clip-path="url(#clipPath19)" stroke="none"
+      ><text x="72" xml:space="preserve" y="31" clip-path="url(#clipPath19)" stroke="none"
       >Leilão</text
     ></g
     ><g font-size="11px" transform="translate(401,512)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -330,9 +330,9 @@
     ><ellipse rx="76" fill="none" ry="20" clip-path="url(#clipPath20)" cx="76" cy="20"
     /></g
     ><g font-size="11px" transform="translate(401,512)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="20" xml:space="preserve" y="16" clip-path="url(#clipPath21)" stroke="none"
+    ><text x="17" xml:space="preserve" y="17" clip-path="url(#clipPath21)" stroke="none"
       >Vizualizar Leilões que</text
-      ><text x="58" xml:space="preserve" y="32" clip-path="url(#clipPath21)" stroke="none"
+      ><text x="58" xml:space="preserve" y="31" clip-path="url(#clipPath21)" stroke="none"
       >Licitou</text
     ></g
     ><g font-size="11px" transform="translate(671,250)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -342,11 +342,11 @@
     ><ellipse rx="118.5" fill="none" ry="67.5" clip-path="url(#clipPath22)" cx="118.5" cy="67.5"
     /></g
     ><g font-size="11px" transform="translate(671,250)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="30" xml:space="preserve" y="71" clip-path="url(#clipPath23)" stroke="none"
+    ><text x="26" xml:space="preserve" y="71" clip-path="url(#clipPath23)" stroke="none"
       >Estar Autenticado como Utilizador</text
     ></g
     ><g font-size="11px" transform="translate(2,359)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="8" xml:space="preserve" y="12" clip-path="url(#clipPath24)" stroke="none"
+    ><text x="7" xml:space="preserve" y="12" clip-path="url(#clipPath24)" stroke="none"
       >Utilizador</text
     ></g
     ><g stroke-linecap="butt" font-size="11px" transform="translate(598,92)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke-linejoin="round" stroke-dasharray="4" stroke="black" stroke-opacity="1"
@@ -420,40 +420,40 @@
     ><line y2="281" fill="none" x1="71" clip-path="url(#clipPath60)" x2="459" y1="71"
     /></g
     ><g font-size="11px" transform="translate(667,506)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="9" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
-      >&lt;&lt;Extend&gt;&gt;</text
+    ><text x="7" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
+      >&lt;&lt;Extend...</text
     ></g
     ><g font-size="11px" transform="translate(604,459)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="9" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
-      >&lt;&lt;Extend&gt;&gt;</text
+    ><text x="7" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
+      >&lt;&lt;Extend...</text
     ></g
     ><g font-size="11px" transform="translate(511,412)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="9" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
-      >&lt;&lt;Extend&gt;&gt;</text
+    ><text x="7" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
+      >&lt;&lt;Extend...</text
     ></g
     ><g font-size="11px" transform="translate(440,362)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="9" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
-      >&lt;&lt;Extend&gt;&gt;</text
+    ><text x="7" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
+      >&lt;&lt;Extend...</text
     ></g
     ><g font-size="11px" transform="translate(465,328)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="9" xml:space="preserve" y="13" clip-path="url(#clipPath62)" stroke="none"
-      >&lt;&lt;Extend&gt;&gt;</text
+    ><text x="7" xml:space="preserve" y="13" clip-path="url(#clipPath62)" stroke="none"
+      >&lt;&lt;Extend...</text
     ></g
     ><g font-size="11px" transform="translate(484,280)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="9" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
-      >&lt;&lt;Extend&gt;&gt;</text
+    ><text x="7" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
+      >&lt;&lt;Extend...</text
     ></g
     ><g font-size="11px" transform="translate(598,228)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="9" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
-      >&lt;&lt;Extend&gt;&gt;</text
+    ><text x="7" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
+      >&lt;&lt;Extend...</text
     ></g
     ><g font-size="11px" transform="translate(688,170)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="9" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
-      >&lt;&lt;Extend&gt;&gt;</text
+    ><text x="7" xml:space="preserve" y="12" clip-path="url(#clipPath61)" stroke="none"
+      >&lt;&lt;Extend...</text
     ></g
     ><g font-size="8px" fill-opacity="1" fill="rgb(120,120,120)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" stroke="rgb(120,120,120)" stroke-opacity="1"
     ><text x="0" xml:space="preserve" y="10" stroke="none"
-      >Visual Paradigm Standard(Universidade do Minho)</text
+      >Visual Paradigm Standard(danielpereira(Universidade do Minho))</text
     ></g
   ></g
 ></svg
