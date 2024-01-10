@@ -1,4 +1,7 @@
--- Microsoft SQL SERVER
+USE master;
+GO
+CREATE DATABASE [online_auctions];
+GO
 
 USE [online_auctions];
 
@@ -72,4 +75,3 @@ CREATE TABLE [Link_Fotos]
     [Link]       VARCHAR(50) NOT NULL,
     FOREIGN KEY ([ID_Produto]) REFERENCES [Produto] ([ID]),
 )
-

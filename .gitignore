@@ -1,3 +1,3 @@
-*.vpp.bak_*
-
-*.lck
+.env
+.env.*
+!.env.sample
