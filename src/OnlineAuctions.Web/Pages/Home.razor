@@ -1,0 +1,27 @@
+﻿@page "/"
+
+@using OnlineAuctions.Data
+@using OnlineAuctions.Data.Models
+
+@inject IUserData _db
+
+<div class="flex flex-row space-x-1">
+    <h1>Info:</h1>
+    @if (users == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <p>@users.Count users</p>
+    }
+</div>
+
+@code {
+    private List<UserModel> users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await _db.GetUsers();
+    }
+}

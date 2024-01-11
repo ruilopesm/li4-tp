@@ -1,10 +1,15 @@
-using online_auctions.Components;
+using OnlineAuctions.Web;
+using OnlineAuctions.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Database-related services
+builder.Services.AddTransient<ISqlDataAccess, SqlDataAccess>();
+builder.Services.AddTransient<IUserData, UserData>();
 
 var app = builder.Build();
 
