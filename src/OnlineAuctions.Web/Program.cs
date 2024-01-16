@@ -1,4 +1,4 @@
-using OnlineAuctions.Web;
+using OnlineAuctions.Web.Components;
 using OnlineAuctions.Data;
 
 var builder = WebApplication.CreateBuilder(args);
