@@ -1,91 +1,92 @@
 USE master;
 GO
-CREATE DATABASE [online_auctions];
+CREATE DATABASE [OnlineAuctions];
 GO
 
-USE [online_auctions];
+USE [OnlineAuctions];
 
-CREATE TABLE [Utilizador]
+CREATE TABLE [User]
 (
-    [ID]               INT                IDENTITY PRIMARY KEY,
-    [Nome]             VARCHAR(50)        NOT NULL,
-    [Email]            VARCHAR(50) UNIQUE NOT NULL,
-    [PasswordHash]     VARCHAR(72)        NOT NULL,
-    [Role]             VARCHAR(10)        NOT NULL CHECK ([Role] IN ('Licitador', 'Administrador')),
+    [ID]            INT                IDENTITY PRIMARY KEY,
+    [Name]          VARCHAR(50)        NOT NULL,
+    [Email]         VARCHAR(50) UNIQUE NOT NULL,
+    [Password]      VARCHAR(72)        NOT NULL,
+    [Role]          VARCHAR(6)         NOT NULL CHECK ([Role] IN ('Bidder', 'Admin')),
 )
 
-CREATE TABLE [Licitador]
+CREATE TABLE [Bidder]
 (
-    [NIF]               INT         NOT NULL PRIMARY KEY,
-    [Data_Nascimento]   DATE        NOT NULL,
-    [Fundos_Livres]     MONEY       NOT NULL DEFAULT 0 CHECK ([Fundos_Livres] >= 0),
-    [Fundos_Pendentes]  MONEY       NOT NULL DEFAULT 0 CHECK ([Fundos_Pendentes] >= 0),
-    [ID_Utilizador]     VARCHAR(50) NOT NULL,
+    [NIF]             INT   NOT NULL PRIMARY KEY,
+    [BirthDate]       DATE  NOT NULL,
+    [Balance]         MONEY NOT NULL DEFAULT 0 CHECK ([Balance] >= 0),
+    [PendingBalance]  MONEY NOT NULL DEFAULT 0 CHECK ([PendingBalance] >= 0),
+    [UserID]          INT   NOT NULL,
     
-    FOREIGN KEY ([ID_Utilizador]) REFERENCES [Utilizador] ([Email]),
+    FOREIGN KEY ([UserID]) REFERENCES [User] ([ID]),
 )
 
-CREATE TABLE [Administrador]
+CREATE TABLE [Admin]
 (
-    [ID]            INT         NOT NULL PRIMARY KEY IDENTITY,
-    [Master]        BIT         NOT NULL,
-    [ID_Utilizador] VARCHAR(50) NOT NULL,
+    [InternalID]  INT IDENTITY PRIMARY KEY,
+    [IsMaster]    BIT NOT NULL,
+    [UserID]      INT NOT NULL,
     
-    FOREIGN KEY ([ID_Utilizador]) REFERENCES [Utilizador] ([Email]),
+    FOREIGN KEY ([UserID]) REFERENCES [User] ([ID]),
 )
 
-CREATE TABLE [Modelo]
+CREATE TABLE [Model]
 (
-    [ID]            INT         NOT NULL PRIMARY KEY IDENTITY,
-    [Nome]          VARCHAR(50) NOT NULL,
-    [Cor]           VARCHAR(50),
-    [Armazenamento] VARCHAR(50),
+    [ID]       INT         NOT NULL PRIMARY KEY IDENTITY,
+    [Name]     VARCHAR(50) NOT NULL,
+    [Color]    VARCHAR(50),
+    [Storage]  VARCHAR(50),
 )
 
-CREATE TABLE [Produto]
+CREATE TABLE [Product]
 (
-    [ID]        INT         NOT NULL PRIMARY KEY IDENTITY,
-    [Nome]      VARCHAR(50) NOT NULL,
-    [Descricao] VARCHAR(50) NOT NULL,
-    [ID_Modelo] INT         NOT NULL,
-    [Estado]    TINYINT     NOT NULL,
-    [Condicao]  TINYINT     NOT NULL,
+    [ID]           INT         NOT NULL PRIMARY KEY IDENTITY,
+    [Name]         VARCHAR(50) NOT NULL,
+    [Description]  VARCHAR(50) NOT NULL,
+    [ModelID]      INT         NOT NULL,
+    [State]        TINYINT     NOT NULL,
+    [Condition]    TINYINT     NOT NULL,
     
-    FOREIGN KEY ([ID_Modelo]) REFERENCES [Modelo] ([ID]),
+    FOREIGN KEY ([ModelID]) REFERENCES [Model] ([ID]),
 )
 
-CREATE TABLE [Leilao]
+CREATE TABLE [Auction]
 (
-    [ID]                          INT      NOT NULL PRIMARY KEY IDENTITY,
-    [ID_Produto]                  INT      NOT NULL,
-    [Data_Inicio]                 DATETIME NOT NULL,
-    [Data_Fim]                    DATETIME NOT NULL,
-    [Preco_Base]                  MONEY    NOT NULL,
-    [Estado]                      TINYINT  NOT NULL,
-    [ID_Administrador_Publicador] INT      NOT NULL,
-    [NIF_Vencedor]                INT,
-    
-    FOREIGN KEY ([ID_Produto]) REFERENCES [Produto] ([ID]),
-    FOREIGN KEY ([ID_Administrador_Publicador]) REFERENCES [Administrador] ([ID]),
-    FOREIGN KEY ([NIF_Vencedor]) REFERENCES [Utilizador] ([NIF]),
+    [ID]                INT      NOT NULL PRIMARY KEY IDENTITY,
+    [ProductID]         INT      NOT NULL,
+    [Start]             DATETIME NOT NULL,
+    [End]               DATETIME NOT NULL,
+    [Price]             MONEY    NOT NULL,
+    [State]             TINYINT  NOT NULL,
+    [PublisherAdminID]  INT      NOT NULL,
+    [WinnerID]          INT,
+
+    FOREIGN KEY ([ProductID]) REFERENCES [Product] ([ID]),
+    FOREIGN KEY ([PublisherAdminID]) REFERENCES [Admin] ([InternalID]),
+    FOREIGN KEY ([WinnerID]) REFERENCES [Bidder] ([NIF]),
 )
 
-CREATE TABLE [Licitacao]
+CREATE TABLE [Bid]
 (
-    [ID]            INT   NOT NULL PRIMARY KEY IDENTITY,
-    [ID_Leilao]     INT   NOT NULL,
-    [ID_Utilizador] INT   NOT NULL,
-    [Valor]         MONEY NOT NULL,
+    [ID]         INT      NOT NULL PRIMARY KEY IDENTITY,
+    [AuctionID]  INT      NOT NULL,
+    [BidderNIF]  INT      NOT NULL,
+    [Value]      MONEY    NOT NULL,
+    [Date]       DATETIME NOT NULL,
     
-    FOREIGN KEY ([ID_Leilao]) REFERENCES [Leilao] ([ID]),
-    FOREIGN KEY ([ID_Utilizador]) REFERENCES [Utilizador] ([NIF]),
+    FOREIGN KEY ([AuctionID]) REFERENCES [Auction] ([ID]),
+    FOREIGN KEY ([BidderNIF]) REFERENCES [Bidder] ([NIF]),
 )
 
-CREATE TABLE [Link_Fotos]
+CREATE TABLE [Image]
 (
-    [ID]         INT         NOT NULL PRIMARY KEY IDENTITY,
-    [ID_Produto] INT         NOT NULL,
-    [Link]       VARCHAR(50) NOT NULL,
+    [ID]         INT          NOT NULL PRIMARY KEY IDENTITY,
+    [ProductID]  INT          NOT NULL,
+    [Path]       VARCHAR(256) NOT NULL,
     
-    FOREIGN KEY ([ID_Produto]) REFERENCES [Produto] ([ID]),
+    FOREIGN KEY ([ProductID]) REFERENCES [Product] ([ID]),
 )

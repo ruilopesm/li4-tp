@@ -27,7 +27,7 @@ namespace OnlineAuctions.Auth
 
                 var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
-                    new(ClaimTypes.Email, userSession.Email),
+                    new(ClaimTypes.Name, userSession.Email),
                     new(ClaimTypes.Role, userSession.Role)
                 }, "CustomAuth"));
                 return await Task.FromResult(new AuthenticationState(claimsPrincipal));
@@ -47,7 +47,7 @@ namespace OnlineAuctions.Auth
                 await _storage.SetAsync("UserSession", userSession);
                 claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
-                    new(ClaimTypes.Email, userSession.Email),
+                    new(ClaimTypes.Name, userSession.Email),
                     new(ClaimTypes.Role, userSession.Role)
                 }, "CustomAuth"));
             } else
@@ -57,6 +57,25 @@ namespace OnlineAuctions.Auth
             }
 
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
+        }
+
+        public async Task<string?> GetEmail()
+        {
+            try
+            {
+                var userSessionResult = await _storage.GetAsync<UserSession>("UserSession");
+                var userSession = userSessionResult.Success ? userSessionResult.Value : null;
+                if (userSession == null)
+                {
+                    return null;
+                }
+
+                return userSession.Email;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

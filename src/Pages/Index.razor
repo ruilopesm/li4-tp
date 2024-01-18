@@ -1,12 +1,40 @@
 ﻿@page "/"
 
+@inject AuthenticationStateProvider AuthProvider
+@inject IUserService _db
+
 <PageTitle>Leilões</PageTitle>
 
 <AuthorizeView>
     <Authorized>
-        <h1>Hello, @context.User.Identity.Name!</h1>
+        <h1>Hello, @User!</h1>
     </Authorized>
     <NotAuthorized>
         <h1>Hello, Guest!</h1>
     </NotAuthorized>
 </AuthorizeView>
+
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (var user in users)
+    {
+        <p>@user.Email</p>
+    }
+}
+
+@code {
+    public String? User { get; set; }
+    public List<UserModel> users { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var ourProvider = (AuthProvider)AuthProvider;
+        User = await ourProvider.GetEmail();
+
+        users = await _db.GetUsers();
+    }
+}

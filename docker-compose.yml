@@ -31,5 +31,6 @@ services:
     command: >
       bash -c '
       /opt/mssql-tools/bin/sqlcmd -S db -U sa -P ${DB_PASSWORD} -d master -i docker-entrypoint-initdb.d/init.sql;
+      /opt/mssql-tools/bin/sqlcmd -S db -U sa -P ${DB_PASSWORD} -d master -i docker-entrypoint-initdb.d/seeds.sql;
       echo "Configuration done!"
       '

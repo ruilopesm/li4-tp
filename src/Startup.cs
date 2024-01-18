@@ -25,7 +25,7 @@ namespace OnlineAuctions
             services.AddAuthenticationCore();
             services.AddScoped<AuthenticationStateProvider, AuthProvider>();
 
-            // Data-related  services
+            // Data-related services
             services.AddTransient<ISqlDataAccess, SqlDataAccess>();
             services.AddTransient<IUserService, UserService>();
         }

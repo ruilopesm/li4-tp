@@ -4,25 +4,20 @@ namespace OnlineAuctions.Data.Models
 {
     public class UserModel
     {
+        public int ID { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        
+        // TODO: Should be an hash
+        public string Password { get; set; }
         public Roles Role { get; set; }
-        public BidderModel? Bidder { get; set; }
-        public AdminModel? Admin { get; set; }
-
-        public string GetRole()
-        {
-            return Role switch
-            {
-                Roles.Bidder => "Bidder",
-                Roles.Admin => "Admin",
-                _ => throw new NotImplementedException()
-            };
-        }
     }
-    
-    public class BidderModel
+
+    public enum Roles {
+        Bidder,
+        Admin
+    }
+
+    public class BidderModel : UserModel
     {
         public int NIF { get; set; }
         public DateOnly BirthDate { get; set; }
@@ -30,14 +25,9 @@ namespace OnlineAuctions.Data.Models
         public SqlMoney PendingBalance { get; set; }
     }
 
-    public class AdminModel
+    public class AdminModel : UserModel
     {
-        public bool IsMaster { get; set; } 
-    }
-
-    public enum Roles
-    {
-        Bidder,
-        Admin,
+        public int InternalID { get; set; }
+        public bool IsMater { get; set; }
     }
 }
