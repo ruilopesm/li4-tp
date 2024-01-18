@@ -38,7 +38,7 @@ namespace OnlineAuctions.Auth
             }
         }
 
-        public async Task UpdateAuthenticationState(UserSession userSession)
+        public async Task UpdateAuthenticationState(UserSession? userSession)
         {
             ClaimsPrincipal claimsPrincipal;
 
@@ -57,6 +57,25 @@ namespace OnlineAuctions.Auth
             }
 
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
+        }
+
+        public async Task Logout()
+        {
+            await UpdateAuthenticationState(null);
+        }
+
+        public async Task<bool> IsAuthenticated()
+        {
+            try
+            {
+                var userSessionResult = await _storage.GetAsync<UserSession>("UserSession");
+                var userSession = userSessionResult.Success ? userSessionResult.Value : null;
+                return userSession != null;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<string?> GetEmail()

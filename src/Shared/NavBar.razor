@@ -1,23 +1,58 @@
+@inject AuthenticationStateProvider AuthProvider
+@inject NavigationManager NavManager
+
 <div class="mx-auto flex max-w-7xl items-center">
   <div class="flex flex-1">
-    <div class="flex items-center">
-      <img class="h-28 w-auto" src="assets/logo.png" alt="Maçã">
+    <a href="/" class="flex items-center">
+      <img class="h-20 w-auto" src="assets/logo.png" alt="Maçã">
       <p class="text-4xl">Maçã</p>
-    </div>
+    </a>
   </div>
   <div class="flex gap-x-28">
-    <NavLink href="/" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
-    <NavLink href="/auctions" Match="NavLinkMatch.All" class="hover:underline">Minhas licitações (1)</NavLink>
-    <NavLink href="/won" Match="NavLinkMatch.All" class="hover:underline">Leilões ganhos</NavLink>
+    @if (IsAuthenticated)
+    {
+      <NavLink href="/" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
+      <NavLink href="/auctions" Match="NavLinkMatch.All" class="hover:underline">Minhas licitações (1)</NavLink>
+      <NavLink href="/won" Match="NavLinkMatch.All" class="hover:underline">Leilões ganhos</NavLink>
+    }
+    else
+    {
+      <NavLink href="/" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
+    }
   </div>
   <div class="flex flex-1 space-x-8 items-center justify-end">
-    <div class="flex flex-col items-center">
-      <p class="text-green-700 underline">313.60€</p>
-      <p class="text-xs text-gray-400">761.90€ pendentes</p>
-    </div>
-    <div class="space-x-2">
-      <NavLink href="/profile" class="hover:underline text-md text-gray-900">Meu Perfil</NavLink>
-      <NavLink href="/logout" class="hover:underline text-xs text-gray-600">Sair</NavLink>
-    </div>
+    @if (IsAuthenticated)
+    {
+      <div class="flex flex-col items-center">
+        <p class="text-green-700 underline">313.60€</p>
+        <p class="text-xs text-gray-400">761.90€ pendentes</p>
+      </div>
+      <div class="space-x-2">
+        <NavLink href="/profile" class="hover:underline text-md text-gray-900">Meu Perfil</NavLink>
+        <NavLink @onclick="Logout" class="cursor-pointer hover:underline text-xs text-gray-600">Sair</NavLink>
+      </div>
+    }
+    else
+    {
+      <NavLink href="/login" class="hover:underline">Entrar</NavLink>
+      <NavLink href="/register" class="hover:underline">Registar</NavLink>
+    }
   </div>
 </div>
+
+@code {
+  private bool IsAuthenticated = true;
+
+  protected override async Task OnInitializedAsync()
+  {
+    var ourProvider = (AuthProvider)AuthProvider;
+    IsAuthenticated = await ourProvider.IsAuthenticated();
+  }
+
+  private async Task Logout()
+  {
+    var ourProvider = (AuthProvider)AuthProvider;
+    await ourProvider.Logout();
+    NavManager.NavigateTo("/", true);
+  }
+}

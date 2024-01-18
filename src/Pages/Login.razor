@@ -1,0 +1,70 @@
+@page "/login"
+@layout NoLayout
+
+@inject IUserService _db
+@inject IJSRuntime js
+@inject AuthenticationStateProvider AuthProvider
+@inject NavigationManager NavManager 
+
+<div class="flex flex-col justify-center items-center h-screen">
+    <div class="flex items-center mb-6">
+      <img class="h-28 w-auto" src="assets/logo.png" alt="Maçã">
+      <p class="text-6xl">Maçã</p>
+    </div>
+    <div class="w-full max-w-[430px]">
+        <div class="bg-[#f5f5f5] rounded-md px-8 pt-6 pb-8 mb-4">
+            <div>
+                <p class="text-4xl font-extrabold text-center mb-4">Entrar</p>
+            </div>
+            <div class="my-4 text-xs">
+                <input @bind="_loginModel.Email" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700" type="text" placeholder="Email">
+            </div>
+            <div class="mb-2 text-xs">
+                <input @bind="_loginModel.Password" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700 mb-3" type="password" placeholder="Password">
+            </div>
+            <div class="flex flex-col space-y-2 items-center justify-center">
+                <button @onclick="Authenticate" class="bg-black hover:bg-gray-700 text-white font-bold py-2.5 px-10 rounded-md focus:outline-none focus:shadow-outline" type="submit">
+                    <p class="font-extrabold">Confirmar</p>
+                </button>
+                <div class="text-xs">
+                    <p>Não tem conta? <a href="/register" class="text-blue-500 hover:text-blue-700 underline">Registe-se</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private class LoginModel
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+        public LoginModel()
+        {
+            Email = "";
+            Password = "";
+        }
+    }
+
+    private LoginModel _loginModel = new LoginModel();
+
+    private async Task Authenticate()
+    {
+        var account = await _db.GetUser(_loginModel.Email);
+        if (account == null || account.Password != _loginModel.Password)
+        {
+            await js.InvokeVoidAsync("alert", "Credenciais inválidas");
+            return;
+        }
+
+        var ourProvider = (AuthProvider)AuthProvider;
+        await ourProvider.UpdateAuthenticationState(new UserSession
+        {
+            Email = account.Email,
+            Role = account.RoleString,
+        });
+
+        NavManager.NavigateTo("/", true);
+    }
+}
