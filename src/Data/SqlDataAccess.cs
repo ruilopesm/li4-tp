@@ -1,4 +1,5 @@
 using Dapper;
+using OnlineAuctions.Data.Utils;
 using System.Data.SqlClient;
 
 namespace OnlineAuctions.Data
@@ -10,10 +11,11 @@ namespace OnlineAuctions.Data
 
         public SqlDataAccess(IConfiguration config) {
             _config = config;
-            _connection = new SqlConnection(_config.GetConnectionString(ConnectionStringName));
-        }
+            _connection = new SqlConnection(_config.GetConnectionString("Default"));
 
-        public string ConnectionStringName { get; set; } = "Default";
+            SqlMapper.AddTypeHandler(new SqlDateOnlyTypeHandler());
+            SqlMapper.AddTypeHandler(new SqlTimeOnlyTypeHandler());
+        }
 
         public async Task<List<T>> LoadData<T, U>(string sql, U parameters)
         {
@@ -30,6 +32,33 @@ namespace OnlineAuctions.Data
             {
                 return _connection.ExecuteAsync(sql, parameters);
             }
+        }
+
+        public Task ExecuteTransaction<T>(Dictionary<string, T> queries)
+        {
+            using (_connection)
+            {
+                _connection.Open();
+
+
+                using var transaction = _connection.BeginTransaction();
+                try
+                {
+                    foreach (var query in queries)
+                    {
+                        _connection.Execute(query.Key, query.Value, transaction);
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

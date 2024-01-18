@@ -11,11 +11,11 @@ namespace OnlineAuctions.Data.Models
         // TODO: Should be an hash
         public string Password { get; set; }
         
-        public Roles Role { get; set; }
+        public Role Role { get; set; }
         public string RoleString => Role.ToString();
     }
 
-    public enum Roles {
+    public enum Role {
         Bidder,
         Admin
     }

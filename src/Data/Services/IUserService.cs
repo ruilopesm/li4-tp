@@ -7,5 +7,7 @@ namespace OnlineAuctions.Data.Services
         Task<List<UserModel>> GetUsers();
 
         Task<UserModel?> GetUser(string email);
+
+        Task CreateBidder(string name, string email, string password, int NIF, DateOnly birthDate);
     }
 }
