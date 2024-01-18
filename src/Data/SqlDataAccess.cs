@@ -40,7 +40,6 @@ namespace OnlineAuctions.Data
             {
                 _connection.Open();
 
-
                 using var transaction = _connection.BeginTransaction();
                 try
                 {
