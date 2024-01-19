@@ -17,6 +17,8 @@ namespace OnlineAuctions.Data
             SqlMapper.AddTypeHandler(new SqlTimeOnlyTypeHandler());
         }
 
+        public SqlConnection Connection => _connection;
+
         public async Task<List<T>> LoadData<T, U>(string sql, U parameters)
         {
             using (_connection)

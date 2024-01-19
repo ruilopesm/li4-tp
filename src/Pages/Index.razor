@@ -1,40 +1,27 @@
 ﻿@page "/"
 
 @inject AuthenticationStateProvider AuthProvider
-@inject IUserService _db
+@inject IAuctionService _db
 
 <PageTitle>Leilões</PageTitle>
 
-<AuthorizeView>
-    <Authorized>
-        <h1>Hello, @User!</h1>
-    </Authorized>
-    <NotAuthorized>
-        <h1>Hello, Guest!</h1>
-    </NotAuthorized>
-</AuthorizeView>
-
-@if (users == null)
+@if (auctions == null)
 {
-    <p><em>Loading...</em></p>
+    <p>Loading...</p>
 }
 else
 {
-    @foreach (var user in users)
-    {
-        <p>@user.Email</p>
-    }
+   foreach (var auction in auctions)
+   {
+        <p>@auction.Product.Name</p>
+   }
 }
 
 @code {
-    public String? User { get; set; }
-    public List<UserModel> users { get; set; }
+    public List<AuctionModel> auctions { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
-        var ourProvider = (AuthProvider)AuthProvider;
-        User = await ourProvider.GetEmail();
-
-        users = await _db.GetUsers();
+       auctions = await _db.GetAuctions();
     }
 }

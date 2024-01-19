@@ -48,25 +48,26 @@ CREATE TABLE [Product]
     [Name]         VARCHAR(50) NOT NULL,
     [Description]  VARCHAR(50) NOT NULL,
     [ModelID]      INT         NOT NULL,
-    [State]        TINYINT     NOT NULL,
-    [Condition]    TINYINT     NOT NULL,
+    [State]        VARCHAR(10) NOT NULL CHECK ([State] IN ('Excellent', 'Good', 'Bad')),
+    [Condition]    VARCHAR(11) NOT NULL CHECK ([Condition] IN ('Used', 'Refurbished', 'Returned')),
     
     FOREIGN KEY ([ModelID]) REFERENCES [Model] ([ID]),
 )
 
 CREATE TABLE [Auction]
 (
-    [ID]                INT      NOT NULL PRIMARY KEY IDENTITY,
-    [ProductID]         INT      NOT NULL,
-    [Start]             DATETIME NOT NULL,
-    [End]               DATETIME NOT NULL,
-    [Price]             MONEY    NOT NULL,
-    [State]             TINYINT  NOT NULL,
-    [PublisherAdminID]  INT      NOT NULL,
-    [WinnerID]          INT,
+    [ID]           INT        NOT NULL PRIMARY KEY IDENTITY,
+    [ProductID]    INT        NOT NULL,
+    [Start]        DATETIME   NOT NULL,
+    [End]          DATETIME   NOT NULL,
+    [StartPrice]   MONEY      NOT NULL CHECK ([StartPrice] >= 0),
+    [CurrentPrice] MONEY      NOT NULL CHECK ([CurrentPrice] >= 0),
+    [State]        VARCHAR(9) NOT NULL CHECK ([State] IN ('Open', 'Closed', 'Cancelled')) DEFAULT 'Open',
+    [PublisherID]  INT        NOT NULL,
+    [WinnerID]     INT        NULL,
 
     FOREIGN KEY ([ProductID]) REFERENCES [Product] ([ID]),
-    FOREIGN KEY ([PublisherAdminID]) REFERENCES [Admin] ([InternalID]),
+    FOREIGN KEY ([PublisherID]) REFERENCES [Admin] ([InternalID]),
     FOREIGN KEY ([WinnerID]) REFERENCES [Bidder] ([NIF]),
 )
 

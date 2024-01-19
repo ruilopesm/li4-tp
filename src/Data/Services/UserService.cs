@@ -33,7 +33,7 @@ namespace OnlineAuctions.Data.Services
                     new { Name = name, Email = email, Password = password, Role = "Bidder" }
                 },
                 {
-                    @"INSERT INTO dbo.[Bidder] (NIF, BirthDate, UserId) VALUES (@NIF, @BirthDate, (SELECT Id FROM dbo.[User] WHERE Email = @Email))",
+                    @"INSERT INTO dbo.Bidder (NIF, BirthDate, UserId) VALUES (@NIF, @BirthDate, (SELECT Id FROM dbo.[User] WHERE Email = @Email))",
                     new { NIF, BirthDate = birthDate, Email = email }
                 }
             };

@@ -15,3 +15,12 @@ VALUES (123456789, '1987-05-23', 300, 0, 1),
 
 INSERT INTO [Admin] ([IsMaster], [UserID])
 VALUES (1, 5);
+
+INSERT INTO [Model] ([Name], [Color], [Storage])
+VALUES ('iPhone 14', 'Red', '128')
+
+INSERT INTO [Product] ([Name], [Description], [ModelID], [State], [Condition])
+VALUES ('iPhone 14 sem caixa', 'iPhone 14 sem caixa e com poucas marcas de uso', 1, 'Good', 'Used');
+
+INSERT INTO [Auction] ([ProductID], [Start], [End], [StartPrice], [CurrentPrice], [PublisherID])
+VALUES (1, "2023-01-19 01:30:02", "2023-01-22 01:30:02", 100, 100, 1);

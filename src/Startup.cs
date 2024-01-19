@@ -28,6 +28,7 @@ namespace OnlineAuctions
             // Data-related services
             services.AddTransient<ISqlDataAccess, SqlDataAccess>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuctionService, AuctionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
