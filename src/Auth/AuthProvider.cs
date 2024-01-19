@@ -84,12 +84,8 @@ namespace OnlineAuctions.Auth
             {
                 var userSessionResult = await _storage.GetAsync<UserSession>("UserSession");
                 var userSession = userSessionResult.Success ? userSessionResult.Value : null;
-                if (userSession == null)
-                {
-                    return null;
-                }
 
-                return userSession.Email;
+                return userSession?.Email;
             }
             catch
             {
