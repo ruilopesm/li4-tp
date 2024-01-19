@@ -77,7 +77,7 @@ CREATE TABLE [Bid]
     [AuctionID]  INT      NOT NULL,
     [BidderNIF]  INT      NOT NULL,
     [Value]      MONEY    NOT NULL,
-    [Date]       DATETIME NOT NULL,
+    [Date]       DATETIME DEFAULT GETDATE(),
     
     FOREIGN KEY ([AuctionID]) REFERENCES [Auction] ([ID]),
     FOREIGN KEY ([BidderNIF]) REFERENCES [Bidder] ([NIF]),
