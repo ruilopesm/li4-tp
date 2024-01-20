@@ -11,10 +11,10 @@ namespace OnlineAuctions.Data.Services
         {
             _db = db;
         }
-    
+
         public async Task<List<AuctionModel>> GetAuctions()
         {
-            const string sql = 
+            const string sql =
                 @"SELECT * FROM dbo.Auction a
                 LEFT JOIN dbo.Product p ON a.ProductID = p.ID
                 LEFT JOIN dbo.Model m ON p.ModelID = m.ID
@@ -34,7 +34,7 @@ namespace OnlineAuctions.Data.Services
                 splitOn: "ID, ID, ID, InternalID, NIF"
             );
 
-            return data.ToList(); 
+            return data.ToList();
         }
     }
 }
