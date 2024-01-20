@@ -1,5 +1,3 @@
-using System.Data.SqlTypes;
-
 namespace OnlineAuctions.Data.Models
 {
     public class UserModel
@@ -22,8 +20,8 @@ namespace OnlineAuctions.Data.Models
     {
         public int NIF { get; set; }
         public DateOnly BirthDate { get; set; }
-        public SqlMoney Balance { get; set; }
-        public SqlMoney PendingBalance { get; set; }
+        public int Balance { get; set; }
+        public int PendingBalance { get; set; }
     }
 
     public class AdminModel : UserModel

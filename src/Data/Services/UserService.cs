@@ -24,6 +24,17 @@ namespace OnlineAuctions.Data.Services
                 .ContinueWith(task => task.Result.FirstOrDefault());
         }
 
+        public Task<BidderModel?> GetBidder(string email)
+        {
+            const string sql = @"
+                SELECT * FROM dbo.[User] AS u
+                INNER JOIN dbo.Bidder AS b ON u.Id = b.UserId
+                WHERE u.Email = @Email
+            ";
+            return _db.LoadData<BidderModel, dynamic>(sql, new { Email = email })
+                .ContinueWith(task => task.Result.FirstOrDefault());
+        }
+
         public Task CreateBidder(string name, string email, string password, int NIF, DateOnly birthDate)
         {
             var queries = new Dictionary<string, dynamic>

@@ -1,0 +1,60 @@
+@page "/profile"
+
+@inject AuthenticationStateProvider AuthProvider
+@inject IUserService _db
+
+<PageTitle>Meu Perfil</PageTitle>
+
+@if (user == null)
+{
+    <p>Carregando...</p>
+}
+else
+{
+    <div class="text-4xl font-bold">Meu Perfil (@user.Name)</div>
+    <div class="grid grid-cols-2 gap-x-16">
+        <ul class="flex flex-col my-6 space-y-4">
+            @foreach (var value in _loadValues)
+            {
+                <li class="relative flex items-center justify-between px-10 py-6 bg-gray-100 rounded-xl border">
+                    <p class="text-xl">Carregar <span class="underline">@value,00€</span></p>
+                    <button class="flex items-center justify-center bg-green-700 hover:bg-green-500 px-8 py-2 text-white rounded-xl">
+                        <p class="font-bold">Adicionar fundos</p>
+                    </button>
+                </li>
+            }
+        </ul>
+        <ul class="flex flex-col my-6 space-y-4">
+            @foreach (var value in _withdrawValues)
+            {
+                <li class="relative flex items-center justify-between px-10 py-6 bg-gray-100 rounded-xl border">
+                    <p class="text-xl">Levantar <span class="underline">@value,00€</span></p>
+                    <button class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 px-8 py-2 text-white rounded-xl">
+                        <p class="font-bold">Levantar fundos</p>
+                    </button>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+@code {
+    private BidderModel? user;
+
+    private List<int> _loadValues = new List<int> { 100, 250, 500, 750, 1000 };
+    private List<int> _withdrawValues = new List<int> { 100, 200, 500, 1000 };
+
+    protected override async Task OnInitializedAsync()
+    {
+        var ourProvider = (AuthProvider)AuthProvider;
+        string? email = await ourProvider.GetEmail();
+        if (email != null)
+        {
+            user = await _db.GetBidder(email);
+            if (user != null)
+            {
+                _withdrawValues.Add(user.Balance);
+            }
+        }
+    }
+}

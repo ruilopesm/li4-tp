@@ -12,7 +12,6 @@ public class BidService : IBidService
         _db = db;
     }
 
-
     public Task<int> CreateBid(int auctionId, int nif, decimal amount)
     {
         const string sql = @"INSERT INTO dbo.Bid (AuctionID, BidderNIF, Value)
@@ -35,5 +34,17 @@ public class BidService : IBidService
         var data = await _db.Connection.QueryAsync<BidModel>(sql, new { ProductId = productId });
 
         return data.ToList();
+    }
+
+    public Task<List<BidModel>> GetLastUserBids(int nif)
+    {
+        const string sql = @"SELECT * FROM dbo.Bid
+                            LEFT JOIN dbo.Auction ON dbo.Bid.AuctionID = dbo.Auction.ID
+                            LEFT JOIN dbo.Product ON dbo.Auction.ProductID = dbo.Product.ID
+                            LEFT JOIN dbo.Model ON dbo.Product.ModelID = dbo.Model.ID 
+                            WHERE BidderNIF = @NIF
+                            ORDER BY dbo.Auction.[End] DESC";
+
+        return _db.LoadData<BidModel, dynamic>(sql, new { NIF = nif });
     }
 }

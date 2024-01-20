@@ -7,7 +7,7 @@
 
 @if (auctions == null)
 {
-    <p>Loading...</p>
+    <p>Carregando...</p>
 }
 else
 {
@@ -156,6 +156,7 @@ else
                         <p class="text-xs leading-5 text-gray-500">@auction.Product.StateString()</p>
                     </div>
                     <div class="absolute flex flex-col items-center ml-40">
+                        @* Text color should gray when the auction has already ended or was cancelled *@
                         <p class="text-3xl font-bold text-green-700 underline">@auction.CurrentPrice€</p>
                         @* FIXME: Bidder should come from the database *@
                         <p class="text-xs">De <span class="text-gray-700">João Mafioso</span></p>
@@ -176,7 +177,7 @@ else
 }
 
 @code {
-    private List<AuctionModel> auctions { get; set; }
+    private List<AuctionModel>? auctions { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

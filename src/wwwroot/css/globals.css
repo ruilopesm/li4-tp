@@ -11,3 +11,7 @@
     border-width: 0.1rem !important;
     border: 1px solid red;
 }
+
+.active-link {
+    text-decoration: underline !important;
+}

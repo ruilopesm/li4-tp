@@ -7,4 +7,6 @@ public interface IBidService
     Task<int> CreateBid(int auctionId, int nif, decimal amount);
 
     Task<List<BidModel>> GetBids(int productId);
+
+    Task<List<BidModel>> GetLastUserBids(int nif);
 }
