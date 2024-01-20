@@ -6,6 +6,9 @@
 @inject AuthenticationStateProvider AuthProvider
 @inject NavigationManager NavManager 
 
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+
 <div class="flex flex-col justify-center items-center h-screen">
     <div class="flex items-center mb-6">
       <img class="h-28 w-auto" src="assets/logo.png" alt="Maçã">
@@ -16,29 +19,47 @@
             <div>
                 <p class="text-4xl font-extrabold text-center mb-4">Registar</p>
             </div>
-            <div class="my-4 text-xs">
-                <input @bind="_registerModel.Name" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700" type="text" placeholder="Nome">
-            </div>
-            <div class="mb-2 text-xs">
-                <input @bind="_registerModel.Email" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700" type="text" placeholder="Email">
-            </div>
-            <div class="mb-2 text-xs">
-                <input @bind="_registerModel.Password" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700 mb-3" type="password" placeholder="Password">
-            </div>
-            <div class="mb-2 text-xs">
-                <input @bind="_registerModel.NIF" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700 mb-3" type="text" placeholder="NIF">
-            </div>
-            <div class="mb-2 text-xs">
-                <input @bind="_registerModel.BirthDate" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700 mb-3" type="date" placeholder="Data de Nascimento">
-            </div>
-            <div class="flex flex-col space-y-2 items-center justify-center">
-                <button @onclick="Authenticate" class="bg-black hover:bg-gray-700 text-white font-bold py-2.5 px-10 rounded-md focus:outline-none focus:shadow-outline" type="submit">
-                    <p class="font-extrabold">Confirmar</p>
-                </button>
-                <div class="text-xs">
-                    <p>Já tem conta? <a href="/login" class="text-blue-500 hover:text-blue-700 underline">Entre na Maçã</a></p>
+            <EditForm EditContext="_registerFormContext" OnValidSubmit="() => Authenticate()">
+                <DataAnnotationsValidator />
+                <div class="mb-2 text-xs space-y-1">
+                    <InputText @bind-Value="_registerModel.Name" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700" placeholder="Nome"/>
+                    <div class="pl-3 text-red-500">
+                        <ValidationMessage For="() => _registerModel.Name" />
+                    </div>
                 </div>
-            </div>
+                <div class="mb-2 text-xs space-y-1">
+                    <InputText @bind-Value="_registerModel.Email" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700" placeholder="Email"/>
+                    <div class="pl-3 text-red-500">
+                        <ValidationMessage For="() => _registerModel.Email" />
+                    </div>
+                </div>
+                <div class="mb-2 text-xs space-y-1">
+                    <InputText @bind-Value="_registerModel.Password" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700" type="password" placeholder="Password"/>
+                    <div class="pl-3 text-red-500">
+                        <ValidationMessage For="() => _registerModel.Password" />
+                    </div>
+                </div>
+                <div class="mb-2 text-xs space-y-1">
+                    <InputNumber @bind-Value="_registerModel.NIF" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700" type="text" placeholder="NIF"/>
+                    <div class="pl-3 text-red-500">
+                        <ValidationMessage For="() => _registerModel.NIF" />
+                    </div>
+                </div>
+                <div class="mb-2 text-xs space-y-1">
+                    <InputDate @bind-Value="_registerModel.BirthDate" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700" placeholder="Data de Nascimento"/>
+                    <div class="pl-3 text-red-500">
+                        <ValidationMessage For="() => _registerModel.BirthDate" />
+                    </div>
+                </div>
+                <div class="flex flex-col space-y-2 items-center justify-center">
+                    <button class="bg-black hover:bg-gray-700 text-white font-bold py-2.5 px-10 rounded-md focus:outline-none focus:shadow-outline" type="submit">
+                        <p class="font-extrabold">Confirmar</p>
+                    </button>
+                    <div class="text-xs">
+                        <p>Já tem conta? <a href="/login" class="text-blue-500 hover:text-blue-700 underline">Entre na Maçã</a></p>
+                    </div>
+                </div>
+            </EditForm>
         </div>
     </div>
 </div>
@@ -46,10 +67,15 @@
 @code {
     private class RegisterModel
     {
+        [Required(ErrorMessage = "O campo nome é obrigatório")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "O campo email é obrigatório"), EmailAddress(ErrorMessage = "O email tem que seguir o formato user@dominio.com")]
         public string Email { get; set; }
+        [Required(ErrorMessage = "O campo password é obrigatório"), MinLength(8, ErrorMessage = "A password deve ter no mínimo 8 caracteres")]
         public string Password { get; set; }
+        [Required(ErrorMessage = "O campo NIF é obrigatório"), NIF(ErrorMessage = "NIF inválido")]
         public int NIF { get; set; }
+        [Required(ErrorMessage = "O campo data de nascimento é obrigatório"), MinimumAge(18, ErrorMessage = "Deve ter no mínimo 18 anos para se registar")]
         public DateOnly BirthDate { get; set; }
 
         public RegisterModel()
@@ -58,11 +84,19 @@
             Email = "";
             Password = "";
             NIF = 0;
-            BirthDate = new DateOnly();
+            BirthDate = DateOnly.FromDateTime(DateTime.Now);
         }
     }
 
+    private EditContext? _registerFormContext { get; set; }
+    private ValidationMessageStore? _registerFormValidationMessageStore { get; set; }
+
     private RegisterModel _registerModel = new RegisterModel();
+
+    protected override void OnInitialized(){
+        _registerFormContext = new EditContext(_registerModel);
+        _registerFormValidationMessageStore = new ValidationMessageStore(_registerFormContext);
+    }
 
     private async Task Authenticate()
     {
