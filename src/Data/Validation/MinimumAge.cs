@@ -9,7 +9,6 @@ namespace OnlineAuctions.Data.Validation
         public MinimumAge(int requiredAge)
         {
             RequiredAge = requiredAge;
-        
         }
         
         public override bool IsValid(object? value)
