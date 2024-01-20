@@ -17,19 +17,21 @@ namespace OnlineAuctions.Data.Services
             const string sql = 
                 @"SELECT * FROM dbo.Auction a
                 LEFT JOIN dbo.Product p ON a.ProductID = p.ID
+                LEFT JOIN dbo.Model m ON p.ModelID = m.ID
                 LEFT JOIN dbo.Admin ad ON a.PublisherID = ad.InternalID
                 LEFT JOIN dbo.Bidder b ON a.WinnerID = b.NIF";
 
-            var data = await _db.Connection.QueryAsync<AuctionModel, ProductModel, AdminModel, BidderModel, AuctionModel>(
+            var data = await _db.Connection.QueryAsync<AuctionModel, ProductModel, ModelModel, AdminModel, BidderModel, AuctionModel>(
                 sql,
-                (auction, product, admin, bidder) =>
+                (auction, product, model, admin, bidder) =>
                 {
                     auction.Product = product;
+                    auction.Product.Model = model;
                     auction.Publisher = admin;
                     auction.Winner = bidder;
                     return auction;
                 },
-                splitOn: "ID, ID, InternalID, NIF"
+                splitOn: "ID, ID, ID, InternalID, NIF"
             );
 
             return data.ToList(); 

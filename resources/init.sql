@@ -44,12 +44,12 @@ CREATE TABLE [Model]
 
 CREATE TABLE [Product]
 (
-    [ID]           INT         NOT NULL PRIMARY KEY IDENTITY,
-    [Name]         VARCHAR(50) NOT NULL,
-    [Description]  VARCHAR(50) NOT NULL,
-    [ModelID]      INT         NOT NULL,
-    [State]        VARCHAR(10) NOT NULL CHECK ([State] IN ('Excellent', 'Good', 'Bad')),
-    [Condition]    VARCHAR(11) NOT NULL CHECK ([Condition] IN ('Used', 'Refurbished', 'Returned')),
+    [ID]           INT          NOT NULL PRIMARY KEY IDENTITY,
+    [Description]  VARCHAR(50)  NOT NULL,
+    [ImagePath]    VARCHAR(256),
+    [ModelID]      INT          NOT NULL,
+    [State]        VARCHAR(10)  NOT NULL CHECK ([State] IN ('Excellent', 'Good', 'Bad')),
+    [Condition]    VARCHAR(11)  NOT NULL CHECK ([Condition] IN ('Used', 'Refurbished', 'Returned')),
     
     FOREIGN KEY ([ModelID]) REFERENCES [Model] ([ID]),
 )
@@ -81,13 +81,4 @@ CREATE TABLE [Bid]
     
     FOREIGN KEY ([AuctionID]) REFERENCES [Auction] ([ID]),
     FOREIGN KEY ([BidderNIF]) REFERENCES [Bidder] ([NIF]),
-)
-
-CREATE TABLE [Image]
-(
-    [ID]         INT          NOT NULL PRIMARY KEY IDENTITY,
-    [ProductID]  INT          NOT NULL,
-    [Path]       VARCHAR(256) NOT NULL,
-    
-    FOREIGN KEY ([ProductID]) REFERENCES [Product] ([ID]),
 )
