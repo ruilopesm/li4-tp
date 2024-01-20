@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using OnlineAuctions.Data.Models;
 using System.Security.Claims;
 
 namespace OnlineAuctions.Auth
@@ -27,7 +28,7 @@ namespace OnlineAuctions.Auth
 
                 var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
-                    new(ClaimTypes.Name, userSession.Email),
+                    new(ClaimTypes.Email, userSession.Email),
                     new(ClaimTypes.Role, userSession.Role)
                 }, "CustomAuth"));
                 return await Task.FromResult(new AuthenticationState(claimsPrincipal));
@@ -47,7 +48,7 @@ namespace OnlineAuctions.Auth
                 await _storage.SetAsync("UserSession", userSession);
                 claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                 {
-                    new(ClaimTypes.Name, userSession.Email),
+                    new(ClaimTypes.Email, userSession.Email),
                     new(ClaimTypes.Role, userSession.Role)
                 }, "CustomAuth"));
             } else
@@ -86,6 +87,21 @@ namespace OnlineAuctions.Auth
                 var userSession = userSessionResult.Success ? userSessionResult.Value : null;
 
                 return userSession?.Email;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<string?> GetRole()
+        {
+            try
+            {
+                var userSessionResult = await _storage.GetAsync<UserSession>("UserSession");
+                var userSession = userSessionResult.Success ? userSessionResult.Value : null;
+
+                return userSession?.Role;
             }
             catch
             {
