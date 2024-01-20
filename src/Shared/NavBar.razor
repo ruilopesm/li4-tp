@@ -11,13 +11,13 @@
   <div class="flex gap-x-28">
     @if (IsAuthenticated)
     {
-      <NavLink href="/" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
-      <NavLink href="/auctions" Match="NavLinkMatch.All" class="hover:underline">Minhas licitações (1)</NavLink>
-      <NavLink href="/won" Match="NavLinkMatch.All" class="hover:underline">Leilões ganhos</NavLink>
+      <NavLink href="/" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
+      <NavLink href="/auctions" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Minhas licitações (1)</NavLink>
+      <NavLink href="/won" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Leilões ganhos</NavLink>
     }
     else
     {
-      <NavLink href="/" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
+      <NavLink href="/" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
     }
   </div>
   <div class="flex flex-1 space-x-8 items-center justify-end">
@@ -28,14 +28,14 @@
         <p class="text-xs text-gray-400">761.90€ pendentes</p>
       </div>
       <div class="space-x-2">
-        <NavLink href="/profile" class="hover:underline text-md text-gray-900">Meu Perfil</NavLink>
-        <NavLink @onclick="Logout" class="cursor-pointer hover:underline text-xs text-gray-600">Sair</NavLink>
+        <NavLink href="/profile" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline text-md text-gray-900">Meu Perfil</NavLink>
+        <NavLink @onclick="Logout" ActiveClass="active-link" class="cursor-pointer hover:underline text-xs text-gray-600">Sair</NavLink>
       </div>
     }
     else
     {
-      <NavLink href="/login" class="hover:underline">Entrar</NavLink>
-      <NavLink href="/register" class="hover:underline">Registar</NavLink>
+      <NavLink href="/login" ActiveClass="active-link" class="hover:underline">Entrar</NavLink>
+      <NavLink href="/register" ActiveClass="active-link" class="hover:underline">Registar</NavLink>
     }
   </div>
 </div>
