@@ -42,7 +42,7 @@ public class BidService : IBidService
                             LEFT JOIN dbo.Auction ON dbo.Bid.AuctionID = dbo.Auction.ID
                             LEFT JOIN dbo.Product ON dbo.Auction.ProductID = dbo.Product.ID
                             LEFT JOIN dbo.Model ON dbo.Product.ModelID = dbo.Model.ID 
-                            SORT BY dbo.Auction.End DESC";
+                            ORDER BY dbo.Auction.[End] DESC";
 
         return _db.LoadData<BidModel, dynamic>(sql, new { NIF = nif });
     }
