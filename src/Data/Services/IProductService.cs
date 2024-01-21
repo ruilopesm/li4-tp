@@ -8,6 +8,6 @@ public interface IProductService
 
     Task<List<ProductModel>> GetProducts();
 
-    Task<int> CreateProduct(string name, string description, int modelId, ProductState state, Condition condition);
-
+    Task<int> CreateProduct(string name, string description, int modelId, ProductState state,
+        Condition condition, List<string> imagePaths);
 }

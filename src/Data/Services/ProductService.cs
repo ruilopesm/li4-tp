@@ -23,6 +23,8 @@ public class ProductService : IProductService
             return product;
         }, new { ID = id }, splitOn: "ID");
 
+        // TODO: load images from the other table
+
         return data.FirstOrDefault();
     }
 
@@ -37,11 +39,13 @@ public class ProductService : IProductService
             return product;
         }, splitOn: "ID");
 
+        // TODO: load images from the other table
+
         return data.ToList();
     }
 
     public async Task<int> CreateProduct(string name, string description, int modelId, ProductState state,
-        Condition condition)
+        Condition condition, List<string> imagePaths)
     {
         const string sql =
             @"INSERT INTO dbo.Product (Name, Description, ModelID, State, Condition) VALUES (@Name, @Description, @ModelID, @State, @Condition); SELECT SCOPE_IDENTITY()";
@@ -54,6 +58,18 @@ public class ProductService : IProductService
             State = state,
             Condition = condition
         });
+
+        foreach (var imagePath in imagePaths)
+        {
+            const string sql2 =
+                @"INSERT INTO dbo.ProductPhoto (ProductID, Path) VALUES (@ProductID, @Path)";
+
+            await _db.Connection.ExecuteAsync(sql2, new
+            {
+                ProductID = id,
+                Path = imagePath
+            });
+        }
 
         return id;
     }
