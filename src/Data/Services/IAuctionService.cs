@@ -5,6 +5,6 @@ namespace OnlineAuctions.Data.Services
     public interface IAuctionService
     {
         Task<List<AuctionModel>> GetAuctions();
-        Task<List<AuctionModel>> GetBidderAuctions(int nif);
+        Task<AuctionModel?> GetAuction(int id);
     }
 }

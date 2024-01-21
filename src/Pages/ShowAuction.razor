@@ -1,0 +1,174 @@
+@page "/auction/{id:int}"
+
+@inject AuthenticationStateProvider AuthProvider
+@inject IAuctionService _auctionService
+@inject IUserService _userService
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+
+<PageTitle>Detalhes</PageTitle>
+
+@if (auction == null)
+{
+    <p>Carregando...</p>
+}
+else
+{
+    <div class="flex flex-row items-center">
+        <p class="text-4xl font-bold">Leilão - @auction.Product.Model.Name</p>
+        <p class="text-md text-gray-600 ml-2">#@Id</p>
+    </div>
+
+    <div class="grid grid-cols-3 grid-rows-6 gap-4 mt-6">
+        <div class="row-span-6 bg-gray-100 rounded-lg">
+            <img class="flex-none bg-red-50" src="@auction.Product.ImagePath" />
+        </div>
+        
+        <div class="row-span-3 bg-gray-100 rounded-lg py-3">
+            <div class="flex justify-center text-lg">
+                Características
+            </div>
+            <div class="flex justify-center mt-1">
+                <div class="w-[90%] h-0.5 bg-gray-300 rounded-full"></div>
+            </div>
+            <ul class="flex flex-col mt-3 space-y-2">
+                <li class="flex flex-row items-center justify-between mx-6">
+                    <p class="text-md font-bold">Cor</p>
+                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@auction.Product.Model.Color</div>
+                </li>
+                <li class="flex flex-row justify-between mx-6">
+                    <p class="text-md font-bold">Armazenamento</p>
+                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@auction.Product.Model.Storage</div>
+                </li>
+                <li class="flex flex-row justify-between mx-6">
+                    <p class="text-md font-bold">Condição</p>
+                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@auction.Product.ConditionString()</div>
+                </li>
+                <li class="flex flex-row justify-between mx-6">
+                    <p class="text-md font-bold">Estado</p>
+                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@auction.Product.StateString()</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row-span-3 col-start-2 row-start-4 bg-gray-100 rounded-lg py-3">
+            <div class="flex justify-center text-lg">
+                Descrição
+            </div>
+            <div class="flex justify-center mt-1">
+                <div class="w-[90%] h-0.5 bg-gray-300 rounded-full"></div>
+            </div>
+        </div>
+
+        <div class="row-span-2 col-start-3 row-start-1 bg-gray-100 rounded-lg py-3">
+            <div class="flex justify-center text-lg">
+                Termina em 23 minutos
+            </div>
+            <div class="flex justify-center mt-1">
+                <div class="w-[90%] h-0.5 bg-gray-300 rounded-full"></div>
+            </div>
+            <ul class="flex flex-col mt-3 space-y-2">
+                <li class="flex flex-row items-center justify-between mx-6">
+                    <p class="text-md font-bold">Cor</p>
+                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@auction.Product.Model.Color</div>
+                </li>
+                <li class="flex flex-row justify-between mx-6">
+                    <p class="text-md font-bold">Armazenamento</p>
+                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@auction.Product.Model.Storage</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="row-span-2 col-start-3 row-start-3 bg-gray-100 rounded-lg py-3">
+            <div class="flex justify-center text-lg">
+                Leilão
+            </div>
+            <div class="flex justify-center mt-1">
+                <div class="w-[90%] h-0.5 bg-gray-300 rounded-full"></div>
+            </div>
+            <ul class="flex flex-col mt-3 space-y-2">
+                <li class="flex flex-row items-center justify-between mx-6">
+                    <p class="text-md font-bold">Valor inicial</p>
+                    <p class="text-md">@auction.StartPrice,00€</p>
+                </li>
+                <li class="flex flex-row justify-between mx-6">
+                    <p class="text-md font-bold">Valor atual</p>
+                    <div class="flex flex-col items-center">
+                        <p class="text-md text-green-700 underline">@auction.CurrentPrice,00€</p>
+                        @* FIXME: Should be the actual last bidder *@
+                        <p class="text-[8px] text-gray-600">de João Mafioso</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-start-3 row-start-5">
+            @* TODO: Validation of value and actual submit of bid *@
+            <input class="border border-solid rounded-xl w-full p-3 text-gray-700" type="text" placeholder="Valor a licitar (100,00)" />
+        </div>
+
+        <button class="col-start-3 row-start-6 bg-blue-600 hover:bg-blue-700 rounded-lg flex justify-center items-center -mt-2" type="submit">
+            <p class="text-white text-xl font-bold p-3">Licitar</p>
+        </button>
+    </div>
+
+    <div class="mt-8">
+        @* FIXME: Should be the actual count of bids *@
+        <p class="text-3xl font-bold">Licitações (7)</p>
+    </div>
+    <div class="my-4 flow-root">
+        <div class="-mx-4 -my-2 overflow-x-auto -mx-8">
+            <div class="inline-block min-w-full py-2 align-middle px-8">
+                <div class="overflow-hidden ring-1 ring-black ring-opacity-5 rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-300">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 pl-6">ID</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Nome</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Data</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Valor</th>
+                                <th scope="col" class="relative py-3.5 pl-3 pr-4 pr-6">
+                                </th>
+                            </tr>
+                        </thead>
+                        @* TODO: Should iterate over the actual bids *@
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            <tr>
+                                @* FIXME: Should be the real id of a bid *@
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium pl-6">Licitação #1</td>
+                                @* FIXME: Should be the real name of the bidder *@
+                                <td class="whitespace-nowrap px-3 py-4 text-sm">João Mafioso</td>
+                                @* FIXME: Should be the real date of the bid *@
+                                <td class="whitespace-nowrap px-3 py-4 text-sm">12/01/2024 às 12:02:51</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-green-700 underline">520,70€</td>
+                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium pr-6">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private BidderModel? bidder;
+    private AuctionModel? auction;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var ourProvider = (AuthProvider)AuthProvider;
+        string? email = await ourProvider.GetEmail();
+        if (email != null)
+        {
+            bidder = await _userService.GetBidder(email);
+        }
+        
+        auction = await _auctionService.GetAuction(Id);
+    }
+}

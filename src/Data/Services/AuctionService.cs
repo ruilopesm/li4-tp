@@ -19,7 +19,7 @@ namespace OnlineAuctions.Data.Services
                 LEFT JOIN dbo.Product p ON a.ProductID = p.ID
                 LEFT JOIN dbo.Model m ON p.ModelID = m.ID
                 LEFT JOIN dbo.Admin ad ON a.PublisherID = ad.InternalID
-                LEFT JOIN dbo.Bidder b ON a.WinnerID = b.NIF
+                LEFT JOIN dbo.Bidder b ON a.WinnerNIF = b.NIF
                 ORDER BY a.[End] DESC";
 
             var data = await _db.Connection.QueryAsync<AuctionModel, ProductModel, ModelModel, AdminModel, BidderModel, AuctionModel>(
@@ -37,7 +37,8 @@ namespace OnlineAuctions.Data.Services
 
             return data.ToList();
         }
-        public async Task<List<AuctionModel>> GetBidderAuctions(int nif)
+
+        public async Task<AuctionModel?> GetAuction(int id)
         {
             const string sql =
                 @"SELECT * FROM dbo.Auction a
@@ -45,8 +46,7 @@ namespace OnlineAuctions.Data.Services
                 LEFT JOIN dbo.Model m ON p.ModelID = m.ID
                 LEFT JOIN dbo.Admin ad ON a.PublisherID = ad.InternalID
                 LEFT JOIN dbo.Bidder b ON a.WinnerID = b.NIF
-                WHERE b.NIF = @NIF
-                ORDER BY a.[End] DESC";
+                WHERE a.ID = @ID";
 
             var data = await _db.Connection.QueryAsync<AuctionModel, ProductModel, ModelModel, AdminModel, BidderModel, AuctionModel>(
                 sql,
@@ -58,11 +58,11 @@ namespace OnlineAuctions.Data.Services
                     auction.Winner = bidder;
                     return auction;
                 },
-                new { NIF = nif },
+                new { ID = id },
                 splitOn: "ID, ID, ID, InternalID, NIF"
             );
 
-            return data.ToList();
+            return data.FirstOrDefault();
         }
     }
 }

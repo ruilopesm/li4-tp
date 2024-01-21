@@ -6,8 +6,8 @@ namespace OnlineAuctions.Data.Models
         public ProductModel Product { get; set; }
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
-        public int StartPrice { get; set; }
-        public int CurrentPrice { get; set; }
+        public decimal StartPrice { get; set; }
+        public decimal CurrentPrice { get; set; }
         public AuctionState State { get; set; }
         public string StateString => State.ToString();
         public AdminModel Publisher { get; set; }
