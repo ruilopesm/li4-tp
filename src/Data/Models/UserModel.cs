@@ -20,8 +20,8 @@ namespace OnlineAuctions.Data.Models
     {
         public int NIF { get; set; }
         public DateOnly BirthDate { get; set; }
-        public int Balance { get; set; }
-        public int PendingBalance { get; set; }
+        public decimal Balance { get; set; }
+        public decimal PendingBalance { get; set; }
     }
 
     public class AdminModel : UserModel
