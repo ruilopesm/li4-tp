@@ -98,12 +98,12 @@ else
             <ul class="flex flex-col mt-3 space-y-2">
                 <li class="flex flex-row items-center justify-between mx-6">
                     <p class="text-md font-bold">Valor inicial</p>
-                    <p class="text-md">@auction.StartPrice,00€</p>
+                    <p class="text-md">@Math.Round(auction.StartPrice, 2)€</p>
                 </li>
                 <li class="flex flex-row justify-between mx-6">
                     <p class="text-md font-bold">Valor atual</p>
                     <div class="flex flex-col items-center">
-                        <p class="text-md text-green-700 underline">@auction.CurrentPrice,00€</p>
+                        <p class="text-md text-green-700 underline">@Math.Round(auction.CurrentPrice, 2)€</p>
                         @* FIXME: Should be the actual last bidder *@
                         <p class="text-[8px] text-gray-600">de João Mafioso</p>
                     </div>
@@ -113,7 +113,7 @@ else
 
         <div class="col-start-3 row-start-5">
             @* TODO: Validation of value and actual submit of bid *@
-            <input class="border border-solid rounded-xl w-full p-3 text-gray-700" type="text" placeholder="Valor a licitar (100,00)" />
+            <input class="border border-solid rounded-xl w-full p-3 text-gray-700" type="text" placeholder="Valor a licitar (100.00)" />
         </div>
 
         <button class="col-start-3 row-start-6 bg-blue-600 hover:bg-blue-700 rounded-lg flex justify-center items-center -mt-2" type="submit">
@@ -149,7 +149,7 @@ else
                                 <td class="whitespace-nowrap px-3 py-4 text-sm">João Mafioso</td>
                                 @* FIXME: Should be the real date of the bid *@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm">12/01/2024 às 12:02:51</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-green-700 underline">520,70€</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-green-700 underline">520.70€</td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium pr-6">
                                 </td>
                             </tr>

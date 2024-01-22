@@ -19,7 +19,7 @@ namespace OnlineAuctions.Data.Services
                 LEFT JOIN dbo.Product p ON a.ProductID = p.ID
                 LEFT JOIN dbo.Model m ON p.ModelID = m.ID
                 LEFT JOIN dbo.Admin ad ON a.PublisherID = ad.InternalID
-                LEFT JOIN dbo.Bidder b ON a.WinnerNIF = b.NIF
+                LEFT JOIN dbo.Bidder b ON a.WinnerID = b.NIF
                 ORDER BY a.[End] DESC";
 
             var data = await _db.Connection.QueryAsync<AuctionModel, ProductModel, ModelModel, AdminModel, BidderModel, AuctionModel>(
