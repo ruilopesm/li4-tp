@@ -7,173 +7,173 @@
 
 @if (auctions == null)
 {
-        <p>Carregando...</p>
+    <p>Carregando...</p>
 }
 else
 {
-        <div class="flex flex-row items-center space-x-6">
-            <p class="text-4xl font-bold">Leilões</p>
-            <div class="relative w-[700px]">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                    </svg>
-                </div>
-                <input type="search" class="block w-full p-3.5 ps-10 text-md text-gray-900 border border-gray-300 rounded-2xl" placeholder="Pesquisar por produtos">
+    <div class="flex flex-row items-center space-x-6">
+        <p class="text-4xl font-bold">Leilões</p>
+        <div class="relative w-[700px]">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
             </div>
-            <p class="text-md">
-                A mostrar
+            <input type="search" class="block w-full p-3.5 ps-10 text-md text-gray-900 border border-gray-300 rounded-2xl" placeholder="Pesquisar por produtos">
+        </div>
+        <p class="text-md">
+            A mostrar
             @if (auctions.Count == 1)
             {
-                        <span>1 leilão</span>
+                <span>1 leilão</span>
             }
             else
             {
-                        <span>@auctions.Count leilões</span>
+                <span>@auctions.Count leilões</span>
             }
-            </p>
+        </p>
+    </div>
+
+    <div class="flex flex-row space-x-4 mt-3">
+    <div class="relative inline-block text-left">
+        <div>
+            <button 
+                @onclick="ToggleSortingDropdown"
+                class="text-sm border px-4 py-0.5 rounded-full flex items-center bg-pcs-lightest-gray"
+            >
+                Ordenar por <p class="pl-1 text-gray-600">@GetOrderingOptionText()</p>
+                <svg class="-mr-1 -mb-0.5 h-5 w-5 text-pcs-medium-gray" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+            </button>
         </div>
 
-        <div class="flex flex-row space-x-4 mt-3">
+        @if (isSortingDropdownOpen)
+        {
+            <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <a 
+                    @onclick="() => UpdateOrderingOption(OrderingOption.HighestPrice)" 
+                    class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
+                >
+                    Preço mais alto
+                </a>
+                <a 
+                    @onclick="() => UpdateOrderingOption(OrderingOption.LowestPrice)" 
+                    class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
+                >
+                    Preço mais baixo
+                </a>
+                <a 
+                    @onclick="() => UpdateOrderingOption(OrderingOption.MostRecent)"
+                    class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
+                >
+                    Mais recentes
+                </a>
+            </div>
+        }
+        </div>
         <div class="relative inline-block text-left">
             <div>
                 <button 
-                    @onclick="ToggleSortingDropdown"
-                    class="text-sm border px-4 py-0.5 rounded-full flex items-center bg-gray-100"
+                    @onclick="ToggleFilteringDropdown" 
+                    class="text-sm border px-4 py-0.5 rounded-full flex items-center bg-pcs-lightest-gray"
                 >
-                    Ordenar por <p class="pl-1 text-gray-600">@GetOrderingOptionText()</p>
-                    <svg class="-mr-1 -mb-0.5 h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    A filtrar por <p class="pl-1 text-pcs-medium-gray">@GetFilteringOptionText()</p>
+                    <svg class="-mr-1 -mb-0.5 h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                     </svg>
                 </button>
             </div>
 
-            @if (isSortingDropdownOpen)
-            {
-                        <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            <a 
-                                @onclick="() => UpdateOrderingOption(OrderingOption.HighestPrice)" 
-                                class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
-                            >
-                                Preço mais alto
-                            </a>
-                            <a 
-                                @onclick="() => UpdateOrderingOption(OrderingOption.LowestPrice)" 
-                                class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
-                            >
-                                Preço mais baixo
-                            </a>
-                            <a 
-                                @onclick="() => UpdateOrderingOption(OrderingOption.MostRecent)"
-                                class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
-                            >
-                                Mais recentes
-                            </a>
-                        </div>
-            }
-            </div>
-            <div class="relative inline-block text-left">
-                <div>
-                    <button 
-                        @onclick="ToggleFilteringDropdown" 
-                        class="text-sm border px-4 py-0.5 rounded-full flex items-center bg-gray-100"
-                    >
-                        A filtrar por <p class="pl-1 text-gray-600">@GetFilteringOptionText()</p>
-                        <svg class="-mr-1 -mb-0.5 h-5 w-5 text-gray-600" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                </div>
-
-            @if (isFilteringDropdownOpen)
-            {
-                        <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            <a 
-                                @onclick="() => UpdateFilteringOption(FilteringOption.Open)" 
-                                class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
-                            >
-                                Aberto
-                            </a>
-                            <a 
-                                @onclick="() => UpdateFilteringOption(FilteringOption.Closed)" 
-                                class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
-                            >
-                                Fechado
-                            </a>
-                            <a 
-                                @onclick="() => UpdateFilteringOption(FilteringOption.Cancelled)"
-                                class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
-                            >
-                                Cancelado
-                            </a>
-                            <a
-                                @onclick="() => UpdateFilteringOption(null)"
-                                class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
-                            >
-                                Nada
-                            </a>
-                        </div>
-            }
-            </div>
-        </div>
-
-        <ul class="flex flex-col my-6 space-y-6">
-        @foreach (var auction in auctions)
+        @if (isFilteringDropdownOpen)
         {
-                    <li class="relative flex items-center justify-between px-6 py-5 bg-gray-100 rounded-xl border">
-                        <div class="flex items-center gap-x-4 pr-6 w-1/2 flex-none">
-                            <img class="h-24 w-24 flex-none rounded-full bg-gray-50" src="@auction.Product.ImagePath">
-                            <div class="min-w-0 flex-auto">
-                                <div class="flex flex-row items-center">
-                                    <p class="text-3xl font-semibold leading-6 text-gray-900">
-                                @auction.Product.Model.Name
-                                    </p>
-                                    <div class="border py-0.25 px-3 ml-4 rounded-xl text-xs bg-white">@auction.Product.Model.Color</div>
-                            @if (@auction.Product.Model.Storage != null)
-                            {
-                                            <div class="border py-0.25 px-3 ml-2 rounded-xl text-xs bg-white">@auction.Product.Model.Storage</div>
-                            }
-                                </div>
-                                <p class="mt-1 flex items-center space-x-1 text-sm leading-5">
-                            @* TODO: If the auction was cancelled, a cross should be displayed instead *@
-                                    <svg class="w-4 h-4 text-gray-500" viewBox="0 0 48 48" fillCurrentColor="currentColor" >
-                                        <path d="M 24 4 C 12.972066 4 4 12.972074 4 24 C 4 35.027926 12.972066 44 24 44 C 35.027934 44 44 35.027926 44 24 C 44 12.972074 35.027934 4 24 4 z M 24 7 C 33.406615 7 41 14.593391 41 24 C 41 33.406609 33.406615 41 24 41 C 14.593385 41 7 33.406609 7 24 C 7 14.593391 14.593385 7 24 7 z M 22.476562 11.978516 A 1.50015 1.50015 0 0 0 21 13.5 L 21 24.5 A 1.50015 1.50015 0 0 0 21.439453 25.560547 L 26.439453 30.560547 A 1.50015 1.50015 0 1 0 28.560547 28.439453 L 24 23.878906 L 24 13.5 A 1.50015 1.50015 0 0 0 22.476562 11.978516 z"></path>
-                                    </svg>
-                            @* FIXME: This function is not working properly *@
-                            @* 
-                                TODO: The text color should follow these requirements: 
-                                - If the auctin is close to ending (1 hour, for example) -> red
-                                - If the auction has already ended -> gray
-                                - If the auction was cancelled -> even more gray
-                            *@
-                                    <p>@ViewUtils.GetRelativeTimeSpan(auction.End)</p>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between gap-x-4 w-1/2 flex-none">
-                            <div class="block">
-                                <p class="text-sm leading-6 text-gray-900">@auction.Product.ConditionString()</p>
-                                <p class="text-xs leading-5 text-gray-500">@auction.Product.StateString()</p>
-                            </div>
-                            <div class="absolute flex flex-col items-center ml-40">
-                        @* Text color should gray when the auction has already ended or was cancelled *@
-                                <p class="text-3xl font-bold text-green-700 underline">@Math.Round(auction.CurrentPrice, 2)€</p>
-                        @* FIXME: Bidder should come from the database *@
-                                <p class="text-xs">De <span class="text-gray-700">João Mafioso</span></p>
-                            </div>
-                            <div class="flex flex-col ml-28 items-center space-y-1">
-                                <NavLink
-                                    href="@($"/auction/{auction.ID}")"
-                                    class="bg-gray-400 hover:bg-gray-500 rounded-lg text-white font-bold text-lg py-1 px-3">
-                                    Ver detalhes
-                                </NavLink>
-                        @* FIXME: Should have the real number of bids *@
-                                <p class="text-sm">7 licitações</p>
-                            </div>
-                        </div>
-                    </li>
+            <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <a 
+                    @onclick="() => UpdateFilteringOption(FilteringOption.Open)" 
+                    class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
+                >
+                    Aberto
+                </a>
+                <a 
+                    @onclick="() => UpdateFilteringOption(FilteringOption.Closed)" 
+                    class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
+                >
+                    Fechado
+                </a>
+                <a 
+                    @onclick="() => UpdateFilteringOption(FilteringOption.Cancelled)"
+                    class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
+                >
+                    Cancelado
+                </a>
+                <a
+                    @onclick="() => UpdateFilteringOption(null)"
+                    class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
+                >
+                    Nada
+                </a>
+            </div>
         }
-        </ul>
+        </div>
+    </div>
+
+    <ul class="flex flex-col my-6 space-y-6">
+    @foreach (var auction in auctions)
+    {
+        <li class="relative flex items-center justify-between px-6 py-5 bg-pcs-lightest-gray rounded-xl border">
+            <div class="flex items-center gap-x-4 pr-6 w-1/2 flex-none">
+                <img class="h-24 w-24 flex-none rounded-full bg-gray-50" src="@auction.Product.ImagePath">
+                <div class="min-w-0 flex-auto">
+                    <div class="flex flex-row items-center">
+                        <p class="text-3xl font-semibold leading-6 text-gray-900">
+                            @auction.Product.Model.Name
+                        </p>
+                        <div class="border py-0.25 px-3 ml-4 rounded-xl text-xs bg-white">@auction.Product.Model.Color</div>
+                        @if (@auction.Product.Model.Storage != null)
+                        {
+                            <div class="border py-0.25 px-3 ml-2 rounded-xl text-xs bg-white">@auction.Product.Model.Storage</div>
+                        }
+                    </div>
+                    <p class="mt-1 flex items-center space-x-1 text-sm leading-5">
+                        @* TODO: If the auction was cancelled, a cross should be displayed instead *@
+                        <svg class="w-4 h-4" viewBox="0 0 48 48" fillCurrentColor="currentColor">
+                            <path d="M 24 4 C 12.972066 4 4 12.972074 4 24 C 4 35.027926 12.972066 44 24 44 C 35.027934 44 44 35.027926 44 24 C 44 12.972074 35.027934 4 24 4 z M 24 7 C 33.406615 7 41 14.593391 41 24 C 41 33.406609 33.406615 41 24 41 C 14.593385 41 7 33.406609 7 24 C 7 14.593391 14.593385 7 24 7 z M 22.476562 11.978516 A 1.50015 1.50015 0 0 0 21 13.5 L 21 24.5 A 1.50015 1.50015 0 0 0 21.439453 25.560547 L 26.439453 30.560547 A 1.50015 1.50015 0 1 0 28.560547 28.439453 L 24 23.878906 L 24 13.5 A 1.50015 1.50015 0 0 0 22.476562 11.978516 z"></path>
+                        </svg>
+                        @* FIXME: This function is not working properly *@
+                        @* 
+                            TODO: The text color should follow these requirements: 
+                            - If the auctin is close to ending (1 hour, for example) -> red
+                            - If the auction has already ended -> gray
+                            - If the auction was cancelled -> even more gray
+                        *@
+                        <p>@ViewUtils.GetRelativeTimeSpan(auction.End)</p>
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center justify-between gap-x-4 w-1/2 flex-none">
+                <ul class="block">
+                    <li class="text-sm leading-6">@auction.Product.ConditionString()</li>
+                    <li class="text-sm leading-5">@auction.Product.StateString()</li>
+                </ul>
+                <div class="absolute flex flex-col items-center ml-40">
+                    @* Text color should gray when the auction has already ended or was cancelled *@
+                    <p class="text-3xl font-bold text-pcs-green underline">@Math.Round(auction.CurrentPrice, 2)€</p>
+                    @* FIXME: Bidder should come from the database *@
+                    <p class="text-xs">De <span class="text-gray-700">João Mafioso</span></p>
+                </div>
+                <div class="flex flex-col ml-28 items-center space-y-1">
+                    <NavLink
+                        href="@($"/auction/{auction.ID}")"
+                        class="bg-pcs-gray hover:bg-scs-gray rounded-lg text-white font-bold text-lg py-1 px-3">
+                        Ver detalhes
+                    </NavLink>
+                    @* FIXME: Should have the real number of bids *@
+                    <p class="text-sm">7 licitações</p>
+                </div>
+            </div>
+        </li>
+    }
+    </ul>
 }
 
 @code {

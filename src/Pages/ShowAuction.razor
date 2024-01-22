@@ -103,7 +103,7 @@ else
                 <li class="flex flex-row justify-between mx-6">
                     <p class="text-md font-bold">Valor atual</p>
                     <div class="flex flex-col items-center">
-                        <p class="text-md text-green-700 underline">@Math.Round(auction.CurrentPrice, 2)€</p>
+                        <p class="text-md text-pcs-green underline">@Math.Round(auction.CurrentPrice, 2)€</p>
                         @* FIXME: Should be the actual last bidder *@
                         <p class="text-[8px] text-gray-600">de João Mafioso</p>
                     </div>
@@ -116,7 +116,7 @@ else
             <input class="border border-solid rounded-xl w-full p-3 text-gray-700" type="text" placeholder="Valor a licitar (100.00)" />
         </div>
 
-        <button class="col-start-3 row-start-6 bg-blue-600 hover:bg-blue-700 rounded-lg flex justify-center items-center -mt-2" type="submit">
+        <button class="col-start-3 row-start-6 bg-pcs-blue hover:bg-scs-blue rounded-lg flex justify-center items-center -mt-2" type="submit">
             <p class="text-white text-xl font-bold p-3">Licitar</p>
         </button>
     </div>
@@ -149,7 +149,7 @@ else
                                 <td class="whitespace-nowrap px-3 py-4 text-sm">João Mafioso</td>
                                 @* FIXME: Should be the real date of the bid *@
                                 <td class="whitespace-nowrap px-3 py-4 text-sm">12/01/2024 às 12:02:51</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-green-700 underline">520.70€</td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-pcs-green underline">520.70€</td>
                                 <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium pr-6">
                                 </td>
                             </tr>

@@ -10,6 +10,27 @@
         <base href="/" />
         <link rel="icon" type="image/png" href="assets/favicon.png" />
         <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'pcs-black': '#1e1e1e',
+                            'pcs-gray': '#7d7d7d',
+                            'scs-gray': '#505050',
+                            'pcs-light-gray': '#bbbbbb',
+                            'pcs-lightest-gray': '#f3f3f3',
+                            'pcs-red': '#ff0000',
+                            'scs-red': '#8a2828',
+                            'pcs-green': '#3a8400',
+                            'scs-green': '#4c7b27',
+                            'pcs-blue': '#4f95ff',
+                            'scs-blue': '#365f9b'
+                        }
+                    }
+                }
+            }
+        </script>
         <link href="css/globals.css" rel="stylesheet" />
         <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
     </head>
