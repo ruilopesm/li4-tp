@@ -63,11 +63,11 @@ CREATE TABLE [Auction]
     [CurrentPrice] MONEY      NOT NULL CHECK ([CurrentPrice] >= 0),
     [State]        VARCHAR(9) NOT NULL CHECK ([State] IN ('Open', 'Closed', 'Cancelled')) DEFAULT 'Open',
     [PublisherID]  INT        NOT NULL,
-    [WinnerNIF]    INT        NULL,
+    [WinnerID]     INT        NULL,
 
-    FOREIGN KEY ([ProductID]) REFERENCES [Product] ([ID]),
+    FOREIGN KEY ([ProductID])   REFERENCES [Product] ([ID]),
     FOREIGN KEY ([PublisherID]) REFERENCES [Admin] ([InternalID]),
-    FOREIGN KEY ([WinnerNIF]) REFERENCES [Bidder] ([NIF]),
+    FOREIGN KEY ([WinnerID])    REFERENCES [Bidder] ([NIF]),
 )
 
 CREATE TABLE [Bid]
