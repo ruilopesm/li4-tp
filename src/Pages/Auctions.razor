@@ -11,9 +11,11 @@
 }
 else
 {
-    <div class="flex flex-row items-center space-x-6">
-    <p class="text-4xl font-bold">Minhas Licitações</p>
-</div>
+    <div class="flex flex-row items-baseline space-x-2">
+        <p class="text-4xl font-bold">Minhas Licitações</p>
+        <p class="text-sm">(@auctions.Count() a decorrer)</p>
+    </div>
+
     <ul class="flex flex-col my-6 space-y-6">
     @foreach (var auction in auctions)
         {
@@ -54,11 +56,13 @@ else
                 </div>
                 <div class="flex items-center justify-between gap-x-4 w-1/2 flex-none">
                     <div class="flex flex-col items-center">
+                        <p class="text-xl font-medium">Licitou</p>
                         <p class="text-3xl font-bold text-red-600 underline">@Math.Round(auction.CurrentPrice, 2)€</p>
-                        @* FIXME: Bidder should come from the database *@
-                        <p class="text-xs">De <span class="text-gray-700">Miguel Mafioso</span></p>
+                        @* FIXME: Should be the actual date of the last bid *@
+                        <p class="text-xs">ontem às 17h30</p>
                     </div>
                     <div class="flex flex-col items-center">
+                        <p class="text-xl font-medium">Melhor</p>
                         <p class="text-3xl font-bold text-green-700 underline">@Math.Round(auction.CurrentPrice, 2)€</p>
                         @* FIXME: Bidder should come from the database *@
                         <p class="text-xs">De <span class="text-gray-700">João Mafioso</span></p>
@@ -91,7 +95,7 @@ else
             bidder = await _userService.GetBidder(email);
             if (bidder != null)
             {
-                // TODO: get last auctions user bidded on
+                // TODO: Get last auctions the user bid on
                 auctions = await _auctionService.GetAuctions();
             }
         }
