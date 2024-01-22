@@ -6,6 +6,7 @@
 @inject AuthenticationStateProvider AuthProvider
 @inject NavigationManager NavManager 
 
+@using BCrypt.Net
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
 
@@ -100,7 +101,8 @@
 
     private async Task Authenticate()
     {
-        await _db.CreateBidder(_registerModel.Name, _registerModel.Email, _registerModel.Password, _registerModel.NIF, _registerModel.BirthDate);
+        string passwordHash = BCrypt.HashPassword(_registerModel.Password);
+        await _db.CreateBidder(_registerModel.Name, _registerModel.Email, passwordHash, _registerModel.NIF, _registerModel.BirthDate);
         await js.InvokeVoidAsync("alert", "Conta criada com sucesso!");
         NavManager.NavigateTo("/login", true);
     }

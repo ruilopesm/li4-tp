@@ -10,7 +10,7 @@ CREATE TABLE [User]
     [ID]            INT                IDENTITY PRIMARY KEY,
     [Name]          VARCHAR(50)        NOT NULL,
     [Email]         VARCHAR(50) UNIQUE NOT NULL,
-    [Password]      VARCHAR(72)        NOT NULL,
+    [PasswordHash]  VARCHAR(72)        NOT NULL,
     [Role]          VARCHAR(6)         NOT NULL CHECK ([Role] IN ('Bidder', 'Admin')),
 )
 
@@ -61,7 +61,7 @@ CREATE TABLE [Auction]
     [End]          DATETIME   NOT NULL,
     [StartPrice]   MONEY      NOT NULL CHECK ([StartPrice] >= 0),
     [CurrentPrice] MONEY      NOT NULL CHECK ([CurrentPrice] >= 0),
-    [State]        VARCHAR(9) NOT NULL CHECK ([State] IN ('Open', 'Closed', 'Cancelled')) DEFAULT 'Open',
+    [IsCancelled]  BIT        NOT NULL DEFAULT 0,
     [PublisherID]  INT        NOT NULL,
     [WinnerID]     INT        NULL,
 

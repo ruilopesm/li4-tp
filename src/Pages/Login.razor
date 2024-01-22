@@ -6,6 +6,7 @@
 @inject AuthenticationStateProvider AuthProvider
 @inject NavigationManager NavManager
 
+@using BCrypt.Net
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
 
@@ -75,9 +76,9 @@
     private async Task Authenticate()
     {
         var account = await _db.GetUser(_loginModel.Email);
-        if (account == null || account.Password != _loginModel.Password)
+        if (account == null || !BCrypt.Verify(_loginModel.Password, account.PasswordHash))
         {
-            await js.InvokeVoidAsync("alert", "Credenciais inválidas");
+            await js.InvokeVoidAsync("alert", "Email ou password incorretos.");
             return;
         }
 

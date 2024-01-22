@@ -1,6 +1,6 @@
 USE [OnlineAuctions];
 
-INSERT INTO [User] ([Name], [Email], [Password], [Role])
+INSERT INTO [User] ([Name], [Email], [PasswordHash], [Role])
 VALUES ('Rui', 'rui@mail.com', 'rui1234', 'Bidder'),
        ('Chico', 'chico@mail.com', 'chico1234', 'Bidder'),
        ('Daniel', 'daniel@mail.com', 'daniel1234', 'Bidder'),
@@ -70,4 +70,3 @@ INSERT INTO [Bid] ([AuctionID], [BidderNIF], [Value], [Date])
 VALUES (1, 321321321, 430, "2024-01-19 01:36:00"),  -- Bid for Auction 1
        (2, 321321321, 330, "2024-01-21 23:50:00"),  -- Bid for Auction 2
        (3, 321321321, 230, "2024-05-21 01:34:00");  -- Bid for Auction 3;
-

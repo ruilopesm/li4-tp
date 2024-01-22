@@ -35,13 +35,13 @@ namespace OnlineAuctions.Data.Services
                 .ContinueWith(task => task.Result.FirstOrDefault());
         }
 
-        public Task CreateBidder(string name, string email, string password, int NIF, DateOnly birthDate)
+        public Task CreateBidder(string name, string email, string passwordHash, int NIF, DateOnly birthDate)
         {
             var queries = new Dictionary<string, dynamic>
             {
                 {
-                    @"INSERT INTO dbo.[User] (Name, Email, Password, Role) VALUES (@Name, @Email, @Password, @Role)",
-                    new { Name = name, Email = email, Password = password, Role = "Bidder" }
+                    @"INSERT INTO dbo.[User] (Name, Email, PasswordHash, Role) VALUES (@Name, @Email, @PasswordHash, @Role)",
+                    new { Name = name, Email = email, PasswordHash = passwordHash, Role = "Bidder" }
                 },
                 {
                     @"INSERT INTO dbo.Bidder (NIF, BirthDate, UserId) VALUES (@NIF, @BirthDate, (SELECT Id FROM dbo.[User] WHERE Email = @Email))",
