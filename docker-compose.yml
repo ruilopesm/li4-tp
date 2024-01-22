@@ -21,7 +21,7 @@ services:
       start_period: 10s
       timeout: 3s
 
-  db.init:
+  db.configurator:
     image: mcr.microsoft.com/mssql/server:2022-latest
     volumes:
       - ./resources:/docker-entrypoint-initdb.d
@@ -31,5 +31,6 @@ services:
     command: >
       bash -c '
       /opt/mssql-tools/bin/sqlcmd -S db -U sa -P Admin-123 -d master -i docker-entrypoint-initdb.d/init.sql;
+      /opt/mssql-tools/bin/sqlcmd -S db -U sa -P Admin-123 -d master -i docker-entrypoint-initdb.d/seeds.sql;
       echo "Initialization done!"
       '
