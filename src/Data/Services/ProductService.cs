@@ -14,8 +14,7 @@ public class ProductService : IProductService
 
     public async Task<ProductModel?> GetProduct(int id)
     {
-        const string sql =
-            @"SELECT * FROM dbo.Product LEFT JOIN dbo.Model ON Product.ModelID = Model.ID WHERE Product.ID = @ID";
+        const string sql = @"SELECT * FROM dbo.Product LEFT JOIN dbo.Model ON Product.ModelID = Model.ID WHERE Product.ID = @ID";
 
         var data = await _db.Connection.QueryAsync<ProductModel, ModelModel, ProductModel>(sql, (product, model) =>
         {
@@ -23,9 +22,18 @@ public class ProductService : IProductService
             return product;
         }, new { ID = id }, splitOn: "ID");
 
-        // TODO: load images from the other table
+        const string sql2 = @"SELECT ImagePath FROM dbo.ProductPhoto WHERE ProductID = @ID";
 
-        return data.FirstOrDefault();
+        var images = await _db.Connection.QueryAsync<string>(sql2, new { ID = id });
+
+        var productModel = data.FirstOrDefault();
+
+        if (productModel != null)
+        {
+            productModel.Images = images.ToList();
+        }
+
+        return productModel;
     }
 
     public async Task<List<ProductModel>> GetProducts()
@@ -39,13 +47,18 @@ public class ProductService : IProductService
             return product;
         }, splitOn: "ID");
 
-        // TODO: load images from the other table
+        const string sql2 = @"SELECT ImagePath FROM dbo.ProductPhoto WHERE ProductID = @ID";
+
+        foreach (var productModel in data)
+        {
+            var images = await _db.Connection.QueryAsync<string>(sql2, new { productModel.ID });
+            productModel.Images = images.ToList();
+        }
 
         return data.ToList();
     }
 
-    public async Task<int> CreateProduct(string description, int modelId, ProductState state,
-        Condition condition, List<string> imagePaths)
+    public async Task<int> CreateProduct(string description, int modelId, ProductState state, Condition condition, List<string> images)
     {
         const string sql =
             @"INSERT INTO dbo.Product (Description, ModelID, State, Condition) VALUES (@Description, @ModelID, @State, @Condition); SELECT SCOPE_IDENTITY()";
@@ -58,15 +71,15 @@ public class ProductService : IProductService
             Condition = condition
         });
 
-        foreach (var imagePath in imagePaths)
+        foreach (var image in images)
         {
             const string sql2 =
-                @"INSERT INTO dbo.ProductPhoto (ProductID, Path) VALUES (@ProductID, @Path)";
+                @"INSERT INTO dbo.ProductPhoto (ProductID, ImagePath) VALUES (@ProductID, @Image)";
 
             await _db.Connection.ExecuteAsync(sql2, new
             {
                 ProductID = id,
-                Path = imagePath
+                Image = image
             });
         }
 

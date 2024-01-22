@@ -35,6 +35,14 @@ namespace OnlineAuctions.Data.Services
                 splitOn: "ID, ID, ID, InternalID, NIF"
             );
 
+            const string sql2 = @"SELECT ImagePath FROM dbo.ProductPhoto WHERE ProductID = @ID";
+
+            foreach (var auctionModel in data)
+            {
+                var images = await _db.Connection.QueryAsync<string>(sql2, new { auctionModel.Product.ID });
+                auctionModel.Product.Images = images.ToList();
+            }
+
             return data.ToList();
         }
 
@@ -62,7 +70,18 @@ namespace OnlineAuctions.Data.Services
                 splitOn: "ID, ID, ID, InternalID, NIF"
             );
 
-            return data.FirstOrDefault();
+            const string sql2 = @"SELECT ImagePath FROM dbo.ProductPhoto WHERE ProductID = @ID";
+
+            var images = await _db.Connection.QueryAsync<string>(sql2, new { data.FirstOrDefault()?.Product.ID });
+
+            var auctionModel = data.FirstOrDefault();
+
+            if (auctionModel != null)
+            {
+                auctionModel.Product.Images = images.ToList();
+            }
+
+            return auctionModel;
         }
     }
 }

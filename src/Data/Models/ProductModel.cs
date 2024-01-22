@@ -4,8 +4,8 @@ namespace OnlineAuctions.Data.Models
     {
         public int ID { get; set; }
         public string? Description { get; set; }
-        public List<string>? ImagePath { get; set; }
-        public ModelModel? Model { get; set; }
+        public List<string> Images { get; set; }
+        public ModelModel Model { get; set; }
         public ProductState State { get; set; }
         public string StateString()
         {

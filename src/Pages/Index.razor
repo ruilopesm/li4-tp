@@ -122,7 +122,14 @@ else
     {
         <li class="relative flex items-center justify-between px-6 py-5 bg-pcs-lightest-gray rounded-xl border">
             <div class="flex items-center gap-x-4 pr-6 w-1/2 flex-none">
-                <img class="h-24 w-24 flex-none rounded-full bg-gray-50" src="@auction.Product.ImagePath">
+                @if (auction.Product.Images.Count >= 1)
+                {
+                    <img class="h-24 w-24 flex-none rounded-full bg-gray-50" src="@auction.Product.Images[0]">
+                }
+                else
+                {
+                    <div class="h-24 w-24 flex-none rounded-full bg-gray-50"></div>
+                }
                 <div class="min-w-0 flex-auto">
                     <div class="flex flex-row items-center">
                         <p class="text-3xl font-semibold leading-6 text-gray-900">

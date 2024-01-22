@@ -21,8 +21,15 @@ else
     </div>
 
     <div class="grid grid-cols-3 grid-rows-6 gap-4 mt-6">
-        <div class="row-span-6 bg-gray-100 rounded-lg">
-            <img class="flex-none bg-red-50" src="@auction.Product.ImagePath" />
+        <div class="flex justify-center row-span-6 bg-gray-100 rounded-lg">
+            @if (auction.Product.Images.Count >= 1)
+            {
+                <img class="flex-none bg-red-50" src="@auction.Product.Images[0]" />
+            }
+            else
+            {
+                <img class="flex-none bg-red-50" src="https://via.placeholder.com/300x300" />
+            }
         </div>
         
         <div class="row-span-3 bg-gray-100 rounded-lg py-3">

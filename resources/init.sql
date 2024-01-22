@@ -84,8 +84,8 @@ CREATE TABLE [Bid]
 
 CREATE TABLE [ProductPhoto]
 (
-    [ID]         INT         NOT NULL PRIMARY KEY IDENTITY,
-    [ProductID]  INT         NOT NULL,
+    [ID]         INT          NOT NULL PRIMARY KEY IDENTITY,
+    [ProductID]  INT          NOT NULL,
     [ImagePath]  VARCHAR(255) NOT NULL,
 
     FOREIGN KEY ([ProductID]) REFERENCES [Product] ([ID]),
