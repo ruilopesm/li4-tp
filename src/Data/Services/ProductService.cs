@@ -44,15 +44,14 @@ public class ProductService : IProductService
         return data.ToList();
     }
 
-    public async Task<int> CreateProduct(string name, string description, int modelId, ProductState state,
+    public async Task<int> CreateProduct(string description, int modelId, ProductState state,
         Condition condition, List<string> imagePaths)
     {
         const string sql =
-            @"INSERT INTO dbo.Product (Name, Description, ModelID, State, Condition) VALUES (@Name, @Description, @ModelID, @State, @Condition); SELECT SCOPE_IDENTITY()";
+            @"INSERT INTO dbo.Product (Description, ModelID, State, Condition) VALUES (@Description, @ModelID, @State, @Condition); SELECT SCOPE_IDENTITY()";
 
         var id = await _db.Connection.ExecuteScalarAsync<int>(sql, new
         {
-            Name = name,
             Description = description,
             ModelID = modelId,
             State = state,
