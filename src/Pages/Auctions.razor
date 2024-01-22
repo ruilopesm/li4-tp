@@ -65,7 +65,7 @@ else
                     </div>
                     <div class="flex flex-col items-center space-y-1">
                         <NavLink href="@($"/auctions/{auction.ID}")"
-                            class="bg-green-700 hover:bg-gray-500 rounded-lg text-white font-bold text-lg py-1 px-3">
+                            class="bg-green-700 hover:bg-green-600 rounded-lg text-white font-bold text-lg py-1 px-3">
                             Ver detalhes
                         </NavLink>
                         @* FIXME: Should have the real number of bids *@
@@ -80,7 +80,7 @@ else
 @code {
     private List<AuctionModel> auctions { get; set; }
     private List<BidModel>? bids;
-    private BidderModel bidder;
+    private BidderModel? bidder;
 
     protected override async Task OnInitializedAsync()
     {

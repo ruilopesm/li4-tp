@@ -62,6 +62,12 @@ else
         </div>
 
         <div class="row-span-2 col-start-3 row-start-1 bg-gray-100 rounded-lg py-3">
+            @* FIXME: Should be the real time *@
+            @* TODO: Color should follow these requirements: 
+                - Red: less than 1 hour
+                - Normal: otherwise
+            *@
+            @* TODO: Clock icon *@
             <div class="flex justify-center text-lg">
                 Termina em 23 minutos
             </div>
@@ -70,12 +76,14 @@ else
             </div>
             <ul class="flex flex-col mt-3 space-y-2">
                 <li class="flex flex-row items-center justify-between mx-6">
-                    <p class="text-md font-bold">Cor</p>
-                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@auction.Product.Model.Color</div>
+                    <p class="text-md font-bold">Início:</p>
+                    @* FIXME: Should be the real value *@
+                    <div class="text-md font-gray-700">12/01/2024 às 10:01:25</div>
                 </li>
                 <li class="flex flex-row justify-between mx-6">
-                    <p class="text-md font-bold">Armazenamento</p>
-                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@auction.Product.Model.Storage</div>
+                    <p class="text-md font-bold">Fim:</p>
+                    @* FIXME: Should be the real value *@
+                    <div class="text-md font-gray-700">12/01/2024 às 12:02:51</div>
                 </li>
             </ul>
         </div>

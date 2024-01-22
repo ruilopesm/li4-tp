@@ -17,10 +17,10 @@ else
         @foreach (var value in _loadValues)
             {
                 <li class="relative flex items-center justify-between px-10 py-6 bg-gray-100 rounded-xl border">
-                    <p class="text-xl">Carregar <span class="underline">@value,00€</span></p>
+                    <p class="text-xl">Carregar <span class="underline">@Math.Round(value, 2)€</span></p>
                     <button
-                        class="flex items-center justify-center bg-green-700 hover:bg-green-500 px-8 py-2 text-white rounded-xl">
-                        <p class="font-bold">Adicionar fundos</p>
+                        class="flex items-center justify-center bg-green-700 hover:bg-green-600 px-8 py-2 text-white rounded-xl">
+                        <p class="font-bold">Carregar fundos</p>
                     </button>
                 </li>
             }
@@ -29,7 +29,7 @@ else
             @foreach (var value in _withdrawValues)
             {
                 <li class="relative flex items-center justify-between px-10 py-6 bg-gray-100 rounded-xl border">
-                    <p class="text-xl">Levantar <span class="underline">@value,00€</span></p>
+                    <p class="text-xl">Levantar <span class="underline">@Math.Round(value, 2)€</span></p>
                     <button
                         class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 px-8 py-2 text-white rounded-xl">
                         <p class="font-bold">Levantar fundos</p>
