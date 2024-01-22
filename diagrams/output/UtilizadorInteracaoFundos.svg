@@ -84,7 +84,7 @@
     ><ellipse rx="72" fill="none" ry="31" clip-path="url(#clipPath4)" cx="72" cy="31"
     /></g
     ><g font-size="11px" transform="translate(235,166)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="29" xml:space="preserve" y="35" clip-path="url(#clipPath5)" stroke="none"
+    ><text x="31" xml:space="preserve" y="35" clip-path="url(#clipPath5)" stroke="none"
       >Carregar fundos</text
     ></g
     ><g font-size="11px" transform="translate(244,328)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -94,7 +94,7 @@
     ><ellipse rx="67.5" fill="none" ry="32.5" clip-path="url(#clipPath6)" cx="67.5" cy="32.5"
     /></g
     ><g font-size="11px" transform="translate(244,328)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="24" xml:space="preserve" y="36" clip-path="url(#clipPath7)" stroke="none"
+    ><text x="28" xml:space="preserve" y="37" clip-path="url(#clipPath7)" stroke="none"
       >Levantar fundos</text
     ></g
     ><g font-size="11px" transform="translate(208,512)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -104,11 +104,11 @@
     ><ellipse rx="103.5" fill="none" ry="36.5" clip-path="url(#clipPath8)" cx="103.5" cy="36.5"
     /></g
     ><g font-size="11px" transform="translate(208,512)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="17" xml:space="preserve" y="40" clip-path="url(#clipPath9)" stroke="none"
+    ><text x="21" xml:space="preserve" y="41" clip-path="url(#clipPath9)" stroke="none"
       >Consultar histórico de transações</text
     ></g
     ><g font-size="11px" transform="translate(2,431)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="10" xml:space="preserve" y="12" clip-path="url(#clipPath10)" stroke="none"
+    ><text x="12" xml:space="preserve" y="12" clip-path="url(#clipPath10)" stroke="none"
       >Utilizador</text
     ></g
     ><g stroke-linecap="butt" font-size="11px" transform="translate(23,167)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke-linejoin="round" stroke="black" stroke-opacity="1"
@@ -122,7 +122,7 @@
     /></g
     ><g font-size="8px" fill-opacity="1" fill="rgb(120,120,120)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" stroke="rgb(120,120,120)" stroke-opacity="1"
     ><text x="0" xml:space="preserve" y="10" stroke="none"
-      >Visual Paradigm Standard(Universidade do Minho)</text
+      >Visual Paradigm Standard(Francisco(Universidade do Minho))</text
     ></g
   ></g
 ></svg

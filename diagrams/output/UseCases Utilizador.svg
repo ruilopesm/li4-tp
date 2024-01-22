@@ -154,7 +154,7 @@
     ><rect fill="none" x="0" width="1152" height="969" y="0" clip-path="url(#clipPath1)"
     /></g
     ><g font-size="11px" transform="translate(226,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="556" xml:space="preserve" y="12" clip-path="url(#clipPath2)" stroke="none"
+    ><text x="557" xml:space="preserve" y="12" clip-path="url(#clipPath2)" stroke="none"
       >Sistema</text
     ></g
     ><g font-size="11px" transform="translate(2,423)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -174,7 +174,7 @@
     ><ellipse rx="91" fill="none" ry="42.5" clip-path="url(#clipPath4)" cx="91" cy="42.5"
     /></g
     ><g font-size="11px" transform="translate(304,36)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="23" xml:space="preserve" y="46" clip-path="url(#clipPath5)" stroke="none"
+    ><text x="25" xml:space="preserve" y="47" clip-path="url(#clipPath5)" stroke="none"
       >Listar os leilões a decorrer</text
     ></g
     ><g font-size="11px" transform="translate(315,162)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -184,7 +184,7 @@
     ><ellipse rx="80" fill="none" ry="41.5" clip-path="url(#clipPath6)" cx="80" cy="41.5"
     /></g
     ><g font-size="11px" transform="translate(315,162)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="36" xml:space="preserve" y="45" clip-path="url(#clipPath7)" stroke="none"
+    ><text x="39" xml:space="preserve" y="46" clip-path="url(#clipPath7)" stroke="none"
       >Efetuar o registo</text
     ></g
     ><g font-size="11px" transform="translate(1026,568)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -194,7 +194,7 @@
     ><ellipse rx="154" fill="none" ry="87.5" clip-path="url(#clipPath8)" cx="154" cy="87.5"
     /></g
     ><g font-size="11px" transform="translate(1026,568)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="78" xml:space="preserve" y="91" clip-path="url(#clipPath9)" stroke="none"
+    ><text x="83" xml:space="preserve" y="92" clip-path="url(#clipPath9)" stroke="none"
       >Autenticar-se como utilizador</text
     ></g
     ><g font-size="11px" transform="translate(311,287)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -204,7 +204,7 @@
     ><ellipse rx="80" fill="none" ry="39" clip-path="url(#clipPath10)" cx="80" cy="39"
     /></g
     ><g font-size="11px" transform="translate(311,287)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="24" xml:space="preserve" y="43" clip-path="url(#clipPath11)" stroke="none"
+    ><text x="28" xml:space="preserve" y="43" clip-path="url(#clipPath11)" stroke="none"
       >Interação com leilões</text
     ></g
     ><g font-size="11px" transform="translate(305,407)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -214,7 +214,7 @@
     ><ellipse rx="83" fill="none" ry="40" clip-path="url(#clipPath12)" cx="83" cy="40"
     /></g
     ><g font-size="11px" transform="translate(305,407)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="26" xml:space="preserve" y="44" clip-path="url(#clipPath13)" stroke="none"
+    ><text x="30" xml:space="preserve" y="44" clip-path="url(#clipPath13)" stroke="none"
       >Interação com fundos</text
     ></g
     ><g font-size="11px" transform="translate(312,536)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -224,7 +224,7 @@
     ><ellipse rx="71.5" fill="none" ry="45.5" clip-path="url(#clipPath14)" cx="71.5" cy="45.5"
     /></g
     ><g font-size="11px" transform="translate(312,536)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="28" xml:space="preserve" y="49" clip-path="url(#clipPath15)" stroke="none"
+    ><text x="30" xml:space="preserve" y="50" clip-path="url(#clipPath15)" stroke="none"
       >Terminar sessão</text
     ></g
     ><g font-size="11px" transform="translate(297,668)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -234,7 +234,7 @@
     ><ellipse rx="86.5" fill="none" ry="46" clip-path="url(#clipPath16)" cx="86.5" cy="46"
     /></g
     ><g font-size="11px" transform="translate(297,668)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="20" xml:space="preserve" y="50" clip-path="url(#clipPath17)" stroke="none"
+    ><text x="23" xml:space="preserve" y="50" clip-path="url(#clipPath17)" stroke="none"
       >Consultar dados pessoais</text
     ></g
     ><g font-size="11px" transform="translate(305,802)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -244,11 +244,11 @@
     ><ellipse rx="85" fill="none" ry="44" clip-path="url(#clipPath18)" cx="85" cy="44"
     /></g
     ><g font-size="11px" transform="translate(305,802)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="28" xml:space="preserve" y="48" clip-path="url(#clipPath19)" stroke="none"
+    ><text x="30" xml:space="preserve" y="48" clip-path="url(#clipPath19)" stroke="none"
       >Editar dados pessoais</text
     ></g
     ><g font-size="11px" transform="translate(20,552)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="10" xml:space="preserve" y="12" clip-path="url(#clipPath20)" stroke="none"
+    ><text x="12" xml:space="preserve" y="13" clip-path="url(#clipPath20)" stroke="none"
       >Utilizador</text
     ></g
     ><g stroke-linecap="butt" font-size="11px" transform="translate(46,38)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke-linejoin="round" stroke="black" stroke-opacity="1"
@@ -298,28 +298,28 @@
     ><line y2="332" fill="none" x1="62" clip-path="url(#clipPath44)" x2="291" y1="63"
     /></g
     ><g font-size="11px" transform="translate(820,787)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="10" xml:space="preserve" y="12" clip-path="url(#clipPath45)" stroke="none"
+    ><text x="11" xml:space="preserve" y="13" clip-path="url(#clipPath45)" stroke="none"
       >&lt;&lt;Extend&gt;&gt;</text
     ></g
     ><g font-size="11px" transform="translate(719,684)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="10" xml:space="preserve" y="12" clip-path="url(#clipPath45)" stroke="none"
+    ><text x="11" xml:space="preserve" y="13" clip-path="url(#clipPath45)" stroke="none"
       >&lt;&lt;Extend&gt;&gt;</text
     ></g
     ><g font-size="11px" transform="translate(766,639)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="11" xml:space="preserve" y="12" clip-path="url(#clipPath46)" stroke="none"
+    ><text x="11" xml:space="preserve" y="13" clip-path="url(#clipPath46)" stroke="none"
       >&lt;&lt;Extend&gt;&gt;</text
     ></g
     ><g font-size="11px" transform="translate(804,563)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="10" xml:space="preserve" y="12" clip-path="url(#clipPath45)" stroke="none"
+    ><text x="11" xml:space="preserve" y="13" clip-path="url(#clipPath45)" stroke="none"
       >&lt;&lt;Extend&gt;&gt;</text
     ></g
     ><g font-size="11px" transform="translate(724,452)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="10" xml:space="preserve" y="12" clip-path="url(#clipPath45)" stroke="none"
+    ><text x="11" xml:space="preserve" y="13" clip-path="url(#clipPath45)" stroke="none"
       >&lt;&lt;Extend&gt;&gt;</text
     ></g
     ><g font-size="8px" fill-opacity="1" fill="rgb(120,120,120)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" stroke="rgb(120,120,120)" stroke-opacity="1"
     ><text x="0" xml:space="preserve" y="10" stroke="none"
-      >Visual Paradigm Standard(Universidade do Minho)</text
+      >Visual Paradigm Standard(Francisco(Universidade do Minho))</text
     ></g
   ></g
 ></svg
