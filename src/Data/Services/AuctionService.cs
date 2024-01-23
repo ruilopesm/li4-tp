@@ -43,6 +43,14 @@ namespace OnlineAuctions.Data.Services
                 auctionModel.Product.Images = images.ToList();
             }
 
+            const string sql3 = @"SELECT * FROM dbo.Bid WHERE AuctionID = @ID";
+
+            foreach (var auctionModel in data)
+            {
+                var bids = await _db.Connection.QueryAsync<BidModel>(sql3, new { auctionModel.ID });
+                auctionModel.Bids = bids.ToList();
+            }
+
             return data.ToList();
         }
 
@@ -79,6 +87,15 @@ namespace OnlineAuctions.Data.Services
             if (auctionModel != null)
             {
                 auctionModel.Product.Images = images.ToList();
+            }
+
+            const string sql3 = @"SELECT * FROM dbo.Bid WHERE AuctionID = @ID";
+
+            var bids = await _db.Connection.QueryAsync<BidModel>(sql3, new { auctionModel?.ID });
+
+            if (auctionModel != null)
+            {
+                auctionModel.Bids = bids.ToList();
             }
 
             return auctionModel;

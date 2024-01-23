@@ -11,5 +11,6 @@ namespace OnlineAuctions.Data.Models
         public bool IsCancelled { get; set; }
         public AdminModel Publisher { get; set; }
         public BidderModel Winner { get; set; }
+        public List<BidModel> Bids { get; set; }
     }
 }

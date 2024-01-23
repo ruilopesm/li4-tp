@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Microsoft.Extensions.Primitives;
 using OnlineAuctions.Data.Models;
 
 namespace OnlineAuctions.Data.Services;
@@ -12,15 +13,16 @@ public class BidService : IBidService
         _db = db;
     }
 
-    public Task<int> CreateBid(int auctionId, int nif, decimal amount)
+    public Task<int> CreateBid(int auctionId, int NIF, decimal amount)
     {
-        const string sql = @"INSERT INTO dbo.Bid (AuctionID, BidderNIF, Value)
-                             VALUES (@AuctionId, @NIF, @Amount); SELECT SCOPE_IDENTITY()";
+        const string sql = 
+            @"INSERT INTO dbo.Bid (AuctionID, BidderNIF, Value)
+            VALUES (@AuctionId, @NIF, @Amount); SELECT SCOPE_IDENTITY()";
 
         var parameters = new
         {
             AuctionId = auctionId,
-            NIF = nif,
+            NIF,
             Amount = amount
         };
 
@@ -36,15 +38,39 @@ public class BidService : IBidService
         return data.ToList();
     }
 
-    public Task<List<BidModel>> GetLastUserBids(int nif)
+    public async Task<List<BidModel>> GetLastUserBids(int NIF)
     {
-        const string sql = @"SELECT * FROM dbo.Bid
-                            LEFT JOIN dbo.Auction ON dbo.Bid.AuctionID = dbo.Auction.ID
-                            LEFT JOIN dbo.Product ON dbo.Auction.ProductID = dbo.Product.ID
-                            LEFT JOIN dbo.Model ON dbo.Product.ModelID = dbo.Model.ID 
-                            WHERE BidderNIF = @NIF
-                            ORDER BY dbo.Auction.[End] DESC";
+        const string sql =
+            @"SELECT * FROM dbo.Bid b
+            LEFT JOIN dbo.Auction a ON b.AuctionID = a.ID
+            LEFT JOIN dbo.Product p ON a.ProductID = p.ID
+            LEFT JOIN dbo.Model m ON p.ModelID = m.ID
+            LEFT JOIN dbo.Admin ad ON a.PublisherID = ad.InternalID
+            WHERE b.BidderNIF = @NIF
+            ORDER BY b.[Date] DESC";
 
-        return _db.LoadData<BidModel, dynamic>(sql, new { NIF = nif });
+        var data = await _db.Connection.QueryAsync<BidModel, AuctionModel, ProductModel, ModelModel, AdminModel, BidModel>(
+            sql,
+            (bid, auction, product, model, admin) =>
+            {
+                bid.Auction = auction;
+                bid.Auction.Product = product;
+                bid.Auction.Product.Model = model;
+                bid.Auction.Publisher = admin;
+                return bid;
+            },
+            new { NIF },
+            splitOn: "ID, ID, ID, ID, InternalID"
+        );
+
+        const string sql2 = @"SELECT ImagePath FROM dbo.ProductPhoto WHERE ProductID = @ID";
+
+        foreach (var bidModel in data)
+        {
+            var images = await _db.Connection.QueryAsync<string>(sql2, new { bidModel.Auction.Product.ID });
+            bidModel.Auction.Product.Images = images.ToList();
+        }
+
+        return data.ToList();
     }
 }

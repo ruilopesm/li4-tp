@@ -7,7 +7,7 @@
 
 @if (auctions == null)
 {
-    <p>Loading...</p>
+    <p>Carregando...</p>
 }
 else
 {
@@ -52,7 +52,7 @@ else
                             - If the auction has already ended -> gray
                             - If the auction was cancelled -> even more gray
                         *@
-                        <p>@ViewUtils.GetRelativeTimeSpan(auction.End)</p>
+                        <p>@ViewUtils.PrettyDisplayDateTime(auction.End)</p>
                     </p>
                 </div>
             </div>
