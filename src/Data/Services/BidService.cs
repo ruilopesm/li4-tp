@@ -29,11 +29,24 @@ public class BidService : IBidService
         return _db.Connection.ExecuteScalarAsync<int>(sql, parameters);
     }
 
-    public async Task<List<BidModel>> GetBids(int productId)
+    public async Task<List<BidModel>> GetBids(int auctionId)
     {
-        const string sql = @"SELECT * FROM dbo.Bid WHERE AuctionID = @ProductId";
+        const string sql = 
+            @"SELECT * FROM dbo.Bid b
+            LEFT JOIN dbo.Bidder ON BidderNIF = NIF
+            WHERE AuctionID = @AuctionId
+            ORDER BY b.ID DESC";
 
-        var data = await _db.Connection.QueryAsync<BidModel>(sql, new { ProductId = productId });
+        var data = await _db.Connection.QueryAsync<BidModel, BidderModel, BidModel>(
+            sql,
+            (bid, bidder) =>
+            {
+                bid.Bidder = bidder;
+                return bid;
+            },
+            new { AuctionId = auctionId },
+            splitOn: "NIF"
+        );        
 
         return data.ToList();
     }

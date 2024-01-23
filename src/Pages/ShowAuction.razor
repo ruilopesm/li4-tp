@@ -134,43 +134,49 @@ else
     </div>
 
     <div class="mt-8">
-        @* FIXME: Should be the actual count of bids *@
-        <p class="text-3xl font-bold">Licitações (7)</p>
+        <p class="text-3xl font-bold">Licitações (@auction.Bids.Count)</p>
     </div>
-    <div class="my-4 flow-root">
-        <div class="-mx-4 -my-2 overflow-x-auto -mx-8">
-            <div class="inline-block min-w-full py-2 align-middle px-8">
-                <div class="overflow-hidden ring-1 ring-black ring-opacity-5 rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-300">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 pl-6">ID</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Nome</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Data</th>
-                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Valor</th>
-                                <th scope="col" class="relative py-3.5 pl-3 pr-4 pr-6">
-                                </th>
-                            </tr>
-                        </thead>
-                        @* TODO: Should iterate over the actual bids *@
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            <tr>
-                                @* FIXME: Should be the real id of a bid *@
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium pl-6">Licitação #1</td>
-                                @* FIXME: Should be the real name of the bidder *@
-                                <td class="whitespace-nowrap px-3 py-4 text-sm">João Mafioso</td>
-                                @* FIXME: Should be the real date of the bid *@
-                                <td class="whitespace-nowrap px-3 py-4 text-sm">12/01/2024 às 12:02:51</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-pcs-green underline">520.70€</td>
-                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium pr-6">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+    @if (bids.Count >= 1)
+    {
+        <div class="my-4 flow-root">
+            <div class="-mx-4 -my-2 overflow-x-auto -mx-8">
+                <div class="inline-block min-w-full py-2 align-middle px-8">
+                    <div class="overflow-hidden ring-1 ring-black ring-opacity-5 rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 pl-6">ID</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Nome</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Data</th>
+                                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Valor</th>
+                                    <th scope="col" class="relative py-3.5 pl-3 pr-4 pr-6"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 bg-white">
+                                <tr>
+                                    @foreach (var bid in bids)
+                                    {
+                                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium pl-6">Licitação #@bid.Id</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm">@bid.Bidder.Name</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm">@bid.Date.ToString("dd/MM/yyyy 'às' HH:mm:ss")</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-pcs-green underline">@Math.Round(bid.Amount, 2)€</td>
+                                        <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium pr-6"></td>
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <div class="flex flex-col justify-center items-center mt-14">
+            <em class="text-gray-500">Sem licitações</em>
+            <p class="text-gray-500">Sê o primeiro a licitar</p>
+        </div>
+    }
 }
 
 @code {
@@ -181,6 +187,7 @@ else
     private AuctionModel? auction;
 
     private BidModel? lastBid;
+    private List<BidModel> bids;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -195,6 +202,7 @@ else
         if (auction != null)
         {
             lastBid = await _bidService.GetAuctionLastBid(auction.ID);
+            bids = await _bidService.GetBids(auction.ID);
         }
     }
 }
