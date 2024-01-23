@@ -8,6 +8,7 @@ namespace OnlineAuctions.Data.Models
         public string PasswordHash { get; set; }
         public Role Role { get; set; }
         public string RoleString => Role.ToString();
+        public static Role FromString(string role) => (Role)Enum.Parse(typeof(Role), role);
     }
 
     public enum Role {
@@ -26,6 +27,6 @@ namespace OnlineAuctions.Data.Models
     public class AdminModel : UserModel
     {
         public int InternalID { get; set; }
-        public bool IsMater { get; set; }
+        public bool IsMaster { get; set; }
     }
 }

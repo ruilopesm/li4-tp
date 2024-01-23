@@ -35,6 +35,17 @@ namespace OnlineAuctions.Data.Services
                 .ContinueWith(task => task.Result.FirstOrDefault());
         }
 
+        public Task<AdminModel?> GetAdmin(string email)
+        {
+            const string sql = @"
+                SELECT * FROM dbo.[User] AS u
+                INNER JOIN dbo.Admin AS a ON u.Id = a.UserId
+                WHERE u.Email = @Email
+            ";
+            return _db.LoadData<AdminModel, dynamic>(sql, new { Email = email })
+                .ContinueWith(task => task.Result.FirstOrDefault());
+        }
+
         public Task CreateBidder(string name, string email, string passwordHash, int NIF, DateOnly birthDate)
         {
             var queries = new Dictionary<string, dynamic>

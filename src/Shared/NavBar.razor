@@ -4,65 +4,109 @@
 @inject IUserService _db
 
 <div class="mx-auto flex max-w-7xl items-center">
-  <div class="flex flex-1">
-    <a href="/" class="flex items-center">
-      <img class="h-20 w-auto" src="assets/logo.png" alt="Maçã">
-      <p class="text-4xl">Maçã</p>
-    </a>
-  </div>
-  <div class="flex gap-x-28">
-    @if (IsAuthenticated)
-    {
-      <NavLink href="/" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
-      <NavLink href="/bids" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Minhas licitações</NavLink>
-      <NavLink href="/won" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Leilões ganhos</NavLink>
-    }
-    else
-    {
-      <NavLink href="/" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
-    }
-  </div>
-  <div class="flex flex-1 space-x-8 items-center justify-end">
-    @if (IsAuthenticated && bidder != null)
-    {
-      <div class="flex flex-col items-center">
-        <p class="text-pcs-green underline">@Math.Round(bidder.Balance, 2)€</p>
-        <p class="text-xs text-gray-400">@Math.Round(bidder.PendingBalance, 2)€ pendentes</p>
-      </div>
-      <div class="space-x-2">
-        <NavLink href="/profile" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline text-md text-gray-900">Meu Perfil</NavLink>
-        <NavLink @onclick="Logout" ActiveClass="active-link" class="cursor-pointer hover:underline text-xs text-gray-600">Sair</NavLink>
-      </div>
-    }
-    else
-    {
-      <NavLink href="/login" ActiveClass="active-link" class="hover:underline">Entrar</NavLink>
-      <NavLink href="/register" ActiveClass="active-link" class="hover:underline">Registar</NavLink>
-    }
-  </div>
+    <div class="flex flex-1">
+        <a href="/" class="flex items-center">
+            <img class="h-20 w-auto" src="assets/logo.png" alt="Maçã">
+            <p class="text-4xl">Maçã</p>
+        </a>
+    </div>
+    
+    <div class="flex gap-x-28">
+        @if (isAuthenticated && role == Role.Bidder)
+        {
+            <NavLink href="/" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
+            <NavLink href="/bids" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Minhas licitações</NavLink>
+            <NavLink href="/won" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Leilões ganhos</NavLink>
+        }
+        else if (isAuthenticated && role == Role.Admin && !isMaster)
+        {
+            <NavLink href="/" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
+            <NavLink href="/products" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Produtos</NavLink>
+        }
+        else if (isAuthenticated && role == Role.Admin && isMaster)
+        {
+            <NavLink href="/" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
+            <NavLink href="/products" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Produtos</NavLink>
+            <NavLink href="/users" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Gerenciar</NavLink>
+        }
+        else
+        {
+            <NavLink href="/" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline">Leilões</NavLink>
+        }
+    </div>
+    
+    <div class="flex flex-1 space-x-8 items-center justify-end">
+        @if (isAuthenticated && role == Role.Bidder)
+        {
+            <div class="flex flex-col items-center">
+                <p class="text-pcs-green underline">@Math.Round(bidder!.Balance, 2)€</p>
+                <p class="text-xs text-gray-400">@Math.Round(bidder!.PendingBalance, 2)€ pendentes</p>
+            </div>
+            <div class="space-x-2">
+                <NavLink href="/profile" ActiveClass="active-link" Match="NavLinkMatch.All" class="hover:underline text-md text-gray-900">Meu Perfil</NavLink>
+                <NavLink @onclick="Logout" ActiveClass="active-link" class="cursor-pointer hover:underline text-xs text-gray-600">Sair</NavLink>
+            </div>
+        }
+        else if (isAuthenticated && role == Role.Admin)
+        {
+            <div class="flex flex-row items-center space-x-2">
+                @if (isMaster)
+                {
+                    <p class="text-yellow-500">Administrador #@admin!.InternalID</p>
+                }
+                else
+                {
+                    <p>Administrador #@admin!.InternalID</p>
+                }
+                <NavLink @onclick="Logout" ActiveClass="active-link" class="cursor-pointer hover:underline text-xs text-gray-600">Sair</NavLink>
+            </div> 
+        }
+        else
+        {
+            <NavLink href="/login" ActiveClass="active-link" class="hover:underline">Entrar</NavLink>
+            <NavLink href="/register" ActiveClass="active-link" class="hover:underline">Registar</NavLink>
+        }
+    </div>
 </div>
 
 @code {
-  private bool IsAuthenticated;
+    private bool isAuthenticated;
+    private Role role;
+    private bool isMaster;
 
-  private BidderModel? bidder;
+    private BidderModel? bidder;
+    private AdminModel? admin;
 
-  protected override async Task OnInitializedAsync()
-  {
-    var ourProvider = (AuthProvider)AuthProvider;
-    IsAuthenticated = await ourProvider.IsAuthenticated();
-
-    string? email = await ourProvider.GetEmail();
-    if (email != null)
+    protected override async Task OnInitializedAsync()
     {
-      bidder = await _db.GetBidder(email);
-    }
-  }
+        var ourProvider = (AuthProvider)AuthProvider;
+        isAuthenticated = await ourProvider.IsAuthenticated();
+        string? email = await ourProvider.GetEmail();
+        string? role = await ourProvider.GetRole();
 
-  private async Task Logout()
-  {
-    var ourProvider = (AuthProvider)AuthProvider;
-    await ourProvider.Logout();
-    NavManager.NavigateTo("/", true);
-  }
+        if (role != null)
+        {
+            this.role = UserModel.FromString(role);
+        }
+
+        if (email != null)
+        {
+            if (this.role == Role.Bidder)
+            {
+                bidder = await _db.GetBidder(email);
+            }
+            else
+            {
+                admin = await _db.GetAdmin(email);
+                isMaster = admin!.IsMaster;
+            }
+        }
+    }
+
+    private async Task Logout()
+    {
+        var ourProvider = (AuthProvider)AuthProvider;
+        await ourProvider.Logout();
+        NavManager.NavigateTo("/", true);
+    }
 }
