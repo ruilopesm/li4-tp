@@ -7,7 +7,7 @@ services:
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=${DB_PASSWORD}
+      - SA_PASSWORD=Admin-123
       - MSSQL_PID=Developer
     ports:
       - 1433:1433
@@ -15,7 +15,7 @@ services:
       - /var/lib/docker/volumes/mssql_db/_data:/var/opt/data
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P ${DB_PASSWORD} -Q 'SELECT 1' || exit 1"]
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Admin-123 -Q 'SELECT 1' || exit 1"]
       interval: 10s
       retries: 10
       start_period: 10s
@@ -30,7 +30,7 @@ services:
         condition: service_healthy
     command: >
       bash -c '
-      /opt/mssql-tools/bin/sqlcmd -S db -U sa -P ${DB_PASSWORD} -d master -i docker-entrypoint-initdb.d/init.sql;
-      /opt/mssql-tools/bin/sqlcmd -S db -U sa -P ${DB_PASSWORD} -d master -i docker-entrypoint-initdb.d/seeds.sql;
-      echo "Configuration done!"
+      /opt/mssql-tools/bin/sqlcmd -S db -U sa -P Admin-123 -d master -i docker-entrypoint-initdb.d/init.sql;
+      /opt/mssql-tools/bin/sqlcmd -S db -U sa -P Admin-123 -d master -i docker-entrypoint-initdb.d/seeds.sql;
+      echo "Initialization done!"
       '
