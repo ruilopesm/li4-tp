@@ -6,7 +6,6 @@
 @inject AuthenticationStateProvider AuthProvider
 @inject NavigationManager NavManager
 
-@using BCrypt.Net
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
 
@@ -16,7 +15,7 @@
       <p class="text-6xl">Maçã</p>
     </div>
     <div class="w-full max-w-[430px]">
-        <div class="bg-pcs-lightest-gray rounded-md px-8 pt-6 pb-8 mb-4">
+        <div class="bg-[#f5f5f5] rounded-md px-8 pt-6 pb-8 mb-4">
             <div>
                 <p class="text-4xl font-extrabold text-center mb-4">Entrar</p>
             </div>
@@ -24,22 +23,22 @@
                 <DataAnnotationsValidator />
                 <div class="my-4 text-xs">
                     <InputText @bind-Value="_loginModel.Email" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700" type="text" placeholder="Email" />
-                    <div class="pl-3 text-pcs-red">
+                    <div class="pl-3 text-red-500">
                         <ValidationMessage For="@(() => _loginModel.Email)" />
                     </div>
                 </div>
                 <div class="mb-2 text-xs">
                     <InputText @bind-Value="_loginModel.Password" class="border border-solid rounded-xl w-full py-3 px-3 text-gray-700" type="password" placeholder="Password" />
-                    <div class="pl-3 text-pcs-red">
+                    <div class="pl-3 text-red-500">
                         <ValidationMessage For="@(() => _loginModel.Password)" />
                     </div>
                 </div>
                 <div class="flex flex-col space-y-2 items-center justify-center">
-                    <button class="bg-pcs-black hover:bg-scs-gray text-white font-bold py-2.5 px-10 rounded-md focus:outline-none focus:shadow-outline" type="submit">
+                    <button class="bg-black hover:bg-gray-700 text-white font-bold py-2.5 px-10 rounded-md focus:outline-none focus:shadow-outline" type="submit">
                         <p class="font-extrabold">Confirmar</p>
                     </button>
                     <div class="text-xs">
-                        <p>Não tem conta? <a href="/register" class="text-pcs-blue hover:text-scs-blue underline">Registe-se</a></p>
+                        <p>Não tem conta? <a href="/register" class="text-blue-500 hover:text-blue-700 underline">Registe-se</a></p>
                     </div>
                 </div>
             </EditForm>
@@ -76,9 +75,9 @@
     private async Task Authenticate()
     {
         var account = await _db.GetUser(_loginModel.Email);
-        if (account == null || !BCrypt.Verify(_loginModel.Password, account.PasswordHash))
+        if (account == null || account.Password != _loginModel.Password)
         {
-            await js.InvokeVoidAsync("alert", "Email ou password incorretos.");
+            await js.InvokeVoidAsync("alert", "Credenciais inválidas");
             return;
         }
 

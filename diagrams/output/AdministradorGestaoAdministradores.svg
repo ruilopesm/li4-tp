@@ -88,7 +88,7 @@
     ><rect fill="none" x="0" width="691" height="732" y="0" clip-path="url(#clipPath1)"
     /></g
     ><g font-size="11px" transform="translate(201,2)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="326" xml:space="preserve" y="12" clip-path="url(#clipPath2)" stroke="none"
+    ><text x="325" xml:space="preserve" y="12" clip-path="url(#clipPath2)" stroke="none"
       >Sistema</text
     ></g
     ><g font-size="11px" transform="translate(2,312)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -108,7 +108,7 @@
     ><ellipse rx="70" fill="none" ry="34" clip-path="url(#clipPath4)" cx="70" cy="34"
     /></g
     ><g font-size="11px" transform="translate(283,101)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="23" xml:space="preserve" y="38" clip-path="url(#clipPath5)" stroke="none"
+    ><text x="19" xml:space="preserve" y="38" clip-path="url(#clipPath5)" stroke="none"
       >Criar administrador</text
     ></g
     ><g font-size="11px" transform="translate(269,240)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -118,7 +118,7 @@
     ><ellipse rx="84" fill="none" ry="36" clip-path="url(#clipPath6)" cx="84" cy="36"
     /></g
     ><g font-size="11px" transform="translate(269,240)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="29" xml:space="preserve" y="40" clip-path="url(#clipPath7)" stroke="none"
+    ><text x="25" xml:space="preserve" y="40" clip-path="url(#clipPath7)" stroke="none"
       >Listar administradores</text
     ></g
     ><g font-size="11px" transform="translate(278,377)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -128,7 +128,7 @@
     ><ellipse rx="75.5" fill="none" ry="34" clip-path="url(#clipPath8)" cx="75.5" cy="34"
     /></g
     ><g font-size="11px" transform="translate(278,377)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="17" xml:space="preserve" y="38" clip-path="url(#clipPath9)" stroke="none"
+    ><text x="11" xml:space="preserve" y="38" clip-path="url(#clipPath9)" stroke="none"
       >Consultar administrador</text
     ></g
     ><g font-size="11px" transform="translate(289,499)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -138,7 +138,7 @@
     ><ellipse rx="64.5" fill="none" ry="29" clip-path="url(#clipPath10)" cx="64.5" cy="29"
     /></g
     ><g font-size="11px" transform="translate(289,499)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="14" xml:space="preserve" y="33" clip-path="url(#clipPath11)" stroke="none"
+    ><text x="11" xml:space="preserve" y="33" clip-path="url(#clipPath11)" stroke="none"
       >Editar administrador</text
     ></g
     ><g font-size="11px" transform="translate(276,620)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -148,11 +148,11 @@
     ><ellipse rx="77.5" fill="none" ry="28.5" clip-path="url(#clipPath12)" cx="77.5" cy="28.5"
     /></g
     ><g font-size="11px" transform="translate(276,620)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="19" xml:space="preserve" y="33" clip-path="url(#clipPath13)" stroke="none"
+    ><text x="16" xml:space="preserve" y="32" clip-path="url(#clipPath13)" stroke="none"
       >Remover administrador</text
     ></g
     ><g font-size="11px" transform="translate(5,424)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="13" xml:space="preserve" y="12" clip-path="url(#clipPath14)" stroke="none"
+    ><text x="10" xml:space="preserve" y="12" clip-path="url(#clipPath14)" stroke="none"
       >Administrador</text
     ></g
     ><g stroke-linecap="butt" font-size="11px" transform="translate(52,107)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke-linejoin="round" stroke="black" stroke-opacity="1"
@@ -172,7 +172,7 @@
     /></g
     ><g font-size="8px" fill-opacity="1" fill="rgb(120,120,120)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" stroke="rgb(120,120,120)" stroke-opacity="1"
     ><text x="0" xml:space="preserve" y="10" stroke="none"
-      >Visual Paradigm Standard(Francisco(Universidade do Minho))</text
+      >Visual Paradigm Standard(Universidade do Minho)</text
     ></g
   ></g
 ></svg

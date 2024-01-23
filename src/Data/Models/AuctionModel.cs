@@ -8,8 +8,15 @@ namespace OnlineAuctions.Data.Models
         public DateTime End { get; set; }
         public decimal StartPrice { get; set; }
         public decimal CurrentPrice { get; set; }
-        public bool IsCancelled { get; set; }
+        public AuctionState State { get; set; }
+        public string StateString => State.ToString();
         public AdminModel Publisher { get; set; }
-        public BidderModel Winner { get; set; }
+        public BidderModel? Winner { get; set; }
+    }
+    
+    public enum AuctionState {
+        Open,
+        Closed,
+        Canceled
     }
 }

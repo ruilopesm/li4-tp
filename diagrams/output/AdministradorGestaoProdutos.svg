@@ -96,7 +96,7 @@
     ><ellipse rx="64" fill="none" ry="26.5" clip-path="url(#clipPath4)" cx="64" cy="26.5"
     /></g
     ><g font-size="11px" transform="translate(303,132)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="31" xml:space="preserve" y="31" clip-path="url(#clipPath5)" stroke="none"
+    ><text x="28" xml:space="preserve" y="30" clip-path="url(#clipPath5)" stroke="none"
       >Criar produto</text
     ></g
     ><g font-size="11px" transform="translate(308,252)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -106,7 +106,7 @@
     ><ellipse rx="59.5" fill="none" ry="30" clip-path="url(#clipPath6)" cx="59.5" cy="30"
     /></g
     ><g font-size="11px" transform="translate(308,252)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="23" xml:space="preserve" y="34" clip-path="url(#clipPath7)" stroke="none"
+    ><text x="20" xml:space="preserve" y="34" clip-path="url(#clipPath7)" stroke="none"
       >Listar produtos</text
     ></g
     ><g font-size="11px" transform="translate(307,397)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -116,7 +116,7 @@
     ><ellipse rx="62" fill="none" ry="31.5" clip-path="url(#clipPath8)" cx="62" cy="31.5"
     /></g
     ><g font-size="11px" transform="translate(307,397)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="26" xml:space="preserve" y="36" clip-path="url(#clipPath9)" stroke="none"
+    ><text x="23" xml:space="preserve" y="35" clip-path="url(#clipPath9)" stroke="none"
       >Editar produto</text
     ></g
     ><g font-size="11px" transform="translate(308,545)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -126,11 +126,11 @@
     ><ellipse rx="62" fill="none" ry="32" clip-path="url(#clipPath10)" cx="62" cy="32"
     /></g
     ><g font-size="11px" transform="translate(308,545)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="19" xml:space="preserve" y="36" clip-path="url(#clipPath11)" stroke="none"
+    ><text x="15" xml:space="preserve" y="36" clip-path="url(#clipPath11)" stroke="none"
       >Remover produto</text
     ></g
     ><g font-size="11px" transform="translate(5,424)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="13" xml:space="preserve" y="12" clip-path="url(#clipPath12)" stroke="none"
+    ><text x="10" xml:space="preserve" y="12" clip-path="url(#clipPath12)" stroke="none"
       >Administrador</text
     ></g
     ><g stroke-linecap="butt" font-size="11px" transform="translate(52,126)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke-linejoin="round" stroke="black" stroke-opacity="1"
@@ -147,7 +147,7 @@
     /></g
     ><g font-size="8px" fill-opacity="1" fill="rgb(120,120,120)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" stroke="rgb(120,120,120)" stroke-opacity="1"
     ><text x="0" xml:space="preserve" y="10" stroke="none"
-      >Visual Paradigm Standard(Francisco(Universidade do Minho))</text
+      >Visual Paradigm Standard(Universidade do Minho)</text
     ></g
   ></g
 ></svg

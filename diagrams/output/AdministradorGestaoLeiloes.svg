@@ -96,7 +96,7 @@
     ><ellipse rx="65.5" fill="none" ry="27.5" clip-path="url(#clipPath4)" cx="65.5" cy="27.5"
     /></g
     ><g font-size="11px" transform="translate(328,108)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="39" xml:space="preserve" y="32" clip-path="url(#clipPath5)" stroke="none"
+    ><text x="37" xml:space="preserve" y="31" clip-path="url(#clipPath5)" stroke="none"
       >Criar leilão</text
     ></g
     ><g font-size="11px" transform="translate(331,259)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -106,7 +106,7 @@
     ><ellipse rx="62" fill="none" ry="26.5" clip-path="url(#clipPath6)" cx="62" cy="26.5"
     /></g
     ><g font-size="11px" transform="translate(331,259)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="30" xml:space="preserve" y="31" clip-path="url(#clipPath7)" stroke="none"
+    ><text x="29" xml:space="preserve" y="30" clip-path="url(#clipPath7)" stroke="none"
       >Listar leilões</text
     ></g
     ><g font-size="11px" transform="translate(333,564)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -116,7 +116,7 @@
     ><ellipse rx="60" fill="none" ry="26" clip-path="url(#clipPath8)" cx="60" cy="26"
     /></g
     ><g font-size="11px" transform="translate(333,564)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="23" xml:space="preserve" y="30" clip-path="url(#clipPath9)" stroke="none"
+    ><text x="21" xml:space="preserve" y="30" clip-path="url(#clipPath9)" stroke="none"
       >Cancelar leilão</text
     ></g
     ><g font-size="11px" transform="translate(330,408)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
@@ -126,11 +126,11 @@
     ><ellipse rx="61.5" fill="none" ry="27" clip-path="url(#clipPath10)" cx="61.5" cy="27"
     /></g
     ><g font-size="11px" transform="translate(330,408)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="23" xml:space="preserve" y="31" clip-path="url(#clipPath11)" stroke="none"
+    ><text x="20" xml:space="preserve" y="31" clip-path="url(#clipPath11)" stroke="none"
       >Consultar leilão</text
     ></g
     ><g font-size="11px" transform="translate(5,424)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
-    ><text x="13" xml:space="preserve" y="12" clip-path="url(#clipPath12)" stroke="none"
+    ><text x="10" xml:space="preserve" y="12" clip-path="url(#clipPath12)" stroke="none"
       >Administrador</text
     ></g
     ><g stroke-linecap="butt" font-size="11px" transform="translate(52,262)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke-linejoin="round" stroke="black" stroke-opacity="1"
@@ -147,7 +147,7 @@
     /></g
     ><g font-size="8px" fill-opacity="1" fill="rgb(120,120,120)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" stroke="rgb(120,120,120)" stroke-opacity="1"
     ><text x="0" xml:space="preserve" y="10" stroke="none"
-      >Visual Paradigm Standard(Francisco(Universidade do Minho))</text
+      >Visual Paradigm Standard(Universidade do Minho)</text
     ></g
   ></g
 ></svg
