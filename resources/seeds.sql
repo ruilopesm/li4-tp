@@ -6,7 +6,8 @@ VALUES ('Rui', 'rui@mail.com', '$2a$11$zS0Lx9yTVhukWEOFdvI0XuKwBxNghrkaAnGViznvD
        ('Chico', 'chico@mail.com', '$2a$11$Ku2RhE1ggjylYgSsRB/xUuUw4V6FIgE9jTP5jM33IhA8ceX.5IONS', 'Bidder'),
        ('Daniel', 'daniel@mail.com', '$2a$11$EGhXtR27QuSBAtvA3DJtFOUqupaCKN3zMlzh.Iru2SI.ws34sdp.K', 'Bidder'),
        ('Duarte', 'duarte@mail.com', '$2a$11$dXjw52VOe.TJB6pWA8dNtefJ7U.fAksdpzo2buptSEwGs7IpUFE8y', 'Bidder'),
-       ('Master', 'master@mail.com', '$2a$11$5lonnuO9V6W/ZbmIDVRyReIY72WN0C5jgMYdU3lRSiYLlj3Ju2iTO', 'Admin');
+       ('Master', 'master@mail.com', '$2a$11$5lonnuO9V6W/ZbmIDVRyReIY72WN0C5jgMYdU3lRSiYLlj3Ju2iTO', 'Admin'),
+       ('Admin', 'admin@mail.com', '$2a$11$BPrZSFwI009VrV5k359BAuchU9gr7fyo9ANwof9pG3BxsD1Q.ddYu', 'Admin');
 
 INSERT INTO [Bidder] ([NIF], [BirthDate], [Balance], [PendingBalance], [UserID])
 VALUES (123456789, '1987-05-23', 300, 0, 1),
@@ -15,7 +16,8 @@ VALUES (123456789, '1987-05-23', 300, 0, 1),
        (321321321, '1999-06-06', 100, 0, 4);
 
 INSERT INTO [Admin] ([IsMaster], [UserID])
-VALUES (1, 5);
+VALUES (1, 5),
+       (0, 6);
 
 INSERT INTO [Model] ([Name], [Color], [Storage])
 VALUES ('iPhone 14', 'Rosa', '128GB'),
