@@ -85,12 +85,12 @@ else
                 <li class="flex flex-row items-center justify-between mx-6">
                     <p class="text-md font-bold">Início:</p>
                     @* FIXME: Should be the real value *@
-                    <div class="text-md font-gray-700">12/01/2024 às 10:01:25</div>
+                    <div class="text-md text-gray-700">@auction.Start.ToString("dd/MM/yyyy 'às' HH:mm:ss")</div>
                 </li>
                 <li class="flex flex-row justify-between mx-6">
                     <p class="text-md font-bold">Fim:</p>
                     @* FIXME: Should be the real value *@
-                    <div class="text-md font-gray-700">12/01/2024 às 12:02:51</div>
+                    <div class="text-md text-gray-700">@auction.End.ToString("dd/MM/yyyy 'às' HH:mm:ss")</div>
                 </li>
             </ul>
         </div>
