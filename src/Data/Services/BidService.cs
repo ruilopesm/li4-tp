@@ -73,4 +73,28 @@ public class BidService : IBidService
 
         return data.ToList();
     }
+
+    public async Task<BidModel?> GetAuctionLastBid(int auctionId)
+    {
+        const string sql =
+            @"SELECT TOP 1 * FROM dbo.Bid b
+            LEFT JOIN dbo.Auction a ON b.AuctionID = a.ID
+            LEFT JOIN dbo.Bidder bd ON b.BidderNIF = bd.NIF
+            WHERE b.AuctionID = @AuctionId
+            ORDER BY b.[Date] DESC";
+
+        var data = await _db.Connection.QueryAsync<BidModel, AuctionModel, BidderModel, BidModel>(
+            sql,
+            (bid, auction, bidder) =>
+            {
+                bid.Auction = auction;
+                bid.Bidder = bidder;
+                return bid;
+            },
+            new { AuctionId = auctionId },
+            splitOn: "ID, NIF"
+        );
+
+        return data.FirstOrDefault();
+    }
 }

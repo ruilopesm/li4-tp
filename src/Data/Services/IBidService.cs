@@ -9,4 +9,6 @@ public interface IBidService
     Task<List<BidModel>> GetBids(int productId);
 
     Task<List<BidModel>> GetLastUserBids(int NIF);
+
+    Task<BidModel?> GetAuctionLastBid(int auctionId);
 }

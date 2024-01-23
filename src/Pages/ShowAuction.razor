@@ -2,6 +2,7 @@
 
 @inject AuthenticationStateProvider AuthProvider
 @inject IAuctionService _auctionService
+@inject IBidService _bidService
 @inject IUserService _userService
 
 @using System.ComponentModel.DataAnnotations
@@ -28,7 +29,7 @@ else
             }
             else
             {
-                <img class="flex-none bg-red-50" src="https://via.placeholder.com/300x300" />
+                <img src="https://via.placeholder.com/300x300" />
             }
         </div>
         
@@ -113,8 +114,10 @@ else
                     <p class="text-md font-bold">Valor atual</p>
                     <div class="flex flex-col items-center">
                         <p class="text-md text-pcs-green underline">@Math.Round(auction.CurrentPrice, 2)€</p>
-                        @* FIXME: Should be the actual last bidder *@
-                        <p class="text-[8px] text-gray-600">de João Mafioso</p>
+                        @if (lastBid != null)
+                        {
+                            <p class="text-[8px] text-gray-600">de @lastBid.Bidder.Name</p>
+                        }
                     </div>
                 </li>
             </ul>
@@ -177,6 +180,8 @@ else
     private BidderModel? bidder;
     private AuctionModel? auction;
 
+    private BidModel? lastBid;
+
     protected override async Task OnParametersSetAsync()
     {
         var ourProvider = (AuthProvider)AuthProvider;
@@ -187,5 +192,9 @@ else
         }
         
         auction = await _auctionService.GetAuction(Id);
+        if (auction != null)
+        {
+            lastBid = await _bidService.GetAuctionLastBid(auction.ID);
+        }
     }
 }

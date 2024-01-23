@@ -4,7 +4,7 @@ public class BidModel
 {
     public int Id { get; }
     public AuctionModel Auction { get; set; }
-    public int BidderNif { get; }
+    public BidderModel Bidder { get; set; }
     public decimal Amount { get; }
     public DateTime Date { get; }
 }
