@@ -76,7 +76,7 @@ else
             *@
             @* TODO: Clock icon *@
             <div class="flex justify-center text-lg">
-                Termina em 23 minutos
+                @ViewUtils.PrettyDisplayDateTime(auction.Start)
             </div>
             <div class="flex justify-center mt-1">
                 <div class="w-[90%] h-0.5 bg-gray-300 rounded-full"></div>
@@ -84,12 +84,10 @@ else
             <ul class="flex flex-col mt-3 space-y-2">
                 <li class="flex flex-row items-center justify-between mx-6">
                     <p class="text-md font-bold">Início:</p>
-                    @* FIXME: Should be the real value *@
                     <div class="text-md text-gray-700">@auction.Start.ToString("dd/MM/yyyy 'às' HH:mm:ss")</div>
                 </li>
                 <li class="flex flex-row justify-between mx-6">
                     <p class="text-md font-bold">Fim:</p>
-                    @* FIXME: Should be the real value *@
                     <div class="text-md text-gray-700">@auction.End.ToString("dd/MM/yyyy 'às' HH:mm:ss")</div>
                 </li>
             </ul>
