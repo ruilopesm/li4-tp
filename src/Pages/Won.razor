@@ -1,0 +1,91 @@
+@page "/won"
+
+@inject AuthenticationStateProvider AuthProvider
+@inject IAuctionService _auctionService
+
+<PageTitle>Leilões ganhos</PageTitle>
+
+@if (auctions == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <div class="flex flex-row items-baseline space-x-2">
+        <p class="text-4xl font-bold">Leilões ganhos</p>
+        <p class="text-sm">(@auctions.Count())</p>
+    </div>
+
+    <ul class="flex flex-col my-6 space-y-6">
+    @foreach (var auction in auctions)
+    {
+        <li class="relative flex items-center justify-between px-6 py-5 bg-pcs-lightest-gray rounded-xl border">
+            <div class="flex items-center gap-x-4 pr-6 w-1/2 flex-none">
+                @if (auction.Product.Images.Count >= 1)
+                {
+                    <img class="h-24 w-24 flex-none rounded-full bg-gray-50" src="@auction.Product.Images[0]">
+                }
+                else
+                {
+                    <div class="h-24 w-24 flex-none rounded-full bg-gray-50"></div>
+                }
+                <div class="min-w-0 flex-auto">
+                    <div class="flex flex-row items-center">
+                        <p class="text-3xl font-semibold leading-6 text-gray-900">
+                            @auction.Product.Model.Name
+                        </p>
+                        <div class="border py-0.25 px-3 ml-4 rounded-xl text-xs bg-white">@auction.Product.Model.Color</div>
+                        @if (@auction.Product.Model.Storage != null)
+                        {
+                            <div class="border py-0.25 px-3 ml-2 rounded-xl text-xs bg-white">@auction.Product.Model.Storage</div>
+                        }
+                    </div>
+                    <p class="mt-1 flex items-center space-x-1 text-sm leading-5">
+                        @* TODO: If the auction was cancelled, a cross should be displayed instead *@
+                        <svg class="w-4 h-4" viewBox="0 0 48 48" fillCurrentColor="currentColor">
+                            <path d="M 24 4 C 12.972066 4 4 12.972074 4 24 C 4 35.027926 12.972066 44 24 44 C 35.027934 44 44 35.027926 44 24 C 44 12.972074 35.027934 4 24 4 z M 24 7 C 33.406615 7 41 14.593391 41 24 C 41 33.406609 33.406615 41 24 41 C 14.593385 41 7 33.406609 7 24 C 7 14.593391 14.593385 7 24 7 z M 22.476562 11.978516 A 1.50015 1.50015 0 0 0 21 13.5 L 21 24.5 A 1.50015 1.50015 0 0 0 21.439453 25.560547 L 26.439453 30.560547 A 1.50015 1.50015 0 1 0 28.560547 28.439453 L 24 23.878906 L 24 13.5 A 1.50015 1.50015 0 0 0 22.476562 11.978516 z"></path>
+                        </svg>
+                        @* FIXME: This function is not working properly *@
+                        @* 
+                            TODO: The text color should follow these requirements: 
+                            - If the auctin is close to ending (1 hour, for example) -> red
+                            - If the auction has already ended -> gray
+                            - If the auction was cancelled -> even more gray
+                        *@
+                        <p>@ViewUtils.GetRelativeTimeSpan(auction.End)</p>
+                    </p>
+                </div>
+            </div>
+            <div class="flex items-center justify-between gap-x-4 w-1/2 flex-none">
+                <ul class="block">
+                    <li class="text-sm leading-6">@auction.Product.ConditionString()</li>
+                    <li class="text-sm leading-5">@auction.Product.StateString()</li>
+                </ul>
+                <div class="absolute flex flex-col items-center ml-40">
+                    <p class="text-lg font-medium">Vencido por</p>
+                    @* Text color should gray when the auction has already ended or was cancelled *@
+                    <p class="text-3xl font-bold text-pcs-green underline">@Math.Round(auction.CurrentPrice, 2)€</p>
+                </div>
+                <div class="flex flex-col ml-28 items-center space-y-1">
+                    <NavLink
+                        href="@($"/auction/{auction.ID}")"
+                        class="bg-pcs-gray hover:bg-scs-gray rounded-lg text-white font-bold text-lg py-1 px-3">
+                        Ver detalhes
+                    </NavLink>
+                    @* FIXME: Should have the real number of bids *@
+                    <p class="text-sm">7 licitações</p>
+                </div>
+            </div>
+        </li>
+    }
+    </ul>
+}
+
+@code {
+    private List<AuctionModel>? auctions { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        auctions = await _auctionService.GetAuctions();
+    }
+}
