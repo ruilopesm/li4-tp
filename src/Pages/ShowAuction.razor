@@ -44,10 +44,10 @@ else
     }
 
     <div class="grid grid-cols-3 grid-rows-6 gap-4 mt-4">
-        <div class="flex justify-center row-span-6 bg-gray-100 rounded-lg">
+        <div class="flex justify-center items-center row-span-6 bg-white rounded-lg">
             @if (auction.Product.Images.Count >= 1)
             {
-                <img class="flex-none bg-red-50" src="@auction.Product.Images[0]" />
+                <img class="size-max flex-none bg-white " src="@auction.Product.Images[0]">
             }
         </div>
         

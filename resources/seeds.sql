@@ -20,10 +20,10 @@ VALUES (1, 5),
        (0, 6);
 
 INSERT INTO [Model] ([Name], [Color], [Storage])
-VALUES ('iPhone 14', 'Rosa', '128GB'),
-       ('iPhone 13', 'Azul', '1TB'),
+VALUES ('iPhone 15', 'Branco', '128GB'),
+       ('iPhone 14', 'Preto', '1TB'),
        ('iPhone 12', 'Preto', '256GB'),
-       ('iPhone 11', 'Branco', '64GB');
+       ('iPhone 15 Pro Max', 'Titanio', '128GB');
 
 INSERT INTO [Model] ([Name], [Color])
 VALUES ('Pano de Limpeza', 'Branco');
@@ -40,6 +40,15 @@ VALUES ('Com poucas marcas de uso', 1, 'Excellent', 'Used'),
        ('Um pouco sujo', 5, 'Good', 'Returned'),
        ('Como novo', 6, 'Excellent', 'Refurbished'),
        ('Com marcas de uso', 7, 'Good', 'Used');
+
+INSERT INTO [ProductPhoto] ([ProductID], [ImagePath])
+VALUES (1, 'assets/iphone-15-branco.jpeg'),
+       (2, 'assets/iphone-14-preto.jpeg'),
+       (3, 'assets/iphone-12-preto.jpeg'),
+       (4, 'assets/iphone-15-pro-max-titanium.png'),
+       (5, 'assets/cleaning-cloth.jpeg'),
+       (6, 'assets/macbook-air-m1.jpeg'),
+       (7, 'assets/macbook-pro-m1.jpeg');
 
 INSERT INTO [Auction] ([ProductID], [Start], [End], [StartPrice], [CurrentPrice], [PublisherID])
 VALUES (1, "2024-01-19 01:30:02", "2024-01-19 01:35:02", 700, 700, 1),

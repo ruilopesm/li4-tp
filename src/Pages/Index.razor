@@ -167,7 +167,7 @@ else
             <div class="flex items-center gap-x-4 pr-6 w-1/2 flex-none">
                 @if (auction.Product.Images.Count >= 1)
                 {
-                    <img class="h-24 w-24 flex-none rounded-full bg-gray-50" src="@auction.Product.Images[0]">
+                    <img class="object-scale-down h-24 w-24 flex-none bg-pcs-lightest-gray " src="@auction.Product.Images[0]">
                 }
                 else
                 {
