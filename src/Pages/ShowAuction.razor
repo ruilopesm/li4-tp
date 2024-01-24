@@ -27,10 +27,6 @@ else
             {
                 <img class="flex-none bg-red-50" src="@auction.Product.Images[0]" />
             }
-            else
-            {
-                <img src="https://via.placeholder.com/300x300" />
-            }
         </div>
         
         <div class="row-span-3 bg-gray-100 rounded-lg py-3">
@@ -199,16 +195,16 @@ else
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 bg-white">
-                                <tr>
-                                    @foreach (var bid in bids)
-                                    {
+                                @foreach (var bid in bids)
+                                {
+                                    <tr>
                                         <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium pl-6">Licitação #@bid.Id</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm">@bid.Bidder.Name</td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm">@bid.Date.ToString("dd/MM/yyyy 'às' HH:mm:ss")</td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-pcs-green underline">@Math.Round(bid.Amount, 2)€</td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-pcs-green underline">@Math.Round(bid.Value, 2)€</td>
                                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium pr-6"></td>
-                                    }
-                                </tr>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
                     </div>

@@ -33,7 +33,8 @@ public class BidService : IBidService
     {
         const string sql = 
             @"SELECT * FROM dbo.Bid b
-            LEFT JOIN dbo.Bidder ON BidderNIF = NIF
+            LEFT JOIN dbo.Bidder ON b.BidderNIF = Bidder.NIF
+            LEFT JOIN dbo.[User] ON Bidder.UserID = [User].ID
             WHERE AuctionID = @AuctionId
             ORDER BY b.ID DESC";
 
@@ -93,6 +94,7 @@ public class BidService : IBidService
             @"SELECT TOP 1 * FROM dbo.Bid b
             LEFT JOIN dbo.Auction a ON b.AuctionID = a.ID
             LEFT JOIN dbo.Bidder bd ON b.BidderNIF = bd.NIF
+            LEFT JOIN dbo.[User] u ON bd.UserID = u.ID
             WHERE b.AuctionID = @AuctionId
             ORDER BY b.[Date] DESC";
 
