@@ -12,6 +12,8 @@ namespace OnlineAuctions.Data.Services
 
         Task<AdminModel?> GetAdmin(string email);
 
+        Task<List<AdminModel>> GetAdmins();
+
         Task CreateBidder(string name, string email, string password, int NIF, DateOnly birthDate);
     }
 }

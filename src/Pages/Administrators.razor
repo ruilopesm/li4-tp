@@ -1,0 +1,131 @@
+@page "/administrators"
+
+@inject IUserService _db
+
+<PageTitle>Gerenciar</PageTitle>
+
+@if (admins == null)
+{
+    <p>Carregando...</p>
+}
+else
+{
+    <p class="text-4xl font-bold">Gerenciar administradores</p>
+
+    <button @onclick="() => modalDialog!.Open()" class="flex flex-row items-center mt-4 -mb-1 space-x-1">
+        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12H20M12 4V20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p>Criar nova conta de administrador</p>
+    </button>
+
+    <ModalDialog @ref="modalDialog" Title="Criar administrador">
+        <EditForm EditContext="_newAdminFormContext" class="space-y-3">
+            <DataAnnotationsValidator />
+            <div>
+                <label for="name" class="block text-md font-medium">Nome</label>
+                <InputText @bind-Value="_newAdminModel.Name" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" placeholder="Escreva o nome do administrador" />
+            </div>
+            <div>
+                <label for="email" class="block text-md font-medium">Email</label>
+                <InputText @bind-Value="_newAdminModel.Email" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" placeholder="Escreva o email do administrador" />
+            </div>
+            <div>
+                <label for="password" class="block text-md font-medium">Password</label>
+                <InputText @bind-Value="_newAdminModel.Password" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" placeholder="Escreva a password do administrador" />
+            </div>
+        </EditForm>
+    </ModalDialog>
+
+    <div class="mt-6 mb-4 flow-root">
+        <div class="-mx-4 -my-2 overflow-x-auto -mx-8">
+            <div class="inline-block min-w-full py-2 align-middle px-8">
+                <div class="overflow-hidden ring-1 ring-black ring-opacity-5 rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-300">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 pl-6">ID</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Nome</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
+                                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            @foreach (var admin in admins)
+                            {
+                                <tr>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium pl-6">@admin.ID.</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm">@admin.Name</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm">@admin.Email</td>
+                                    <td class="flex flex-row whitespace-nowrap px-3 py-4 text-sm space-x-4">
+                                        <button class="flex flex-row items-center space-x-1">
+                                            <svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <title/>
+                                                <g id="Complete">
+                                                <g id="edit">
+                                                <g>
+                                                <path d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                <polygon fill="none" points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                                                </g>
+                                                </g>
+                                                </g>
+                                            </svg>
+                                            <p>Editar</p>
+                                        </button>
+                                        <button class="flex flex-row items-center space-x-1 text-pcs-red">
+                                            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M4 6H20L18.4199 20.2209C18.3074 21.2337 17.4512 22 16.4321 22H7.56786C6.54876 22 5.69264 21.2337 5.5801 20.2209L4 6Z" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M7.34491 3.14716C7.67506 2.44685 8.37973 2 9.15396 2H14.846C15.6203 2 16.3249 2.44685 16.6551 3.14716L18 6H6L7.34491 3.14716Z" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M2 6H22" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M10 11V16" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M14 11V16" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            <p>Remover</p>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<AdminModel> admins;
+
+    protected override async Task OnInitializedAsync()
+    {
+        admins = await _db.GetAdmins();
+    }
+
+    private ModalDialog? modalDialog;
+
+    // TODO: Make use of validation
+    private class NewAdminModel
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+        public NewAdminModel()
+        {
+            Name = "";
+            Email = "";
+            Password = "";
+        }
+    }
+
+    private EditContext? _newAdminFormContext { get; set; }
+    private ValidationMessageStore? _newAdminValidationMessageStore { get; set; }
+
+    private NewAdminModel _newAdminModel = new NewAdminModel();
+
+    protected override void OnInitialized()
+    {
+        _newAdminFormContext = new EditContext(_newAdminModel);
+        _newAdminValidationMessageStore = new ValidationMessageStore(_newAdminFormContext);
+    }
+}
