@@ -100,5 +100,14 @@ namespace OnlineAuctions.Data.Services
 
             return auctionModel;
         }
+
+        public async Task<AuctionModel?> GetProductAuction(int productId)
+        {
+            const string sql = @"SELECT * FROM dbo.Auction WHERE ProductID = @ID";
+
+            var data = await _db.Connection.QueryAsync<AuctionModel>(sql, new { ID = productId });
+
+            return data.FirstOrDefault();
+        }
     }
 }

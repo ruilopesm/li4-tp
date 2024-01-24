@@ -1,0 +1,203 @@
+@page "/products"
+
+@inject IProductService _productService
+@inject IAuctionService _auctionService
+
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Forms
+
+<PageTitle>Produtos</PageTitle>
+
+@if (products == null)
+{
+    <p>Carregando...</p>
+}
+else
+{
+    <div class="flex flex-row items-baseline space-x-2">
+        <p class="text-4xl font-bold">Produtos</p>
+        <p class="text-sm">(@products.Count())</p>
+    </div>
+
+    <button @onclick="() => modalDialog!.Open()" class="flex flex-row items-center mt-4 -mb-1 space-x-1">
+        <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 12H20M12 4V20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p>Criar produto</p>
+    </button>
+
+    <ModalDialog @ref="modalDialog" Title="Criar produto" Type="ModalDialog.ActionType.Create">
+        <EditForm EditContext="_newProductFormContext" class="space-y-3">
+            <DataAnnotationsValidator />
+            <div>
+                <label for="model" class="block text-md font-medium">Modelo</label>
+                <InputSelect @bind-Value="_newProductModel.Model" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
+                    @* TODO: List actual products *@
+                    <option value="" disabled selected hidden>Selecionar modelo</option>
+                    <option>iPhone 14</option>
+                </InputSelect>
+            </div>
+            <div class="flex flex-row justify-between">
+                <div>
+                    <label for="state" class="block text-md font-medium">Estado</label>
+                    <InputSelect @bind-Value="_newProductModel.State" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
+                        <option value="" disabled selected hidden>Selecionar estado</option>
+                        <option>Usado</option>
+                        <option>Recondicionado</option>
+                        <option>Retornado</option>
+                    </InputSelect>
+                </div>
+                <div>
+                    <label for="condition" class="block text-md font-medium">Condição</label>
+                    <InputSelect @bind-Value="_newProductModel.Condition" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
+                        <option value="" disabled selected hidden>Selecionar condição</option>
+                        <option>Excelente</option>
+                        <option>Bom</option>
+                        <option>Mau</option>
+                    </InputSelect>
+                </div>
+            </div>
+            <div>
+                <label for="description" class="block text-md font-medium">Descrição</label>
+                <InputTextArea @bind-Value="_newProductModel.Description" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" placeholder="Descrição do produto"/>
+            </div>
+            <div>
+                <label for="images" class="block text-md font-medium">Fotos do produto</label>
+                <InputFile @bind-Value="_newProductModel.Images" class="mt-0.5 block w-full rounded-md border-0 py-2 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" multiple />
+            </div>
+        </EditForm>
+    </ModalDialog>
+
+    <ul class="flex flex-col my-6 space-y-4">
+    @foreach (var (product, auction) in products)
+    {
+        <li class="relative flex items-center px-6 py-3 bg-pcs-lightest-gray rounded-xl border">
+            <p class="text-2xl ml-2 mr-6">@product.ID.</p>
+            <div class="flex items-center gap-x-4 pr-6 w-1/2 flex-none">
+                @if (product.Images.Count >= 1)
+                {
+                    <img class="h-16 w-16 flex-none rounded-full bg-gray-50" src="@product.Images[0]">
+                }
+                else
+                {
+                    <div class="h-16 w-16 flex-none rounded-full bg-gray-50"></div>
+                }
+                <div class="min-w-0 flex-auto">
+                    <div class="flex flex-row items-center">
+                        <p class="text-3xl font-semibold leading-6 text-gray-900">
+                            @product.Model.Name
+                        </p>
+                        <div class="border py-0.25 px-3 ml-4 rounded-xl text-xs bg-white">@product.Model.Color</div>
+                        @if (@product.Model.Storage != null)
+                        {
+                            <div class="border py-0.25 px-3 ml-2 rounded-xl text-xs bg-white">@product.Model.Storage</div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between gap-x-4 flex-none">
+                <ul class="block">
+                    <li class="text-sm leading-6">@product.ConditionString()</li>
+                    <li class="text-sm leading-5">@product.StateString()</li>
+                </ul>
+            </div>
+            <div class="flex flex-row items-center absolute right-10 space-x-5">
+                <div class="flex flex-row items-center space-x-1">
+                    <svg class="h-5 w-5 cursor-pointer" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 17.75C12.4142 17.75 12.75 17.4142 12.75 17V11C12.75 10.5858 12.4142 10.25 12 10.25C11.5858 10.25 11.25 10.5858 11.25 11V17C11.25 17.4142 11.5858 17.75 12 17.75Z" fill="#1C274C"/>
+                        <path d="M12 7C12.5523 7 13 7.44772 13 8C13 8.55228 12.5523 9 12 9C11.4477 9 11 8.55228 11 8C11 7.44772 11.4477 7 12 7Z" fill="#000000"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.25 12C1.25 6.06294 6.06294 1.25 12 1.25C17.9371 1.25 22.75 6.06294 22.75 12C22.75 17.9371 17.9371 22.75 12 22.75C6.06294 22.75 1.25 17.9371 1.25 12ZM12 2.75C6.89137 2.75 2.75 6.89137 2.75 12C2.75 17.1086 6.89137 21.25 12 21.25C17.1086 21.25 21.25 17.1086 21.25 12C21.25 6.89137 17.1086 2.75 12 2.75Z" fill="#000000"/>
+                    </svg>
+                    <p>Descrição</p>
+                </div>
+                @if (auction == null)
+                {
+                    <button class="flex flex-row items-center space-x-1">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <title/>
+                            <g id="Complete">
+                            <g id="edit">
+                            <g>
+                            <path d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            <polygon fill="none" points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+                            </g>
+                            </g>
+                            </g>
+                        </svg>
+                        <p>Editar</p>
+                    </button>
+                    <button class="flex flex-row items-center space-x-1 text-pcs-red">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 6H20L18.4199 20.2209C18.3074 21.2337 17.4512 22 16.4321 22H7.56786C6.54876 22 5.69264 21.2337 5.5801 20.2209L4 6Z" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7.34491 3.14716C7.67506 2.44685 8.37973 2 9.15396 2H14.846C15.6203 2 16.3249 2.44685 16.6551 3.14716L18 6H6L7.34491 3.14716Z" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 6H22" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 11V16" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 11V16" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <p>Remover</p>
+                    </button>
+                }
+                else
+                {
+                    <a href="@($"/auction/{auction.ID}")" class="flex flex-row items-center space-x-1">
+                        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="Interface / External_Link">
+                            <path id="Vector" d="M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                        </svg>
+                        <p class="underline">Leilão #@auction.ID</p>
+                    </a>
+                }
+            </div>
+        </li>
+    }
+    </ul>
+}
+
+@code {
+    private List<(ProductModel, AuctionModel?)> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var onlyProducts = await _productService.GetProducts();
+        products = new List<(ProductModel, AuctionModel?)>();
+
+        foreach (var product in onlyProducts)
+        {
+            var auction = await _auctionService.GetProductAuction(product.ID);
+            products.Add((product, auction));
+        }
+    }
+
+    private ModalDialog? modalDialog;
+
+    // TODO: Make use of validation
+    private class NewProductModel
+    {
+        public string Model { get; set; }
+        public string State { get; set; }
+        public string Condition { get; set; }
+        public string Description { get; set; }
+        public List<string> Images { get; set; }
+
+        public NewProductModel()
+        {
+            Model = "";
+            State = "";
+            Condition = "";
+            Description = "";
+            Images = new List<string>();
+        }
+    }
+
+    private EditContext? _newProductFormContext { get; set; }
+    private ValidationMessageStore? _newProductValidationMessageStore { get; set; }
+
+    private NewProductModel _newProductModel = new NewProductModel();
+
+    protected override void OnInitialized()
+    {
+        _newProductFormContext = new EditContext(_newProductModel);
+        _newProductValidationMessageStore = new ValidationMessageStore(_newProductFormContext);
+    }
+}

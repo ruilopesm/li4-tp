@@ -7,5 +7,7 @@ namespace OnlineAuctions.Data.Services
         Task<List<AuctionModel>> GetAuctions();
 
         Task<AuctionModel?> GetAuction(int id);
+
+        Task<AuctionModel?> GetProductAuction(int productId);
     }
 }
