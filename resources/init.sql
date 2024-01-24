@@ -3,6 +3,9 @@ GO
 CREATE DATABASE [OnlineAuctions];
 GO
 
+SET QUOTED_IDENTIFIER ON;
+GO
+
 USE [OnlineAuctions];
 
 CREATE TABLE [User]
@@ -32,7 +35,12 @@ CREATE TABLE [Admin]
     [UserID]      INT NOT NULL,
 
     FOREIGN KEY ([UserID]) REFERENCES [User] ([ID]),
-)
+);
+GO
+
+-- Constraint to ensure that there is at most one master admin
+CREATE UNIQUE INDEX UQ_IsMaster ON [Admin] ([IsMaster]) WHERE ([IsMaster] = 1);
+GO
 
 CREATE TABLE [Model]
 (
@@ -89,4 +97,8 @@ CREATE TABLE [ProductPhoto]
     [ImagePath]  VARCHAR(255) NOT NULL,
 
     FOREIGN KEY ([ProductID]) REFERENCES [Product] ([ID]),
-)
+);
+GO
+
+SET QUOTED_IDENTIFIER OFF;
+GO
