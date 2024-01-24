@@ -94,7 +94,7 @@
 
     private RegisterModel _registerModel = new RegisterModel();
 
-    protected override void OnInitialized(){
+    protected override void OnInitialized() {
         _registerFormContext = new EditContext(_registerModel);
         _registerFormValidationMessageStore = new ValidationMessageStore(_registerFormContext);
     }
