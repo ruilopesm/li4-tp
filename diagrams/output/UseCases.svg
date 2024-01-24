@@ -237,7 +237,7 @@
     ><text x="15" xml:space="preserve" y="33" clip-path="url(#clipPath7)" stroke="none"
       >Registar-se na plataforma</text
       ><text x="45" xml:space="preserve" y="48" clip-path="url(#clipPath7)" stroke="none"
-      >como licitante</text
+      >como licitador</text
     ></g
     ><g font-size="11px" transform="translate(153,308)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
     ><ellipse rx="72.5" ry="22" clip-path="url(#clipPath8)" cx="72.5" cy="22" stroke="none"
@@ -364,8 +364,8 @@
     ><g font-size="11px" transform="translate(768,512)" fill-opacity="1" fill="black" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="black" stroke-opacity="1"
     ><text x="29" xml:space="preserve" y="27" clip-path="url(#clipPath28)" stroke="none"
       >Terminar sessão como</text
-      ><text x="51" xml:space="preserve" y="42" clip-path="url(#clipPath28)" stroke="none"
-      >Administrador</text
+      ><text x="52" xml:space="preserve" y="42" clip-path="url(#clipPath28)" stroke="none"
+      >administrador</text
     ></g
     ><g font-size="11px" transform="translate(1116,588)" fill-opacity="1" fill="rgb(122,207,245)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" font-family="sans-serif" stroke="rgb(122,207,245)" stroke-opacity="1"
     ><circle r="7.5" clip-path="url(#clipPath18)" cx="14.5" cy="7.5" stroke="none"
