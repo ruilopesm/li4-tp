@@ -19,20 +19,20 @@ else
         <p class="text-sm">(@products.Count())</p>
     </div>
 
-    <button @onclick="() => modalDialog!.Open()" class="flex flex-row items-center mt-4 -mb-1 space-x-1">
+    <button @onclick="() => newProductModalDialog!.Open()" class="flex flex-row items-center mt-4 -mb-1 space-x-1">
         <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M4 12H20M12 4V20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <p>Criar produto</p>
     </button>
 
-    <ModalDialog @ref="modalDialog" Title="Criar produto" Type="ModalDialog.ActionType.Create">
+    <ModalDialog @ref="newProductModalDialog" Title="Criar produto" Type="ModalDialog.ActionType.Create">
         <EditForm EditContext="_newProductFormContext" class="space-y-3">
             <DataAnnotationsValidator />
             <div>
                 <label for="model" class="block text-md font-medium">Modelo</label>
                 <InputSelect @bind-Value="_newProductModel.Model" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
-                    @* TODO: List actual products *@
+                    @* TODO: List actual models *@
                     <option value="" disabled selected hidden>Selecionar modelo</option>
                     <option>iPhone 14</option>
                 </InputSelect>
@@ -112,7 +112,7 @@ else
                 </div>
                 @if (auction == null)
                 {
-                    <button class="flex flex-row items-center space-x-1">
+                    <button @onclick="() => editProductModalDialog!.Open()" class="flex flex-row items-center space-x-1">
                         <svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <title/>
                             <g id="Complete">
@@ -126,6 +126,50 @@ else
                         </svg>
                         <p>Editar</p>
                     </button>
+
+                    @* TODO: This is only frontend *@
+                    <ModalDialog @ref="editProductModalDialog" Title="Editar produto" Type="ModalDialog.ActionType.Update">
+                        <EditForm EditContext="_editProductFormContext" class="space-y-3">
+                            <DataAnnotationsValidator />
+                            <div>
+                                <label for="model" class="block text-md font-medium">Modelo</label>
+                                <InputSelect @bind-Value="_editProductModel.Model" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
+                                    @* TODO: List actual models *@
+                                    <option value="" disabled selected hidden>Selecionar modelo</option>
+                                    <option>iPhone 14</option>
+                                </InputSelect>
+                            </div>
+                            <div class="flex flex-row justify-between">
+                                <div>
+                                    <label for="state" class="block text-md font-medium">Estado</label>
+                                    <InputSelect @bind-Value="_editProductModel.State" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
+                                        <option value="" disabled selected hidden>Selecionar estado</option>
+                                        <option>Usado</option>
+                                        <option>Recondicionado</option>
+                                        <option>Retornado</option>
+                                    </InputSelect>
+                                </div>
+                                <div>
+                                    <label for="condition" class="block text-md font-medium">Condição</label>
+                                    <InputSelect @bind-Value="_editProductModel.Condition" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
+                                        <option value="" disabled selected hidden>Selecionar condição</option>
+                                        <option>Excelente</option>
+                                        <option>Bom</option>
+                                        <option>Mau</option>
+                                    </InputSelect>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="description" class="block text-md font-medium">Descrição</label>
+                                <InputTextArea @bind-Value="_editProductModel.Description" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" placeholder="Descrição do produto"/>
+                            </div>
+                            <div>
+                                <label for="images" class="block text-md font-medium">Fotos do produto</label>
+                                <InputFile @bind-Value="_editProductModel.Images" class="mt-0.5 block w-full rounded-md border-0 py-2 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" multiple />
+                            </div>
+                        </EditForm>
+                    </ModalDialog>
+
                     <button class="flex flex-row items-center space-x-1 text-pcs-red">
                         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 6H20L18.4199 20.2209C18.3074 21.2337 17.4512 22 16.4321 22H7.56786C6.54876 22 5.69264 21.2337 5.5801 20.2209L4 6Z" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -169,7 +213,8 @@ else
         }
     }
 
-    private ModalDialog? modalDialog;
+    private ModalDialog? newProductModalDialog;
+    private ModalDialog? editProductModalDialog;
 
     // TODO: Make use of validation
     private class NewProductModel
@@ -189,15 +234,42 @@ else
             Images = new List<string>();
         }
     }
-
+    
     private EditContext? _newProductFormContext { get; set; }
     private ValidationMessageStore? _newProductValidationMessageStore { get; set; }
 
     private NewProductModel _newProductModel = new NewProductModel();
 
+    // FIXME: Should actually use the product values before opening the modal
+    private class EditProductModel
+    {
+        public string Model { get; set; }
+        public string State { get; set; }
+        public string Condition { get; set; }
+        public string Description { get; set; }
+        public List<string> Images { get; set; }
+
+        public EditProductModel()
+        {
+            Model = "iPhone 14";
+            State = "Usado";
+            Condition = "Excelente";
+            Description = "Com mínimos arranhões no vido traseiro.";
+            Images = new List<string>();
+        }
+    }
+
+    private EditContext? _editProductFormContext { get; set; }
+    private ValidationMessageStore? _editProductValidationMessageStore { get; set; }
+
+    private EditProductModel _editProductModel = new EditProductModel();
+
     protected override void OnInitialized()
     {
         _newProductFormContext = new EditContext(_newProductModel);
         _newProductValidationMessageStore = new ValidationMessageStore(_newProductFormContext);
+
+        _editProductFormContext = new EditContext(_newProductModel);
+        _editProductValidationMessageStore = new ValidationMessageStore(_newProductFormContext);
     }
 }
