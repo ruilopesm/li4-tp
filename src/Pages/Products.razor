@@ -110,7 +110,7 @@ else
                     </svg>
                     <p>Descrição</p>
                 </div>
-                @if (auction == null)
+                @if (auction != null)
                 {
                     <button @onclick="() => editProductModalDialog!.Open()" class="flex flex-row items-center space-x-1">
                         <svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -170,7 +170,7 @@ else
                         </EditForm>
                     </ModalDialog>
 
-                    <button class="flex flex-row items-center space-x-1 text-pcs-red">
+                    <button @onclick="() => removeProductModalDialog!.Open()" class="flex flex-row items-center space-x-1 text-pcs-red">
                         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 6H20L18.4199 20.2209C18.3074 21.2337 17.4512 22 16.4321 22H7.56786C6.54876 22 5.69264 21.2337 5.5801 20.2209L4 6Z" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M7.34491 3.14716C7.67506 2.44685 8.37973 2 9.15396 2H14.846C15.6203 2 16.3249 2.44685 16.6551 3.14716L18 6H6L7.34491 3.14716Z" stroke="#ff0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -180,6 +180,11 @@ else
                         </svg>
                         <p>Remover</p>
                     </button>
+
+                    @* TODO: This is only the frontend *@
+                    <ModalDialog @ref="removeProductModalDialog" Title="Remover produto" Type="ModalDialog.ActionType.Delete">
+                        <p class="text-lg">Tem a certeza que quer remover o produto? O processo não é reversível.</p>
+                    </ModalDialog>
                 }
                 else
                 {
@@ -237,7 +242,6 @@ else
     
     private EditContext? _newProductFormContext { get; set; }
     private ValidationMessageStore? _newProductValidationMessageStore { get; set; }
-
     private NewProductModel _newProductModel = new NewProductModel();
 
     // FIXME: Should actually use the product values before opening the modal
@@ -261,8 +265,9 @@ else
 
     private EditContext? _editProductFormContext { get; set; }
     private ValidationMessageStore? _editProductValidationMessageStore { get; set; }
-
     private EditProductModel _editProductModel = new EditProductModel();
+
+    private ModalDialog? removeProductModalDialog;
 
     protected override void OnInitialized()
     {
