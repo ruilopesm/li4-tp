@@ -23,17 +23,17 @@ VALUES (1, 5),
        (0, 6);
 
 INSERT INTO [Model] ([Name], [Color], [Storage])
-VALUES ('iPhone 15', 'Branco', '128GB'),
+VALUES ('iPhone 13', 'Branco', '128GB'),
        ('iPhone 14', 'Preto', '1TB'),
        ('iPhone 12', 'Preto', '256GB'),
-       ('iPhone 15 Pro Max', 'Titanio', '128GB');
+       ('iPhone 15', 'Titânio', '128GB');
 
 INSERT INTO [Model] ([Name], [Color])
 VALUES ('Pano de Limpeza', 'Branco');
 
 INSERT INTO [Model] ([Name], [Color], [Storage])
-VALUES ('Macbook Air M1', 'Cinzento', '256GB'),
-       ('Macbook Pro M1', 'Cinzento', '512GB');
+VALUES ('Macbook Air', 'Cinzento', '256GB'),
+       ('Macbook Pro', 'Cinzento', '512GB');
 
 INSERT INTO [Product] ([Description], [ModelID], [State], [Condition])
 VALUES ('Com poucas marcas de uso', 1, 'Excellent', 'Used'),
@@ -48,19 +48,19 @@ INSERT INTO [ProductPhoto] ([ProductID], [ImagePath])
 VALUES (1, 'assets/iphone-15-branco.png'),
        (2, 'assets/iphone-14-preto.png'),
        (3, 'assets/iphone-12-preto.png'),
-       (4, 'assets/iphone-15-pro-max-titanium.png'),
+       (4, 'assets/iphone-15-pro-titanium.png'),
        (5, 'assets/cleaning-cloth.png'),
        (6, 'assets/macbook-air-m1.png'),
        (7, 'assets/macbook-pro-m1.png');
 
 INSERT INTO [Auction] ([ProductID], [Start], [End], [StartPrice], [CurrentPrice], [PublisherID])
-VALUES (1, '2024-01-19 01:30:02', '2024-01-19 01:35:02', 700, 700, 1),
+VALUES (1, '2024-01-20 01:30:02', '2024-01-21 01:35:02', 700, 700, 1),
        (2, '2024-01-20 23:05:02', '2024-01-22 01:30:02', 600, 600, 1),
-       (3, '2024-01-19 01:30:02', '2024-05-22 01:30:02', 500, 500, 1),
-       (4, '2024-01-19 01:30:02', '2024-05-23 01:30:02', 400, 400, 1),
-       (5, '2024-01-19 01:30:02', '2024-01-20 01:30:02', 10, 10, 1),
-       (6, '2024-01-19 01:30:02', '2024-01-22 12:30:02', 1000, 1000, 1),
-       (7, '2024-01-19 01:30:02', '2024-01-22 19:30:02', 1500, 1500, 1);
+       (3, '2024-01-20 01:30:02', '2024-01-24 12:30:02', 500, 500, 1),
+       (4, '2024-01-20 01:30:02', '2024-01-24 01:30:02', 400, 400, 1),
+       (5, '2024-01-21 01:30:02', '2024-01-22 01:30:02', 10, 10, 1),
+       (6, '2024-01-24 01:30:02', '2024-01-25 01:19:02', 1000, 1000, 1),
+       (7, '2024-01-20 01:30:02', '2024-01-22 19:30:02', 1500, 1500, 1);
 
 INSERT INTO [Bid] ([AuctionID], [BidderNIF], [Value], [Date])
 VALUES (1, 123456789, 750, '2024-01-19 01:33:00'),
