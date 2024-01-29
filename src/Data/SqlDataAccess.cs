@@ -21,44 +21,35 @@ namespace OnlineAuctions.Data
 
         public async Task<List<T>> LoadData<T, U>(string sql, U parameters)
         {
-            using (_connection)
-            {
-                var data = await _connection.QueryAsync<T>(sql, parameters);
-                return data.ToList();
-            }
+            var data = await _connection.QueryAsync<T>(sql, parameters);
+            return data.ToList();
         }
 
         public Task SaveData<T>(string sql, T parameters)
         {
-            using (_connection)
-            {
-                return _connection.ExecuteAsync(sql, parameters);
-            }
+            return _connection.ExecuteAsync(sql, parameters);
         }
 
         public Task ExecuteTransaction<T>(Dictionary<string, T> queries)
         {
-            using (_connection)
+            _connection.Open();
+
+            using var transaction = _connection.BeginTransaction();
+            try
             {
-                _connection.Open();
-
-                using var transaction = _connection.BeginTransaction();
-                try
+                foreach (var query in queries)
                 {
-                    foreach (var query in queries)
-                    {
-                        _connection.Execute(query.Key, query.Value, transaction);
-                    }
+                    _connection.Execute(query.Key, query.Value, transaction);
+                }
 
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                    throw;
-                }
+                transaction.Commit();
             }
-
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
+            }
+            
             return Task.CompletedTask;
         }
     }
