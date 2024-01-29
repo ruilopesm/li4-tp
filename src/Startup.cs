@@ -31,6 +31,7 @@ namespace OnlineAuctions
             services.AddTransient<IAuctionService, AuctionService>();
             services.AddTransient<IBidService, BidService>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IModelService, ModelService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

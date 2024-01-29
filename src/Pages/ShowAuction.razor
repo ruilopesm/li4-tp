@@ -69,11 +69,11 @@ else
                 </li>
                 <li class="flex flex-row justify-between mx-6">
                     <p class="text-md font-bold">Condição</p>
-                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@auction.Product.ConditionString()</div>
+                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@ProductModel.ConditionString(auction.Product.Condition)</div>
                 </li>
                 <li class="flex flex-row justify-between mx-6">
                     <p class="text-md font-bold">Estado</p>
-                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@auction.Product.StateString()</div>
+                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@ProductModel.StateString(auction.Product.State)</div>
                 </li>
             </ul>
         </div>

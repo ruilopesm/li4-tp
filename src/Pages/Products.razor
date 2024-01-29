@@ -2,6 +2,7 @@
 
 @inject IProductService _productService
 @inject IAuctionService _auctionService
+@inject IModelService _modelService
 
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
@@ -26,15 +27,22 @@ else
         <p>Criar produto</p>
     </button>
 
-    <ModalDialog @ref="newProductModalDialog" Title="Criar produto" Type="ModalDialog.ActionType.Create">
+    <ModalDialog 
+        @ref="newProductModalDialog" 
+        Title="Criar produto" 
+        Type="ModalDialog.ActionType.Create"
+        SubmitCallback="() => CreateProductCallback()"
+    >
         <EditForm EditContext="_newProductFormContext" class="space-y-3">
             <DataAnnotationsValidator />
             <div>
                 <label for="model" class="block text-md font-medium">Modelo</label>
-                <InputSelect @bind-Value="_newProductModel.Model" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
-                    @* TODO: List actual models *@
+                <InputSelect @bind-Value="_newProductModel.ModelID" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
                     <option value="" disabled selected hidden>Selecionar modelo</option>
-                    <option>iPhone 14</option>
+                    @foreach (var model in models)
+                    {
+                        <option value="@model.ID">@model.Name</option>
+                    }
                 </InputSelect>
             </div>
             <div class="flex flex-row justify-between">
@@ -42,18 +50,18 @@ else
                     <label for="state" class="block text-md font-medium">Estado</label>
                     <InputSelect @bind-Value="_newProductModel.State" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
                         <option value="" disabled selected hidden>Selecionar estado</option>
-                        <option>Usado</option>
-                        <option>Recondicionado</option>
-                        <option>Retornado</option>
+                        <option value="@ProductState.Excellent">Excelente</option>
+                        <option value="@ProductState.Good">Bom</option>
+                        <option value="@ProductState.Bad">Mau</option>
                     </InputSelect>
                 </div>
                 <div>
                     <label for="condition" class="block text-md font-medium">Condição</label>
                     <InputSelect @bind-Value="_newProductModel.Condition" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
                         <option value="" disabled selected hidden>Selecionar condição</option>
-                        <option>Excelente</option>
-                        <option>Bom</option>
-                        <option>Mau</option>
+                        <option value="@Condition.Used">Usado</option>
+                        <option value="@Condition.Refurbished">Recondicionado</option>
+                        <option value="@Condition.Returned">Retornado</option>
                     </InputSelect>
                 </div>
             </div>
@@ -97,8 +105,8 @@ else
             </div>
             <div class="flex items-center justify-between gap-x-4 flex-none">
                 <ul class="block">
-                    <li class="text-sm leading-6">@product.ConditionString()</li>
-                    <li class="text-sm leading-5">@product.StateString()</li>
+                    <li class="text-sm leading-6">@ProductModel.StateString(product.State)</li>
+                    <li class="text-sm leading-6">@ProductModel.ConditionString(product.Condition)</li>
                 </ul>
             </div>
             <div class="flex flex-row items-center absolute right-10 space-x-5">
@@ -110,9 +118,10 @@ else
                     </svg>
                     <p>Descrição</p>
                 </div>
+                
                 @if (auction == null)
                 {
-                    <button @onclick="() => editProductModalDialog!.Open()" class="flex flex-row items-center space-x-1">
+                    <button @onclick="() => { productIdToEdit = product.ID; OpenEditModal(product); }" class="flex flex-row items-center space-x-1">
                         <svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <title/>
                             <g id="Complete">
@@ -127,35 +136,41 @@ else
                         <p>Editar</p>
                     </button>
 
-                    @* TODO: This is only frontend *@
-                    <ModalDialog @ref="editProductModalDialog" Title="Editar produto" Type="ModalDialog.ActionType.Update">
+                    <ModalDialog 
+                        @ref="editProductModalDialog" 
+                        Title="Editar produto" 
+                        Type="ModalDialog.ActionType.Update"
+                        SubmitCallback="() => EditProductCallback()"
+                    >
                         <EditForm EditContext="_editProductFormContext" class="space-y-3">
                             <DataAnnotationsValidator />
                             <div>
                                 <label for="model" class="block text-md font-medium">Modelo</label>
-                                <InputSelect @bind-Value="_editProductModel.Model" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
-                                    @* TODO: List actual models *@
-                                    <option value="" disabled selected hidden>Selecionar modelo</option>
-                                    <option>iPhone 14</option>
+                                <InputSelect @bind-Value="_editProductModel.ModelID" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
+                                    <option value="@_editProductModel.ModelID" selected hidden>@_editProductModel.ModelName</option>
+                                    @foreach (var model in models)
+                                    {
+                                        <option value="@model.Name">@model.Name</option>
+                                    }
                                 </InputSelect>
                             </div>
                             <div class="flex flex-row justify-between">
                                 <div>
                                     <label for="state" class="block text-md font-medium">Estado</label>
                                     <InputSelect @bind-Value="_editProductModel.State" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
-                                        <option value="" disabled selected hidden>Selecionar estado</option>
-                                        <option>Usado</option>
-                                        <option>Recondicionado</option>
-                                        <option>Retornado</option>
+                                        <option value="@_editProductModel.State" selected hidden>@ProductModel.StateString(_editProductModel.State)</option>
+                                        <option value="@ProductState.Excellent">Excelente</option>
+                                        <option value="@ProductState.Good">Bom</option>
+                                        <option value="@ProductState.Bad">Mau</option>
                                     </InputSelect>
                                 </div>
                                 <div>
                                     <label for="condition" class="block text-md font-medium">Condição</label>
                                     <InputSelect @bind-Value="_editProductModel.Condition" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
-                                        <option value="" disabled selected hidden>Selecionar condição</option>
-                                        <option>Excelente</option>
-                                        <option>Bom</option>
-                                        <option>Mau</option>
+                                        <option value="@_editProductModel.Condition" selected hidden>@ProductModel.ConditionString(_editProductModel.Condition)</option>
+                                        <option value="@Condition.Used">Usado</option>
+                                        <option value="@Condition.Refurbished">Recondicionado</option>
+                                        <option value="@Condition.Returned">Retornado</option>
                                     </InputSelect>
                                 </div>
                             </div>
@@ -212,6 +227,7 @@ else
 
 @code {
     private List<(ProductModel, AuctionModel?)> products;
+    private List<ModelModel> models;
 
     protected override async Task OnInitializedAsync()
     {
@@ -223,22 +239,23 @@ else
             var auction = await _auctionService.GetProductAuction(product.ID);
             products.Add((product, auction));
         }
+
+        models = await _modelService.GetModels();
     }
 
     // New product
     private class NewProductModel
     {
-        public string Model { get; set; }
-        public string State { get; set; }
-        public string Condition { get; set; }
+        public string ModelName { get; set; }
+        public int ModelID { get; set; }
+        public ProductState State { get; set; }
+        public Condition Condition { get; set; }
         public string Description { get; set; }
         public List<string> Images { get; set; }
 
         public NewProductModel()
         {
-            Model = "";
-            State = "";
-            Condition = "";
+            ModelName = "";
             Description = "";
             Images = new List<string>();
         }
@@ -248,38 +265,91 @@ else
     private EditContext? _newProductFormContext { get; set; }
     private ValidationMessageStore? _newProductValidationMessageStore { get; set; }
     private NewProductModel _newProductModel = new NewProductModel();
+    private async void CreateProductCallback()
+    {
+        // Create the product in the database
+        var product = await _productService.CreateProduct(
+            _newProductModel.ModelID,
+            _newProductModel.State,
+            _newProductModel.Condition,
+            _newProductModel.Description, 
+            _newProductModel.Images
+        );
+
+        // Create the product in the in-memory state
+        products.Add((product, null));
+
+        // Re-render the component
+        StateHasChanged();
+    }
 
     // Edit product
     private class EditProductModel
     {
-        public string Model { get; set; }
-        public string State { get; set; }
-        public string Condition { get; set; }
+        public string ModelName { get; set; }
+        public int ModelID { get; set; }
+        public ProductState State { get; set; }
+        public Condition Condition { get; set; }
         public string Description { get; set; }
         public List<string> Images { get; set; }
 
         public EditProductModel()
         {
-            Model = "iPhone 14";
-            State = "Usado";
-            Condition = "Excelente";
-            Description = "Com mínimos arranhões no vido traseiro.";
+            ModelName = "";
+            Description = "";
             Images = new List<string>();
         }
     }
 
+    private int productIdToEdit;
     private ModalDialog? editProductModalDialog;
     private EditContext? _editProductFormContext { get; set; }
     private ValidationMessageStore? _editProductValidationMessageStore { get; set; }
     private EditProductModel _editProductModel = new EditProductModel();
+    private void OpenEditModal(ProductModel product)
+    {
+        productIdToEdit = product.ID;
+        _editProductModel.ModelName = product.Model.Name;
+        _editProductModel.ModelID = product.Model.ID;
+        _editProductModel.State = product.State;
+        _editProductModel.Condition = product.Condition;
+        _editProductModel.Description = product?.Description ?? "";
+        _editProductModel.Images = product?.Images ?? new List<string>();
+
+        editProductModalDialog!.Open();
+    }
+    private async void EditProductCallback()
+    {
+        // Update the database
+        await _productService.UpdateProduct(
+            productIdToEdit, 
+            _editProductModel.ModelID,
+            _editProductModel.State,
+            _editProductModel.Condition,
+            _editProductModel.Description, 
+            _editProductModel.Images
+        );
+
+        // Update the in-memory state
+        var product = products.Find(p => p.Item1.ID == productIdToEdit);
+        product.Item1.Model.Name = _editProductModel.ModelName;
+        product.Item1.Model.ID = _editProductModel.ModelID;
+        product.Item1.State = _editProductModel.State;
+        product.Item1.Condition = _editProductModel.Condition;
+        product.Item1.Description = _editProductModel.Description;
+        product.Item1.Images = _editProductModel.Images;
+
+        // Re-render the component
+        StateHasChanged();
+    }
 
     // Remove product
     private int productIdToRemove;
     private ModalDialog? removeProductModalDialog;
-    private void RemoveProductCallback()
+    private async void RemoveProductCallback()
     {
         // Delete from the database
-        _productService.DeleteProduct(productIdToRemove);
+        await _productService.DeleteProduct(productIdToRemove);
 
         // Delete from the in-memory state
         products.RemoveAll(p => p.Item1.ID == productIdToRemove);

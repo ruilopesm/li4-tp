@@ -55,8 +55,8 @@ CREATE TABLE [Product]
     [ID]           INT          NOT NULL PRIMARY KEY IDENTITY,
     [Description]  VARCHAR(50)  NOT NULL,
     [ModelID]      INT          NOT NULL,
-    [State]        VARCHAR(10)  NOT NULL CHECK ([State] IN ('Excellent', 'Good', 'Bad')),
-    [Condition]    VARCHAR(11)  NOT NULL CHECK ([Condition] IN ('Used', 'Refurbished', 'Returned')),
+    [State]        VARCHAR(10)  NOT NULL,
+    [Condition]    VARCHAR(11)  NOT NULL,
 
     FOREIGN KEY ([ModelID]) REFERENCES [Model] ([ID]),
 )

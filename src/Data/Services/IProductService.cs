@@ -6,7 +6,9 @@ public interface IProductService
 {
     Task<List<ProductModel>> GetProducts();
 
-    Task<int> CreateProduct(string description, int modelId, ProductState state, Condition condition, List<string> images);
+    Task<ProductModel> CreateProduct(int modelId, ProductState state, Condition condition, string description, List<string> images);
+
+    Task UpdateProduct(int productId, int modelId, ProductState state, Condition condition, string description, List<string> images);
 
     Task DeleteProduct(int productId);
 }

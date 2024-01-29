@@ -7,9 +7,9 @@ namespace OnlineAuctions.Data.Models
         public List<string> Images { get; set; }
         public ModelModel Model { get; set; }
         public ProductState State { get; set; }
-        public string StateString()
+        public static string StateString(ProductState state)
         {
-            return State switch
+            return state switch
             {
                 ProductState.Excellent => "Excelente",
                 ProductState.Good => "Bom",
@@ -18,9 +18,9 @@ namespace OnlineAuctions.Data.Models
             };
         }
         public Condition Condition { get; set; }
-        public string ConditionString()
+        public static string ConditionString(Condition condition)
         {
-            return Condition switch
+            return condition switch
             {
                 Condition.Used => "Usado",
                 Condition.Refurbished => "Recondicionado",
