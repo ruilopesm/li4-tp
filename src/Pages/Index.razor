@@ -16,6 +16,8 @@
 }
 else
 {
+    var processedAuctions = ProcessAuctions();
+
     <div class="flex flex-row items-center space-x-6">
         <p class="text-4xl font-bold">Leilões</p>
         <div class="relative w-[700px]">
@@ -34,13 +36,13 @@ else
         </div>
         <p class="text-md">
             A mostrar
-            @if (auctions.Count == 1)
+            @if (processedAuctions.Count == 1)
             {
                 <span>1 leilão</span>
             }
             else
             {
-                <span>@auctions.Count leilões</span>
+                <span>@processedAuctions.Count leilões</span>
             }
         </p>
     </div>
@@ -167,7 +169,7 @@ else
     }
 
     <ul class="flex flex-col my-6 space-y-6">
-    @foreach (var auction in ProcessedAuctions())
+    @foreach (var auction in processedAuctions)
     {
         <li class="relative flex items-center justify-between px-6 py-5 bg-pcs-lightest-gray rounded-xl border">
             <div class="flex items-center gap-x-4 pr-6 w-1/2 flex-none">
@@ -251,7 +253,7 @@ else
         } 
     }
 
-    private List<AuctionModel> ProcessedAuctions()
+    private List<AuctionModel> ProcessAuctions()
     {
         var searchedAuctions = auctions!;
 
@@ -275,11 +277,11 @@ else
             _ => throw new NotImplementedException(),
         };
 
-        return filteredAuctions.ToList(); 
+        return filteredAuctions.ToList();
     }
 
     // Searching
-    private string searchQuery = "";
+    private string searchQuery { get; set; }= ""; 
 
     // Sorting
     private bool isSortingDropdownOpen = false;
