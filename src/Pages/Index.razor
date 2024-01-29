@@ -253,12 +253,29 @@ else
 
     private List<AuctionModel> ProcessedAuctions()
     {
-        if (searchQuery == "")
-        {
-            return auctions!;
-        }
+        var searchedAuctions = auctions!;
 
-        return auctions!.Where(auction => auction.Product.Model.Name.ToLower().Contains(searchQuery.ToLower())).ToList();
+        if (searchQuery != "")
+        {
+            searchedAuctions = auctions!.Where(auction => auction.Product.Model.Name.ToLower().Contains(searchQuery.ToLower())).ToList();
+        }
+        var sortedAuctions = currentSortingOption switch
+        {
+            SortingOption.MostRecent => searchedAuctions.OrderByDescending(auction => auction.End),
+            SortingOption.HighestPrice => searchedAuctions.OrderByDescending(auction => auction.CurrentPrice),
+            SortingOption.LowestPrice => searchedAuctions.OrderBy(auction => auction.CurrentPrice),
+            _ => throw new NotImplementedException(),
+        };
+        var filteredAuctions = currentFilteringOption switch
+        {
+            FilteringOption.Open => sortedAuctions.Where(auction => auction.End > DateTime.Now),
+            FilteringOption.Closed => sortedAuctions.Where(auction => auction.End <= DateTime.Now),
+            FilteringOption.Cancelled => sortedAuctions.Where(auction => auction.IsCancelled),
+            null => sortedAuctions,
+            _ => throw new NotImplementedException(),
+        };
+
+        return filteredAuctions.ToList(); 
     }
 
     // Searching
