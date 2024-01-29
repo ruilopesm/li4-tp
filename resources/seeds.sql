@@ -42,7 +42,8 @@ VALUES ('Com poucas marcas de uso', 1, 'Excellent', 'Used'),
        ('Com vidro de trás partido', 4, 'Bad', 'Used'),
        ('Um pouco sujo', 5, 'Good', 'Returned'),
        ('Como novo', 6, 'Excellent', 'Refurbished'),
-       ('Com marcas de uso', 7, 'Good', 'Used');
+       ('Com marcas de uso', 7, 'Good', 'Used'),
+       ('Com sujidade', 1, 'Good', 'Used');
 
 INSERT INTO [ProductPhoto] ([ProductID], [ImagePath])
 VALUES (1, 'assets/iphone-15-branco.png'),
@@ -51,7 +52,8 @@ VALUES (1, 'assets/iphone-15-branco.png'),
        (4, 'assets/iphone-15-pro-titanium.png'),
        (5, 'assets/cleaning-cloth.png'),
        (6, 'assets/macbook-air-m1.png'),
-       (7, 'assets/macbook-pro-m1.png');
+       (7, 'assets/macbook-pro-m1.png'),
+       (8, 'assets/iphone-15-branco.png');
 
 INSERT INTO [Auction] ([ProductID], [Start], [End], [StartPrice], [CurrentPrice], [PublisherID])
 VALUES (1, '2024-01-20 01:30:02', '2024-01-21 01:35:02', 700, 700, 1),

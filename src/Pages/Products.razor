@@ -71,16 +71,16 @@ else
     <ul class="flex flex-col my-6 space-y-4">
     @foreach (var (product, auction) in products)
     {
-        <li class="relative flex items-center px-6 py-3 bg-pcs-lightest-gray rounded-xl border">
+        <li class="relative flex items-center px-6 py-3 bg-pcs-lightest-gray rounded-xl border" @key="product.ID">
             <p class="text-2xl ml-2 mr-6">@product.ID.</p>
             <div class="flex items-center gap-x-4 pr-6 w-1/2 flex-none">
                 @if (product.Images.Count >= 1)
                 {
-                    <img class="h-16 w-16 flex-none rounded-full bg-gray-50" src="@product.Images[0]">
+                    <img class="h-16 w-16 flex-none" src="@product.Images[0]">
                 }
                 else
                 {
-                    <div class="h-16 w-16 flex-none rounded-full bg-gray-50"></div>
+                    <div class="h-16 w-16 flex-none rounded-full bg-gray-50 animate-pulse"></div>
                 }
                 <div class="min-w-0 flex-auto">
                     <div class="flex flex-row items-center">
@@ -170,7 +170,10 @@ else
                         </EditForm>
                     </ModalDialog>
 
-                    <button @onclick="() => removeProductModalDialog!.Open()" class="flex flex-row items-center space-x-1 text-pcs-red">
+                    <button 
+                        @onclick="() => { productIdToRemove = product.ID; removeProductModalDialog!.Open(); }" 
+                        class="flex flex-row items-center space-x-1 text-pcs-red"
+                    >
                         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4 6H20L18.4199 20.2209C18.3074 21.2337 17.4512 22 16.4321 22H7.56786C6.54876 22 5.69264 21.2337 5.5801 20.2209L4 6Z" stroke="#c73030" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M7.34491 3.14716C7.67506 2.44685 8.37973 2 9.15396 2H14.846C15.6203 2 16.3249 2.44685 16.6551 3.14716L18 6H6L7.34491 3.14716Z" stroke="#c73030" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -181,8 +184,12 @@ else
                         <p>Remover</p>
                     </button>
 
-                    @* TODO: This is only the frontend *@
-                    <ModalDialog @ref="removeProductModalDialog" Title="Remover produto" Type="ModalDialog.ActionType.Delete">
+                    <ModalDialog 
+                        @ref="removeProductModalDialog" 
+                        Title="Remover produto" 
+                        SubmitCallback="() => RemoveProductCallback()"
+                        Type="ModalDialog.ActionType.Delete"
+                    >
                         <p class="text-lg">Tem a certeza que quer remover o produto? O processo não é reversível.</p>
                     </ModalDialog>
                 }
@@ -218,10 +225,7 @@ else
         }
     }
 
-    private ModalDialog? newProductModalDialog;
-    private ModalDialog? editProductModalDialog;
-
-    // TODO: Make use of validation
+    // New product
     private class NewProductModel
     {
         public string Model { get; set; }
@@ -239,12 +243,13 @@ else
             Images = new List<string>();
         }
     }
-    
+
+    private ModalDialog? newProductModalDialog; 
     private EditContext? _newProductFormContext { get; set; }
     private ValidationMessageStore? _newProductValidationMessageStore { get; set; }
     private NewProductModel _newProductModel = new NewProductModel();
 
-    // FIXME: Should actually use the product values before opening the modal
+    // Edit product
     private class EditProductModel
     {
         public string Model { get; set; }
@@ -263,18 +268,33 @@ else
         }
     }
 
+    private ModalDialog? editProductModalDialog;
     private EditContext? _editProductFormContext { get; set; }
     private ValidationMessageStore? _editProductValidationMessageStore { get; set; }
     private EditProductModel _editProductModel = new EditProductModel();
 
+    // Remove product
+    private int productIdToRemove;
     private ModalDialog? removeProductModalDialog;
+    private void RemoveProductCallback()
+    {
+        // Delete from the database
+        _productService.DeleteProduct(productIdToRemove);
 
+        // Delete from the in-memory state
+        products.RemoveAll(p => p.Item1.ID == productIdToRemove);
+
+        // Re-render the component
+        StateHasChanged();
+    }
+
+    // Initialize edit contexts
     protected override void OnInitialized()
     {
         _newProductFormContext = new EditContext(_newProductModel);
         _newProductValidationMessageStore = new ValidationMessageStore(_newProductFormContext);
 
-        _editProductFormContext = new EditContext(_newProductModel);
-        _editProductValidationMessageStore = new ValidationMessageStore(_newProductFormContext);
+        _editProductFormContext = new EditContext(_editProductModel);
+        _editProductValidationMessageStore = new ValidationMessageStore(_editProductFormContext);
     }
 }

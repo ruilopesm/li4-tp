@@ -78,7 +78,13 @@
     public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
-    public EventCallback Submit { get; set; }
+    public EventCallback SubmitCallback { get; set; }
+
+    private async Task Submit()
+    {
+        await SubmitCallback.InvokeAsync(null);
+        Close();
+    }
 
     private bool showModal = false;
 

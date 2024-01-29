@@ -12,30 +12,6 @@ public class ProductService : IProductService
         _db = db;
     }
 
-    public async Task<ProductModel?> GetProduct(int id)
-    {
-        const string sql = @"SELECT * FROM dbo.Product LEFT JOIN dbo.Model ON Product.ModelID = Model.ID WHERE Product.ID = @ID";
-
-        var data = await _db.Connection.QueryAsync<ProductModel, ModelModel, ProductModel>(sql, (product, model) =>
-        {
-            product.Model = model;
-            return product;
-        }, new { ID = id }, splitOn: "ID");
-
-        const string sql2 = @"SELECT ImagePath FROM dbo.ProductPhoto WHERE ProductID = @ID";
-
-        var images = await _db.Connection.QueryAsync<string>(sql2, new { ID = id });
-
-        var productModel = data.FirstOrDefault();
-
-        if (productModel != null)
-        {
-            productModel.Images = images.ToList();
-        }
-
-        return productModel;
-    }
-
     public async Task<List<ProductModel>> GetProducts()
     {
         const string sql =
@@ -84,5 +60,12 @@ public class ProductService : IProductService
         }
 
         return id;
+    }
+
+    public async Task DeleteProduct(int productId)
+    {
+        const string sql = @"DELETE FROM dbo.Product WHERE ID = @ID";
+
+        await _db.Connection.ExecuteAsync(sql, new { ID = productId });
     }
 }
