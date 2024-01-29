@@ -116,5 +116,21 @@ namespace OnlineAuctions.Data.Services
             ";
             await _db.SaveData(sql, new { Name = name, Email = email, Id = adminId });
         }
+
+        public async Task Withdraw(string email, decimal value)
+        {
+            const string sql = @"
+                UPDATE dbo.Bidder SET Balance = Balance - @Value WHERE UserId = (SELECT Id FROM dbo.[User] WHERE Email = @Email)";
+
+            await _db.SaveData(sql, new { Email = email, Value = value });
+        }
+
+        public async Task Deposit(string email, decimal value)
+        {
+            const string sql = @"
+                UPDATE dbo.Bidder SET Balance = Balance + @Value WHERE UserId = (SELECT Id FROM dbo.[User] WHERE Email = @Email)";
+
+            await _db.SaveData(sql, new { Email = email, Value = value });
+        }
     }
 }

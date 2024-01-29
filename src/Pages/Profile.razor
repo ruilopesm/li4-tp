@@ -1,25 +1,28 @@
 @page "/profile"
 
 @inject AuthenticationStateProvider AuthProvider
-@inject IUserService _db
+@inject IUserService UserService
+@inject IJSRuntime Js
+@inject NavigationManager NavManager
 
 <PageTitle>Meu Perfil</PageTitle>
 
-@if (user == null)
+@if (_user == null)
 {
     <p>Carregando...</p>
 }
 else
 {
-    <div class="text-4xl font-bold">Meu Perfil (@user.Name)</div>
+    <div class="text-4xl font-bold">Meu Perfil (@_user.Name)</div>
     <div class="grid grid-cols-2 gap-x-16">
-    <ul class="flex flex-col my-6 space-y-4">
-        @foreach (var value in _loadValues)
+        <ul class="flex flex-col my-6 space-y-4">
+            @foreach (var value in _loadValues)
             {
                 <li class="relative flex items-center justify-between px-10 py-6 bg-gray-100 rounded-xl border">
                     <p class="text-xl">Carregar <span class="underline">@Math.Round(value, 2)€</span></p>
                     <button
-                        class="flex items-center justify-center bg-pcs-green hover:bg-scs-green px-8 py-2 text-white rounded-xl">
+                        class="flex items-center justify-center bg-pcs-green hover:bg-scs-green px-8 py-2 text-white rounded-xl"
+                        @onclick="() => Deposit(value)">
                         <p class="font-bold">Carregar fundos</p>
                     </button>
                 </li>
@@ -31,7 +34,8 @@ else
                 <li class="relative flex items-center justify-between px-10 py-6 bg-gray-100 rounded-xl border">
                     <p class="text-xl">Levantar <span class="underline">@Math.Round(value, 2)€</span></p>
                     <button
-                        class="flex items-center justify-center bg-pcs-blue hover:bg-scs-blue px-8 py-2 text-white rounded-xl">
+                        class="flex items-center justify-center @WithdrawButtonClass(value) px-8 py-2 text-white rounded-xl"
+                        @onclick="() => Withdraw(value)">
                         <p class="font-bold">Levantar fundos</p>
                     </button>
                 </li>
@@ -41,22 +45,50 @@ else
 }
 
 @code {
-    private BidderModel? user;
+    private BidderModel? _user;
 
-    private List<decimal> _loadValues = new List<decimal> { 100, 250, 500, 750, 1000 };
-    private List<decimal> _withdrawValues = new List<decimal> { 100, 200, 500, 1000 };
+    private readonly List<decimal> _loadValues = new() { 100.00m, 250.00m, 500.00m, 750.00m, 1000.00m };
+    private readonly List<decimal> _withdrawValues = new() { 100.00m, 200.00m, 500.00m, 1000.00m };
+
+    private string WithdrawButtonClass(decimal value) => _user!.Balance >= value && value > 0 ? "bg-pcs-blue hover:bg-scs-blue" : "bg-pcs-gray cursor-not-allowed";
 
     protected override async Task OnInitializedAsync()
     {
         var ourProvider = (AuthProvider)AuthProvider;
-        string? email = await ourProvider.GetEmail();
+        var email = await ourProvider.GetEmail();
         if (email != null)
         {
-            user = await _db.GetBidder(email);
-            if (user != null)
+            _user = await UserService.GetBidder(email);
+            if (_user != null)
             {
-                _withdrawValues.Add(user.Balance);
+                _withdrawValues.Add(_user.Balance);
             }
         }
     }
+
+    private async void Withdraw(decimal value)
+    {
+        if (_user!.Balance < value)
+        {
+            return;
+        }
+
+        await UserService.Withdraw(_user!.Email, value);
+        _user.Balance -= value;
+
+        await Js.InvokeVoidAsync("alert", "Levantamento de " + value + " efetuado com sucesso.");
+
+        NavManager.NavigateTo("/profile", true);
+    }
+
+    private async void Deposit(decimal value)
+    {
+        await UserService.Deposit(_user!.Email, value);
+        _user.Balance += value;
+
+        await Js.InvokeVoidAsync("alert", "Depósito de " + value + " efetuado com sucesso.");
+
+        NavManager.NavigateTo("/profile", true);
+    }
+
 }

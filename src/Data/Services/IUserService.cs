@@ -23,5 +23,9 @@ namespace OnlineAuctions.Data.Services
         Task UpdateAdmin(int adminId, string name, string email, string passwordHash);
 
         Task UpdateAdmin(int adminId, string name, string email);
+
+        Task Withdraw(string email, decimal value);
+
+        Task Deposit(string email, decimal value);
     }
 }
