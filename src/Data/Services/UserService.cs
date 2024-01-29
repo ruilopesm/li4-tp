@@ -81,5 +81,24 @@ namespace OnlineAuctions.Data.Services
             ";
             await _db.SaveData(sql, new { InternalId = adminModel.InternalID, Id = adminModel.ID });
         }
+
+        public async Task<AdminModel> CreateAdmin(string name, string email, string passwordHash)
+        {
+            var queries = new Dictionary<string, dynamic>
+            {
+                {
+                    @"INSERT INTO dbo.[User] (Name, Email, PasswordHash, Role) VALUES (@Name, @Email, @PasswordHash, @Role)",
+                    new { Name = name, Email = email, PasswordHash = passwordHash, Role = "Admin" }
+                },
+                {
+                    @"INSERT INTO dbo.Admin (UserId) VALUES ((SELECT Id FROM dbo.[User] WHERE Email = @Email))",
+                    new { Email = email }
+                }
+            };
+
+            await _db.ExecuteTransaction(queries);
+
+            return (await GetAdmin(email))!;
+        }
     }
 }

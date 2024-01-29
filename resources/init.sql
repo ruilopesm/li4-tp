@@ -31,7 +31,7 @@ CREATE TABLE [Bidder]
 CREATE TABLE [Admin]
 (
     [InternalID]  INT IDENTITY PRIMARY KEY,
-    [IsMaster]    BIT NOT NULL,
+    [IsMaster]    BIT NOT NULL DEFAULT 0,
     [UserID]      INT NOT NULL,
 
     FOREIGN KEY ([UserID]) REFERENCES [User] ([ID]),

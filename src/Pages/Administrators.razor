@@ -1,4 +1,5 @@
 @page "/administrators"
+@using BCrypt.Net
 
 @inject AuthenticationStateProvider AuthProvider
 @inject IUserService _UserService
@@ -21,7 +22,7 @@ else
         <p>Criar nova conta de administrador</p>
     </button>
 
-    <ModalDialog @ref="newAdminModalDialog" Title="Criar administrador">
+    <ModalDialog @ref="newAdminModalDialog" Title="Criar administrador" Type="ModalDialog.ActionType.Create" SubmitCallback="() => CreateAdminCallback()">
         <EditForm EditContext="_newAdminFormContext" class="space-y-3">
             <DataAnnotationsValidator />
             <div>
@@ -175,21 +176,24 @@ else
     // TODO: Make use of validation
     private class NewAdminModel
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-
-        public NewAdminModel()
-        {
-            Name = "";
-            Email = "";
-            Password = "";
-        }
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Password { get; set; } = "";
     }
 
     private EditContext? _newAdminFormContext { get; set; }
     private ValidationMessageStore? _newAdminValidationMessageStore { get; set; }
-    private NewAdminModel _newAdminModel = new NewAdminModel();
+
+    private NewAdminModel _newAdminModel = new();
+    private async Task CreateAdminCallback()
+    {
+        string passwordHash = BCrypt.HashPassword(_newAdminModel.Password);
+
+        var admin = await _UserService.CreateAdmin(_newAdminModel.Name, _newAdminModel.Email, passwordHash);
+
+        admins.Add(admin);
+        adminsHasCreatedAuction.Add(admin.InternalID, false);
+    }
 
     private bool showPasswordNew = false;
     private string inputTypeNew => showPasswordNew ? "text" : "password";
@@ -238,5 +242,4 @@ else
 
         StateHasChanged();
     }
-
 }
