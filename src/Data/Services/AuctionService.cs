@@ -109,5 +109,14 @@ namespace OnlineAuctions.Data.Services
 
             return data.FirstOrDefault();
         }
+
+        public async Task<bool> HasAdminCreatedAnyAuction(int adminId)
+        {
+            const string sql = @"SELECT * FROM dbo.Auction WHERE PublisherID = @ID";
+
+            var data = await _db.Connection.QueryAsync<AuctionModel>(sql, new { ID = adminId });
+
+            return data.Any();
+        }
     }
 }

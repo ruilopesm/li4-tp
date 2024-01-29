@@ -72,5 +72,14 @@ namespace OnlineAuctions.Data.Services
 
             return _db.ExecuteTransaction(queries);
         }
+
+        public async Task DeleteAdmin(AdminModel adminModel)
+        {
+            const string sql = @"
+                DELETE FROM dbo.[Admin] WHERE InternalId = @InternalId;
+                DELETE FROM dbo.[User] WHERE Id = @Id;
+            ";
+            await _db.SaveData(sql, new { InternalId = adminModel.InternalID, Id = adminModel.ID });
+        }
     }
 }

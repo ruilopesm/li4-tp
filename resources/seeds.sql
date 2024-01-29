@@ -10,7 +10,8 @@ VALUES ('Rui', 'rui@mail.com', '$2a$11$zS0Lx9yTVhukWEOFdvI0XuKwBxNghrkaAnGViznvD
        ('Daniel', 'daniel@mail.com', '$2a$11$EGhXtR27QuSBAtvA3DJtFOUqupaCKN3zMlzh.Iru2SI.ws34sdp.K', 'Bidder'),
        ('Duarte', 'duarte@mail.com', '$2a$11$dXjw52VOe.TJB6pWA8dNtefJ7U.fAksdpzo2buptSEwGs7IpUFE8y', 'Bidder'),
        ('Master', 'master@mail.com', '$2a$11$5lonnuO9V6W/ZbmIDVRyReIY72WN0C5jgMYdU3lRSiYLlj3Ju2iTO', 'Admin'),
-       ('Admin', 'admin@mail.com', '$2a$11$BPrZSFwI009VrV5k359BAuchU9gr7fyo9ANwof9pG3BxsD1Q.ddYu', 'Admin');
+       ('Admin', 'admin@mail.com', '$2a$11$BPrZSFwI009VrV5k359BAuchU9gr7fyo9ANwof9pG3BxsD1Q.ddYu', 'Admin'),
+       ('Admin inutilizado', 'lazy@mail.com', '$2a$11$1RxUSIyOxC.to1yBzIEPVuqdUdANkGuno6dk.IfM4KeMNKLzCVJrG', 'Admin');
 
 INSERT INTO [Bidder] ([NIF], [BirthDate], [Balance], [PendingBalance], [UserID])
 VALUES (123456789, '1987-05-23', 300, 0, 1),
@@ -20,7 +21,8 @@ VALUES (123456789, '1987-05-23', 300, 0, 1),
 
 INSERT INTO [Admin] ([IsMaster], [UserID])
 VALUES (1, 5),
-       (0, 6);
+       (0, 6),
+       (0, 7);
 
 INSERT INTO [Model] ([Name], [Color], [Storage])
 VALUES ('iPhone 13', 'Branco', '128GB'),
@@ -57,7 +59,7 @@ INSERT INTO [Auction] ([ProductID], [Start], [End], [StartPrice], [CurrentPrice]
 VALUES (1, '2024-01-20 01:30:02', '2024-01-21 01:35:02', 700, 700, 1),
        (2, '2024-01-20 23:05:02', '2024-01-22 01:30:02', 600, 600, 1),
        (3, '2024-01-20 01:30:02', '2024-01-24 12:30:02', 500, 500, 1),
-       (4, '2024-01-20 01:30:02', '2024-01-24 01:30:02', 400, 400, 1);
+       (4, '2024-01-20 01:30:02', '2024-01-24 01:30:02', 400, 400, 2);
 
 INSERT INTO [Bid] ([AuctionID], [BidderNIF], [Value], [Date])
 VALUES (1, 123456789, 750, '2024-01-19 01:33:00'),
