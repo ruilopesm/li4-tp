@@ -24,7 +24,13 @@ else
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-            <input type="search" class="block w-full p-3.5 ps-10 text-md text-gray-900 border border-gray-300 rounded-2xl" placeholder="Pesquisar por produtos">
+            <input
+                @bind-Value="searchQuery"
+                @bind-Value:event="oninput"
+                type="search" 
+                class="block w-full p-3.5 ps-10 text-md text-gray-900 border border-gray-300 rounded-2xl" 
+                placeholder="Pesquisar por produtos"
+            >
         </div>
         <p class="text-md">
             A mostrar
@@ -46,7 +52,7 @@ else
                     @onclick="ToggleSortingDropdown"
                     class="text-sm border px-4 py-0.5 rounded-full flex items-center bg-pcs-lightest-gray"
                 >
-                    Ordenar por <p class="pl-1 text-pcs-gray">@GetOrderingOptionText()</p>
+                    Ordenar por <p class="pl-1 text-pcs-gray">@GetSortingOptionText()</p>
                     <svg class="-mr-1 -mb-0.5 h-5 w-5 text-pcs-medium-gray" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
                     </svg>
@@ -57,19 +63,19 @@ else
             {
                 <div class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <a 
-                        @onclick="() => UpdateOrderingOption(OrderingOption.HighestPrice)" 
+                        @onclick="() => UpdateSortingOption(SortingOption.HighestPrice)" 
                         class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
                     >
                         Preço mais alto
                     </a>
                     <a 
-                        @onclick="() => UpdateOrderingOption(OrderingOption.LowestPrice)" 
+                        @onclick="() => UpdateSortingOption(SortingOption.LowestPrice)" 
                         class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
                     >
                         Preço mais baixo
                     </a>
                     <a 
-                        @onclick="() => UpdateOrderingOption(OrderingOption.MostRecent)"
+                        @onclick="() => UpdateSortingOption(SortingOption.MostRecent)"
                         class="text-gray-700 hover:bg-gray-100 cursor-pointer block px-4 py-2 text-sm"
                     >
                         Mais recentes
@@ -161,7 +167,7 @@ else
     }
 
     <ul class="flex flex-col my-6 space-y-6">
-    @foreach (var auction in auctions)
+    @foreach (var auction in ProcessedAuctions())
     {
         <li class="relative flex items-center justify-between px-6 py-5 bg-pcs-lightest-gray rounded-xl border">
             <div class="flex items-center gap-x-4 pr-6 w-1/2 flex-none">
@@ -231,7 +237,6 @@ else
 
 @code {
     private List<AuctionModel>? auctions { get; set; }
-    
     private AdminModel? admin;
 
     protected override async Task OnInitializedAsync()
@@ -246,6 +251,20 @@ else
         } 
     }
 
+    private List<AuctionModel> ProcessedAuctions()
+    {
+        if (searchQuery == "")
+        {
+            return auctions!;
+        }
+
+        return auctions!.Where(auction => auction.Product.Model.Name.ToLower().Contains(searchQuery.ToLower())).ToList();
+    }
+
+    // Searching
+    private string searchQuery = "";
+
+    // Sorting
     private bool isSortingDropdownOpen = false;
     private void ToggleSortingDropdown()
     {
@@ -258,6 +277,30 @@ else
     }
     private void HideSortingDropdown() => isSortingDropdownOpen = false;
 
+    private enum SortingOption
+    {
+        MostRecent,
+        HighestPrice,
+        LowestPrice
+    }
+    private SortingOption currentSortingOption = SortingOption.MostRecent;
+    private string GetSortingOptionText()
+    {
+        return currentSortingOption switch
+        {
+            SortingOption.MostRecent => "Mais recentes",
+            SortingOption.HighestPrice => "Preço mais alto",
+            SortingOption.LowestPrice => "Preço mais baixo",
+            _ => throw new NotImplementedException(),
+        };
+    }
+    private void UpdateSortingOption(SortingOption option)
+    {
+        currentSortingOption = option;
+        isSortingDropdownOpen = false;
+    }
+
+    // Filtering
     private bool isFilteringDropdownOpen = false;
     private void ToggleFilteringDropdown()
     {
@@ -269,32 +312,7 @@ else
         isFilteringDropdownOpen = !isFilteringDropdownOpen;
     }
     private void HideFilteringDropdown() => isFilteringDropdownOpen = false;
-
-    // Ordering
-    private enum OrderingOption
-    {
-        MostRecent,
-        HighestPrice,
-        LowestPrice
-    }
-    private OrderingOption currentOrderingOption = OrderingOption.MostRecent;
-    private string GetOrderingOptionText()
-    {
-        return currentOrderingOption switch
-        {
-            OrderingOption.MostRecent => "Mais recentes",
-            OrderingOption.HighestPrice => "Preço mais alto",
-            OrderingOption.LowestPrice => "Preço mais baixo",
-            _ => throw new NotImplementedException(),
-        };
-    }
-    private void UpdateOrderingOption(OrderingOption option)
-    {
-        currentOrderingOption = option;
-        isSortingDropdownOpen = false;
-    }
-
-    // Filtering
+    
     private enum FilteringOption
     {
         Open,
