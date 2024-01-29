@@ -19,5 +19,9 @@ namespace OnlineAuctions.Data.Services
         Task DeleteAdmin(AdminModel adminModel);
 
         Task<AdminModel> CreateAdmin(string name, string email, string passwordHash);
+
+        Task UpdateAdmin(int adminId, string name, string email, string passwordHash);
+
+        Task UpdateAdmin(int adminId, string name, string email);
     }
 }

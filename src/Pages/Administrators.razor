@@ -76,7 +76,7 @@ else
                                     <td class="whitespace-nowrap px-3 py-4 text-sm">@admin.Name</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm">@admin.Email</td>
                                     <td class="flex flex-row whitespace-nowrap px-3 py-4 text-sm space-x-4">
-                                        <button @onclick="() => editAdminModalDialog!.Open()" class="flex flex-row items-center space-x-1">
+                                        <button @onclick="() => { OpenEditModal(admin); }" class="flex flex-row items-center space-x-1">
                                             <svg class="h-5 w-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <title/>
                                                 <g id="Complete">
@@ -91,8 +91,7 @@ else
                                             <p>Editar</p>
                                         </button>
 
-                                        @* TODO: This is only frontend *@
-                                        <ModalDialog @ref="editAdminModalDialog" Title="Editar administrador" Type="ModalDialog.ActionType.Update">
+                                        <ModalDialog @ref="_editAdminModalDialog" Title="Editar administrador" Type="ModalDialog.ActionType.Update" SubmitCallback="() => EditAdminCallback()">
                                             <EditForm EditContext="_editAdminFormContext" class="space-y-3">
                                                 <DataAnnotationsValidator />
                                                 <div>
@@ -106,7 +105,7 @@ else
                                                 <div>
                                                     <label for="password" class="block text-md font-medium">Password</label>
                                                     <div class="relative">
-                                                        <InputText @bind-Value="_editAdminModel.Password" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" type="@inputTypeEdit" placeholder="Escreva a password do administrador" />
+                                                        <InputText @bind-Value="_editAdminModel.Password" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" type="@inputTypeEdit" placeholder="Escreva uma nova password caso queira alterar" />
                                                         @if (!showPasswordEdit)
                                                         {
                                                             <svg @onclick="TogglePasswordVisibilityEdit" class="h-4 w-4 absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -171,7 +170,6 @@ else
     }
 
     private ModalDialog? newAdminModalDialog;
-    private ModalDialog? editAdminModalDialog;
 
     // TODO: Make use of validation
     private class NewAdminModel
@@ -199,24 +197,49 @@ else
     private string inputTypeNew => showPasswordNew ? "text" : "password";
     private void TogglePasswordVisibilityNew() => showPasswordNew = !showPasswordNew;
 
-    // FIXME: Should actually use the admin values before opening the modal
     private class EditAdminModel
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-
-        public EditAdminModel()
-        {
-            Name = "admin";
-            Email = "admin@mail.com";
-            Password = "admin1234567";
-        }
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Password { get; set; } = "";
     }
 
+    private int _adminIdToEdit;
+    private ModalDialog? _editAdminModalDialog;
     private EditContext? _editAdminFormContext { get; set; }
     private ValidationMessageStore? _editAdminValidationMessageStore { get; set; }
     private EditAdminModel _editAdminModel = new EditAdminModel();
+
+    private void OpenEditModal(AdminModel admin)
+    {
+        _adminIdToEdit = admin.ID;
+        _editAdminModel.Name = admin.Name;
+        _editAdminModel.Email = admin.Email;
+
+        _editAdminModalDialog!.Open();
+    }
+
+    private async void EditAdminCallback()
+    {
+        var admin = admins.Find(admin => admin.ID == _adminIdToEdit);
+
+        if (_editAdminModel.Password.Length > 0)
+        {
+            string passwordHash = BCrypt.HashPassword(_editAdminModel.Password);
+
+            await _UserService.UpdateAdmin(_adminIdToEdit, _editAdminModel.Name, _editAdminModel.Email, passwordHash);
+            admin.PasswordHash = passwordHash;
+        }
+        else
+        {
+            await _UserService.UpdateAdmin(_adminIdToEdit, _editAdminModel.Name, _editAdminModel.Email);
+        }
+
+        admin.Name = _editAdminModel.Name;
+        admin.Email = _editAdminModel.Email;
+
+        StateHasChanged();
+    }
 
     private bool showPasswordEdit = false;
     private string inputTypeEdit => showPasswordEdit ? "text" : "password";

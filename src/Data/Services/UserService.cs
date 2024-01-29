@@ -100,5 +100,21 @@ namespace OnlineAuctions.Data.Services
 
             return (await GetAdmin(email))!;
         }
+
+        public async Task UpdateAdmin(int adminId, string name, string email, string passwordHash)
+        {
+            const string sql = @"
+                UPDATE dbo.[User] SET Name = @Name, Email = @Email, PasswordHash = @PasswordHash WHERE Id = @Id;
+            ";
+            await _db.SaveData(sql, new { Name = name, Email = email, PasswordHash = passwordHash, Id = adminId });
+        }
+
+        public async Task UpdateAdmin(int adminId, string name, string email)
+        {
+            const string sql = @"
+                UPDATE dbo.[User] SET Name = @Name, Email = @Email WHERE Id = @Id;
+            ";
+            await _db.SaveData(sql, new { Name = name, Email = email, Id = adminId });
+        }
     }
 }
