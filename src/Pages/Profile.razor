@@ -50,7 +50,9 @@ else
     private readonly List<decimal> _loadValues = new() { 100.00m, 250.00m, 500.00m, 750.00m, 1000.00m };
     private readonly List<decimal> _withdrawValues = new() { 100.00m, 200.00m, 500.00m, 1000.00m };
 
-    private string WithdrawButtonClass(decimal value) => _user!.Balance >= value && value > 0 ? "bg-pcs-blue hover:bg-scs-blue" : "bg-pcs-gray cursor-not-allowed";
+    private bool CanWithdraw(decimal value) => _user!.Balance >= value && value > 0;
+
+    private string WithdrawButtonClass(decimal value) => CanWithdraw(value) ? "bg-pcs-blue hover:bg-scs-blue" : "bg-pcs-gray cursor-not-allowed";
 
     protected override async Task OnInitializedAsync()
     {
@@ -68,7 +70,7 @@ else
 
     private async void Withdraw(decimal value)
     {
-        if (_user!.Balance < value)
+        if (!CanWithdraw(value))
         {
             return;
         }
