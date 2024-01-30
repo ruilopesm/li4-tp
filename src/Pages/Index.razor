@@ -3,6 +3,7 @@
 @inject AuthenticationStateProvider AuthProvider
 @inject IAuctionService _auctionService
 @inject IUserService _userService
+@inject IProductService _productService
 
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
@@ -139,30 +140,48 @@ else
             <p>Criar leilão</p>
         </button>
 
-        <ModalDialog @ref="modalDialog" Title="Criar leilão" Type="ModalDialog.ActionType.Create">
+        <ModalDialog @ref="modalDialog" 
+            Title="Criar leilão" 
+            Type="ModalDialog.ActionType.Create" 
+            SubmitCallback="() => CreateAuctionCallback()"
+        >
             <EditForm EditContext="_newAuctionFormContext" class="space-y-3">
                 <DataAnnotationsValidator />
                 <div>
                     <label for="product" class="block text-md font-medium">Produto</label>
                     <InputSelect @bind-Value="_newAuctionModel.Product" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
-                        @* TODO: List actual products *@
                         <option value="" disabled selected hidden>Selecionar produto</option>
-                        <option>iPhone 14</option>
+                        @foreach (var product in products)
+                        {
+                            <option value="@product.ID"> @product.Model.Name </option>
+                        }
                     </InputSelect>
                 </div>
                 <div class="flex flex-row justify-between">
                     <div>
                         <label for="start" class="block text-md font-medium">Data começo</label>
-                        <InputDateTime @bind-Value="_newAuctionModel.Start" class="mt-0.5 border border-solid rounded-md w-full py-1.5 px-1 text-gray-700" placeholder="Data de Nascimento"/>
+                        <InputDate 
+                            Type="InputDateType.DateTimeLocal" 
+                            min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                            @bind-Value="_newAuctionModel.Start"
+                            class="mt-0.5 border border-solid rounded-md w-full py-1.5 px-1 text-gray-700" 
+                            placeholder="Data de Nascimento"
+                        />
                     </div>
                     <div>
                         <label for="start" class="block text-md font-medium">Data fim (prevista)</label>
-                        <InputDateTime @bind-Value="_newAuctionModel.End" class="mt-0.5 border border-solid rounded-md w-full py-1.5 px-1 text-gray-700" placeholder="Data de Nascimento"/>
+                        <InputDate 
+                            Type="InputDateType.DateTimeLocal" 
+                            min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                            @bind-Value="_newAuctionModel.End"
+                            class="mt-0.5 border border-solid rounded-md w-full py-1.5 px-1 text-gray-700" 
+                            placeholder="Data de Nascimento"
+                        />
                     </div>
                 </div>
                 <div>
                     <label for="initialPrice" class="block text-md font-medium">Valor inicial</label>
-                    <InputText @bind-Value="_newAuctionModel.InitialPrice" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" placeholder="470.30" />
+                    <InputNumber @bind-Value="_newAuctionModel.InitialPrice" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" placeholder="470.30" />
                 </div>
             </EditForm>
         </ModalDialog>
@@ -238,12 +257,14 @@ else
 }
 
 @code {
-    private List<AuctionModel>? auctions { get; set; }
+    private List<AuctionModel> auctions;
     private AdminModel? admin;
+    private List<ProductModel> products;
 
     protected override async Task OnInitializedAsync()
     {
         auctions = await _auctionService.GetAuctions();
+        products = await _productService.GetProducts();
         
         var ourProvider = (AuthProvider)AuthProvider;
         string? email = await ourProvider.GetEmail();
@@ -261,6 +282,7 @@ else
         {
             searchedAuctions = auctions!.Where(auction => auction.Product.Model.Name.ToLower().Contains(searchQuery.ToLower())).ToList();
         }
+
         var sortedAuctions = currentSortingOption switch
         {
             SortingOption.MostRecent => searchedAuctions.OrderByDescending(auction => auction.End),
@@ -268,6 +290,7 @@ else
             SortingOption.LowestPrice => searchedAuctions.OrderBy(auction => auction.CurrentPrice),
             _ => throw new NotImplementedException(),
         };
+
         var filteredAuctions = currentFilteringOption switch
         {
             FilteringOption.Open => sortedAuctions.Where(auction => auction.End > DateTime.Now),
@@ -368,38 +391,46 @@ else
         isFilteringDropdownOpen = false;
     }
     
-    private ModalDialog? modalDialog;
-
-    // TODO: Make use of the validation
+    // New auction
     private class NewAuctionModel
     {
         [Required(ErrorMessage = "O produto é obrigatório")]
-        public string Product { get; set; }
+        public int Product { get; set; }
 
         [Required(ErrorMessage = "A data de começo é obrigatória")]
         public DateTime Start { get; set; }
 
         [Required(ErrorMessage = "A data de fim é obrigatória")]
         public DateTime End { get; set; }
-
-        [Required(ErrorMessage = "O preço inicial é obrigatório")]
-        // FIXME: Should be a decimal
-        public string InitialPrice { get; set; }
+        
+        [Required(ErrorMessage = "O preço inicial é obrigatório"), Range(0, double.MaxValue, ErrorMessage = "O preço inicial tem de ser positivo")]
+        public decimal InitialPrice { get; set; }
 
         public NewAuctionModel()
         {
-            Product = "";
             Start = DateTime.Now;
-            End = DateTime.Now;
-            InitialPrice = "";
+            End = DateTime.Now + TimeSpan.FromDays(3);
         }
     }
-
+    
+    private ModalDialog? modalDialog;
     private EditContext? _newAuctionFormContext { get; set; }
     private ValidationMessageStore? _newAuctionValidationMessageStore { get; set; }
-
     private NewAuctionModel _newAuctionModel = new NewAuctionModel();
+    private async void CreateAuctionCallback()
+    {
+        var auction = await _auctionService.CreateAuction(
+            _newAuctionModel.Product,
+            _newAuctionModel.Start,
+            _newAuctionModel.End,
+            _newAuctionModel.InitialPrice,
+            admin!.InternalID
+        );
 
+        auctions.Add(auction);
+    }
+
+    // Initialize edit context
     protected override void OnInitialized()
     {
         _newAuctionFormContext = new EditContext(_newAuctionModel);
