@@ -282,6 +282,7 @@ else
         {
             searchedAuctions = auctions!.Where(auction => auction.Product.Model.Name.ToLower().Contains(searchQuery.ToLower())).ToList();
         }
+
         var sortedAuctions = currentSortingOption switch
         {
             SortingOption.MostRecent => searchedAuctions.OrderByDescending(auction => auction.End),
@@ -289,6 +290,7 @@ else
             SortingOption.LowestPrice => searchedAuctions.OrderBy(auction => auction.CurrentPrice),
             _ => throw new NotImplementedException(),
         };
+
         var filteredAuctions = currentFilteringOption switch
         {
             FilteringOption.Open => sortedAuctions.Where(auction => auction.End > DateTime.Now),
@@ -417,7 +419,6 @@ else
     private NewAuctionModel _newAuctionModel = new NewAuctionModel();
     private async void CreateAuctionCallback()
     {
-        // Create the product in the database
         var auction = await _auctionService.CreateAuction(
             _newAuctionModel.Product,
             _newAuctionModel.Start,
@@ -426,11 +427,7 @@ else
             admin!.InternalID
         );
 
-        // Create the product in the in-memory state
         auctions.Add(auction);
-
-        // Re-render the component
-        StateHasChanged();
     }
 
     // Initialize edit context

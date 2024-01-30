@@ -169,8 +169,7 @@ namespace OnlineAuctions.Data.Services
                 PublisherID = publisherId
             });
 
-            var auction = await GetAuction(id);
-            return auction!;
+            return (await GetAuction(id))!;
         }
 
         public async Task<bool> HasAdminCreatedAnyAuction(int adminId)
