@@ -110,6 +110,27 @@ namespace OnlineAuctions.Data.Services
             return data.FirstOrDefault();
         }
 
+        public async Task<AuctionModel> CreateAuction(int productId, DateTime start, DateTime end, decimal startPrice, int publisherId)
+        {
+            const string sql =
+                @"INSERT INTO dbo.Auction (ProductID, Start, End, StartPrice, CurrentPrice, PublisherID) VALUES (@ProductID, @Start, @End, @StartPrice, @CurrentPrice, @PublisherID); SELECT SCOPE_IDENTITY()";
+
+            var id = await _db.Connection.ExecuteScalarAsync<int>(sql, new
+            {
+                ProductID = productId,
+                Start = start,
+                End = end,
+                StartPrice = startPrice,
+                CurrentPrice = startPrice,
+                PublisherID = publisherId
+            });
+
+            Console.WriteLine("HELLO WORLD");
+            var auction = await GetAuction(id);
+            Console.WriteLine(auction);
+            return auction!;
+        }
+
         public async Task<bool> HasAdminCreatedAnyAuction(int adminId)
         {
             const string sql = @"SELECT * FROM dbo.Auction WHERE PublisherID = @ID";

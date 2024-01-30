@@ -3,6 +3,7 @@
 @inject AuthenticationStateProvider AuthProvider
 @inject IAuctionService _auctionService
 @inject IUserService _userService
+@inject IProductService _productService
 
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
@@ -139,15 +140,21 @@ else
             <p>Criar leilão</p>
         </button>
 
-        <ModalDialog @ref="modalDialog" Title="Criar leilão" Type="ModalDialog.ActionType.Create">
+        <ModalDialog @ref="modalDialog" 
+            Title="Criar leilão" 
+            Type="ModalDialog.ActionType.Create" 
+            SubmitCallback="() => CreateAuctionCallback()"
+        >
             <EditForm EditContext="_newAuctionFormContext" class="space-y-3">
                 <DataAnnotationsValidator />
                 <div>
                     <label for="product" class="block text-md font-medium">Produto</label>
                     <InputSelect @bind-Value="_newAuctionModel.Product" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm">
-                        @* TODO: List actual products *@
                         <option value="" disabled selected hidden>Selecionar produto</option>
-                        <option>iPhone 14</option>
+                        @foreach (var product in products)
+                        {
+                            <option value="@product.ID"> @product.Model.Name </option>
+                        }
                     </InputSelect>
                 </div>
                 <div class="flex flex-row justify-between">
@@ -162,7 +169,7 @@ else
                 </div>
                 <div>
                     <label for="initialPrice" class="block text-md font-medium">Valor inicial</label>
-                    <InputText @bind-Value="_newAuctionModel.InitialPrice" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" placeholder="470.30" />
+                    <InputNumber @bind-Value="_newAuctionModel.InitialPrice" class="mt-0.5 block w-full rounded-md border-0 py-2.5 pl-3 pr-10 bg-white ring-1 ring-inset ring-gray-300 text-sm" placeholder="470.30" />
                 </div>
             </EditForm>
         </ModalDialog>
@@ -240,10 +247,12 @@ else
 @code {
     private List<AuctionModel>? auctions { get; set; }
     private AdminModel? admin;
+    private List<ProductModel>? products;
 
     protected override async Task OnInitializedAsync()
     {
         auctions = await _auctionService.GetAuctions();
+        products = await _productService.GetProducts();
         
         var ourProvider = (AuthProvider)AuthProvider;
         string? email = await ourProvider.GetEmail();
@@ -374,7 +383,7 @@ else
     private class NewAuctionModel
     {
         [Required(ErrorMessage = "O produto é obrigatório")]
-        public string Product { get; set; }
+        public int Product { get; set; }
 
         [Required(ErrorMessage = "A data de começo é obrigatória")]
         public DateTime Start { get; set; }
@@ -384,15 +393,32 @@ else
 
         [Required(ErrorMessage = "O preço inicial é obrigatório")]
         // FIXME: Should be a decimal
-        public string InitialPrice { get; set; }
+        public decimal InitialPrice { get; set; }
 
         public NewAuctionModel()
         {
-            Product = "";
+            Product = 0;
             Start = DateTime.Now;
             End = DateTime.Now;
-            InitialPrice = "";
+            InitialPrice = 0;
         }
+    }
+    private async void CreateAuctionCallback()
+    {
+        // Create the product in the database
+        var auction = await _auctionService.CreateAuction(
+            _newAuctionModel.Product,
+            _newAuctionModel.Start,
+            _newAuctionModel.End,
+            _newAuctionModel.InitialPrice,
+            admin.ID
+        );
+
+        // Create the product in the in-memory state
+        @* auctions.Add(auction); *@
+
+        // Re-render the component
+        StateHasChanged();
     }
 
     private EditContext? _newAuctionFormContext { get; set; }
