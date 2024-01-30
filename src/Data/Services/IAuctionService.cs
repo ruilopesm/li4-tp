@@ -8,6 +8,8 @@ namespace OnlineAuctions.Data.Services
 
         Task<AuctionModel?> GetAuction(int id);
 
+        Task<List<AuctionModel>> GetUserWonAuctions(int nif);
+
         Task<AuctionModel?> GetProductAuction(int productId);
 
         Task<AuctionModel> CreateAuction(int productId, DateTime start, DateTime end, decimal startPrice, int publisherId);
