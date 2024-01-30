@@ -160,11 +160,23 @@ else
                 <div class="flex flex-row justify-between">
                     <div>
                         <label for="start" class="block text-md font-medium">Data começo</label>
-                        <InputDateTime @bind-Value="_newAuctionModel.Start" class="mt-0.5 border border-solid rounded-md w-full py-1.5 px-1 text-gray-700" placeholder="Data de Nascimento"/>
+                        <InputDate 
+                            Type="InputDateType.DateTimeLocal" 
+                            min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                            @bind-Value="_newAuctionModel.Start"
+                            class="mt-0.5 border border-solid rounded-md w-full py-1.5 px-1 text-gray-700" 
+                            placeholder="Data de Nascimento"
+                        />
                     </div>
                     <div>
                         <label for="start" class="block text-md font-medium">Data fim (prevista)</label>
-                        <InputDateTime @bind-Value="_newAuctionModel.End" class="mt-0.5 border border-solid rounded-md w-full py-1.5 px-1 text-gray-700" placeholder="Data de Nascimento"/>
+                        <InputDate 
+                            Type="InputDateType.DateTimeLocal" 
+                            min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                            @bind-Value="_newAuctionModel.End"
+                            class="mt-0.5 border border-solid rounded-md w-full py-1.5 px-1 text-gray-700" 
+                            placeholder="Data de Nascimento"
+                        />
                     </div>
                 </div>
                 <div>
@@ -245,9 +257,9 @@ else
 }
 
 @code {
-    private List<AuctionModel>? auctions { get; set; }
+    private List<AuctionModel> auctions;
     private AdminModel? admin;
-    private List<ProductModel>? products;
+    private List<ProductModel> products;
 
     protected override async Task OnInitializedAsync()
     {
@@ -377,9 +389,7 @@ else
         isFilteringDropdownOpen = false;
     }
     
-    private ModalDialog? modalDialog;
-
-    // TODO: Make use of the validation
+    // New auction
     private class NewAuctionModel
     {
         [Required(ErrorMessage = "O produto é obrigatório")]
@@ -390,19 +400,21 @@ else
 
         [Required(ErrorMessage = "A data de fim é obrigatória")]
         public DateTime End { get; set; }
-
-        [Required(ErrorMessage = "O preço inicial é obrigatório")]
-        // FIXME: Should be a decimal
+        
+        [Required(ErrorMessage = "O preço inicial é obrigatório"), Range(0, double.MaxValue, ErrorMessage = "O preço inicial tem de ser positivo")]
         public decimal InitialPrice { get; set; }
 
         public NewAuctionModel()
         {
-            Product = 0;
             Start = DateTime.Now;
-            End = DateTime.Now;
-            InitialPrice = 0;
+            End = DateTime.Now + TimeSpan.FromDays(3);
         }
     }
+    
+    private ModalDialog? modalDialog;
+    private EditContext? _newAuctionFormContext { get; set; }
+    private ValidationMessageStore? _newAuctionValidationMessageStore { get; set; }
+    private NewAuctionModel _newAuctionModel = new NewAuctionModel();
     private async void CreateAuctionCallback()
     {
         // Create the product in the database
@@ -411,21 +423,17 @@ else
             _newAuctionModel.Start,
             _newAuctionModel.End,
             _newAuctionModel.InitialPrice,
-            admin.ID
+            admin!.InternalID
         );
 
         // Create the product in the in-memory state
-        @* auctions.Add(auction); *@
+        auctions.Add(auction);
 
         // Re-render the component
         StateHasChanged();
     }
 
-    private EditContext? _newAuctionFormContext { get; set; }
-    private ValidationMessageStore? _newAuctionValidationMessageStore { get; set; }
-
-    private NewAuctionModel _newAuctionModel = new NewAuctionModel();
-
+    // Initialize edit context
     protected override void OnInitialized()
     {
         _newAuctionFormContext = new EditContext(_newAuctionModel);

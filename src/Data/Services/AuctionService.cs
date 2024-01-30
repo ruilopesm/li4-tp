@@ -156,8 +156,8 @@ namespace OnlineAuctions.Data.Services
 
         public async Task<AuctionModel> CreateAuction(int productId, DateTime start, DateTime end, decimal startPrice, int publisherId)
         {
-            const string sql =
-                @"INSERT INTO dbo.Auction (ProductID, Start, End, StartPrice, CurrentPrice, PublisherID) VALUES (@ProductID, @Start, @End, @StartPrice, @CurrentPrice, @PublisherID); SELECT SCOPE_IDENTITY()";
+            const string sql = 
+                @"INSERT INTO dbo.Auction (ProductID, Start, [End], StartPrice, CurrentPrice, PublisherID) VALUES (@ProductID, @Start, @End, @StartPrice, @CurrentPrice, @PublisherID)";
 
             var id = await _db.Connection.ExecuteScalarAsync<int>(sql, new
             {
@@ -169,9 +169,7 @@ namespace OnlineAuctions.Data.Services
                 PublisherID = publisherId
             });
 
-            Console.WriteLine("HELLO WORLD");
             var auction = await GetAuction(id);
-            Console.WriteLine(auction);
             return auction!;
         }
 
