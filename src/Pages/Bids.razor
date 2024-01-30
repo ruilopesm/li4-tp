@@ -102,9 +102,6 @@ else
             if (bidder != null)
             {
                 bids = await _bidService.GetLastUserBids(bidder.NIF);
-                for (int i = 0; i < bids.Count; i++) {
-                    Console.WriteLine(bids[i].Auction.Product.Images[0]);
-                }
             }
         }
     }
