@@ -4,6 +4,7 @@
 @inject IAuctionService _auctionService
 @inject IUserService _userService
 @inject IProductService _productService
+@inject IBidService _bidService
 
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Components.Forms
@@ -188,7 +189,7 @@ else
     }
 
     <ul class="flex flex-col my-6 space-y-6">
-    @foreach (var auction in processedAuctions)
+    @foreach (var (auction, lastBid, totalBids) in processedAuctions)
     {
         <li class="relative flex items-center justify-between px-6 py-5 bg-pcs-lightest-gray rounded-xl border">
             <div class="flex items-center gap-x-4 pr-6 w-1/2 flex-none">
@@ -238,8 +239,15 @@ else
                 <div class="absolute flex flex-col items-center ml-40">
                     @* Text color should gray when the auction has already ended or was cancelled *@
                     <p class="text-3xl font-bold text-pcs-green underline">@Math.Round(auction.CurrentPrice, 2)€</p>
-                    @* FIXME: Bidder should come from the database *@
-                    <p class="text-xs">De <span class="text-gray-700">João Mafioso</span></p>
+
+                    @if (lastBid != null && lastBid.Bidder != null)
+                    {
+                        <p class="text-xs">De <span class="text-gray-700">@lastBid.Bidder.Name</span></p>
+                    }
+                    else
+                    {
+                        <p class="text-xs text-gray-700">Sem licitações</p>
+                    }
                 </div>
                 <div class="flex flex-col ml-28 items-center space-y-1">
                     <NavLink
@@ -247,8 +255,7 @@ else
                         class="bg-pcs-gray hover:bg-scs-gray rounded-lg text-white font-bold text-lg py-1 px-3">
                         Ver detalhes
                     </NavLink>
-                    @* FIXME: Should have the real number of bids *@
-                    <p class="text-sm">7 licitações</p>
+                    <p class="text-sm">@totalBids licitações</p>
                 </div>
             </div>
         </li>
@@ -257,13 +264,22 @@ else
 }
 
 @code {
-    private List<AuctionModel> auctions;
+    private List<(AuctionModel, BidModel?, int)> auctions;
     private AdminModel? admin;
     private List<ProductModel> products;
 
     protected override async Task OnInitializedAsync()
     {
-        auctions = await _auctionService.GetAuctions();
+        var onlyAuctions = await _auctionService.GetAuctions();
+        auctions = new List<(AuctionModel, BidModel?, int)>();
+
+        foreach (var auction in onlyAuctions)
+        {
+            var lastBid = await _bidService.GetAuctionLastBid(auction.ID);
+            var totalBids = await _bidService.GetTotalBids(auction.ID);
+            auctions.Add((auction, lastBid, totalBids));
+        }
+
         products = await _productService.GetProducts();
         
         var ourProvider = (AuthProvider)AuthProvider;
@@ -274,28 +290,28 @@ else
         } 
     }
 
-    private List<AuctionModel> ProcessAuctions()
+    private List<(AuctionModel, BidModel?, int)> ProcessAuctions()
     {
         var searchedAuctions = auctions!;
 
         if (searchQuery != "")
         {
-            searchedAuctions = auctions!.Where(auction => auction.Product.Model.Name.ToLower().Contains(searchQuery.ToLower())).ToList();
+            searchedAuctions = auctions!.Where(auction => auction.Item1.Product.Model.Name.ToLower().Contains(searchQuery.ToLower())).ToList();
         }
 
         var sortedAuctions = currentSortingOption switch
         {
-            SortingOption.MostRecent => searchedAuctions.OrderByDescending(auction => auction.End),
-            SortingOption.HighestPrice => searchedAuctions.OrderByDescending(auction => auction.CurrentPrice),
-            SortingOption.LowestPrice => searchedAuctions.OrderBy(auction => auction.CurrentPrice),
+            SortingOption.MostRecent => searchedAuctions.OrderByDescending(auction => auction.Item1.End),
+            SortingOption.HighestPrice => searchedAuctions.OrderByDescending(auction => auction.Item1.CurrentPrice),
+            SortingOption.LowestPrice => searchedAuctions.OrderBy(auction => auction.Item1.CurrentPrice),
             _ => throw new NotImplementedException(),
         };
 
         var filteredAuctions = currentFilteringOption switch
         {
-            FilteringOption.Open => sortedAuctions.Where(auction => auction.End > DateTime.Now),
-            FilteringOption.Closed => sortedAuctions.Where(auction => auction.End <= DateTime.Now),
-            FilteringOption.Cancelled => sortedAuctions.Where(auction => auction.IsCancelled),
+            FilteringOption.Open => sortedAuctions.Where(auction => auction.Item1.End > DateTime.Now),
+            FilteringOption.Closed => sortedAuctions.Where(auction => auction.Item1.End <= DateTime.Now),
+            FilteringOption.Cancelled => sortedAuctions.Where(auction => auction.Item1.IsCancelled),
             null => sortedAuctions,
             _ => throw new NotImplementedException(),
         };
@@ -304,7 +320,7 @@ else
     }
 
     // Searching
-    private string searchQuery { get; set; }= ""; 
+    private string searchQuery { get; set; } = ""; 
 
     // Sorting
     private bool isSortingDropdownOpen = false;
@@ -427,7 +443,7 @@ else
             admin!.InternalID
         );
 
-        auctions.Add(auction);
+        auctions.Add((auction, null, 0));
     }
 
     // Initialize edit context

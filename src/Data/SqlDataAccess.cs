@@ -34,7 +34,7 @@ namespace OnlineAuctions.Data
         {
             _connection.Open();
 
-            using var transaction = _connection.BeginTransaction();
+            var transaction = _connection.BeginTransaction();
             try
             {
                 foreach (var query in queries)
@@ -43,10 +43,12 @@ namespace OnlineAuctions.Data
                 }
 
                 transaction.Commit();
+                transaction.Dispose();
             }
             catch (Exception)
             {
                 transaction.Rollback();
+                transaction.Dispose();
                 throw;
             }
             

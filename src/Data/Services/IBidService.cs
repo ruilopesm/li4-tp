@@ -4,9 +4,13 @@ namespace OnlineAuctions.Data.Services;
 
 public interface IBidService
 {
-    Task<int> CreateBid(int auctionId, int NIF, decimal amount);
+    Task<BidModel> CreateBid(int auctionId, int NIF, decimal amount);
 
-    Task<List<BidModel>> GetBids(int productId);
+    Task<BidModel?> GetBid(int id);
+
+    Task<List<BidModel>> GetBids(int auctionId);
+
+    Task<int> GetTotalBids(int auctionId);
 
     Task<List<BidModel>> GetLastUserBids(int NIF);
 
