@@ -83,7 +83,22 @@ else
                 Descrição
             </div>
             <div class="flex justify-center mt-1">
-                <div class="w-[90%] h-0.5 bg-gray-300 rounded-full"></div>
+                @if (@auction.Product.Description != null)
+                {
+                    <div class="w-[90%] h-0.5 mb-2 bg-gray-300 rounded-full">
+                        <p class="mt-2">
+                            @auction.Product.Description
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <div class="w-[90%] flex justify-center h-0.5 mb-2 bg-gray-300 rounded-full">
+                        <p class="mt-16 italic text-gray-400">
+                            Sem descrição
+                        </p>
+                    </div>
+                }
             </div>
         </div>
 
