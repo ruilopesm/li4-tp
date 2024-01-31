@@ -204,5 +204,12 @@ namespace OnlineAuctions.Data.Services
                 await _db.Connection.ExecuteAsync(sql3, new { Amount = bid.Value, NIF = bid.BidderNIF });
             }
         }
+
+        public async Task SetWinner(int auctionId, int winnerNIF)
+        {
+            const string sql = @"UPDATE dbo.Auction SET WinnerID = @WinnerID WHERE ID = @ID";
+
+            await _db.Connection.ExecuteAsync(sql, new { WinnerID = winnerNIF, ID = auctionId });
+        }
     }
 }

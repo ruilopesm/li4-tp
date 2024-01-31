@@ -17,5 +17,7 @@ namespace OnlineAuctions.Data.Services
         Task<bool> HasAdminCreatedAnyAuction(int adminId);
 
         Task CancelAuction(int id);
+
+        Task SetWinner(int auctionId, int winnerId);
     }
 }

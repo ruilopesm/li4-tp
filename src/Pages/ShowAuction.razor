@@ -290,6 +290,8 @@ else
 
     private decimal? bidValue;
 
+    private bool alreadyEnded = false;
+
     protected override async Task OnParametersSetAsync()
     {
         var ourProvider = (AuthProvider)AuthProvider;
@@ -319,6 +321,12 @@ else
         {
             while (true)
             {
+                if (auction!.End < DateTime.Now && !alreadyEnded)
+                {
+                    alreadyEnded = true;
+                    await _auctionService.SetWinner(auction!.ID, lastBid!.Bidder.NIF);
+                }
+                
                 await Task.Delay(1000);
                 await InvokeAsync(StateHasChanged);
             }
