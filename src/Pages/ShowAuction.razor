@@ -66,7 +66,7 @@ else
                 </li>
                 <li class="flex flex-row justify-between mx-6">
                     <p class="text-md font-bold">Armazenamento</p>
-                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@auction.Product.Model.Storage</div>
+                    <div class="border py-0.25 px-3 rounded-xl bg-white text-md">@(auction.Product.Model.Storage ?? "--")</div>
                 </li>
                 <li class="flex flex-row justify-between mx-6">
                     <p class="text-md font-bold">Condição</p>
@@ -271,6 +271,8 @@ else
     [Parameter]
     public int Id { get; set; }
 
+    private string? email;
+
     private BidderModel? bidder;
     private AdminModel? admin;
     
@@ -307,7 +309,7 @@ else
         }
     }
 
-    private async Task Bid()
+    private async void Bid()
     {
         if (bidValue != null)
         {
