@@ -314,6 +314,15 @@ else
             lastBid = await _bidService.GetAuctionLastBid(Id);
             bids = await _bidService.GetBids(Id);
         }
+
+        await Task.Run(async () =>
+        {
+            while (true)
+            {
+                await Task.Delay(1000);
+                await InvokeAsync(StateHasChanged);
+            }
+        });
     }
 
     private async void Bid()
