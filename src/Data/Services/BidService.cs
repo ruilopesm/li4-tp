@@ -158,21 +158,24 @@ public class BidService : IBidService
             LEFT JOIN dbo.Product p ON a.ProductID = p.ID
             LEFT JOIN dbo.Model m ON p.ModelID = m.ID
             LEFT JOIN dbo.Admin ad ON a.PublisherID = ad.InternalID
+            LEFT JOIN dbo.Bidder bd ON b.BidderNIF = bd.NIF
+            LEFT JOIN dbo.[User] u ON bd.UserID = u.ID
             WHERE b.BidderNIF = @NIF
             ORDER BY b.[Date] DESC";
 
-        var data = await _db.Connection.QueryAsync<BidModel, AuctionModel, ProductModel, ModelModel, AdminModel, BidModel>(
+        var data = await _db.Connection.QueryAsync<BidModel, AuctionModel, ProductModel, ModelModel, AdminModel, BidderModel, BidModel>(
             sql,
-            (bid, auction, product, model, admin) =>
+            (bid, auction, product, model, admin, bidder) =>
             {
                 bid.Auction = auction;
                 bid.Auction.Product = product;
                 bid.Auction.Product.Model = model;
                 bid.Auction.Publisher = admin;
+                bid.Bidder = bidder;
                 return bid;
             },
             new { NIF },
-            splitOn: "ID, ID, ID, ID, InternalID"
+            splitOn: "ID, ID, ID, InternalID, NIF"
         );
 
         const string sql2 = @"SELECT ImagePath FROM dbo.ProductPhoto WHERE ProductID = @ID";
@@ -206,6 +209,20 @@ public class BidService : IBidService
             },
             new { AuctionId = auctionId },
             splitOn: "ID, NIF"
+        );
+
+        return data.FirstOrDefault();
+    }
+
+    public async Task<int> GetTotalBidsInAuction(int auctionId)
+    {
+        const string sql =
+            @"SELECT COUNT(*) FROM dbo.Bid
+            WHERE AuctionID = @AuctionId";
+
+        var data = await _db.Connection.QueryAsync<int>(
+            sql,
+            new { AuctionId = auctionId }
         );
 
         return data.FirstOrDefault();
