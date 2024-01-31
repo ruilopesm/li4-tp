@@ -1,7 +1,7 @@
 ﻿using System.Data;
-using System.Transactions;
 using Dapper;
 using OnlineAuctions.Data.Models;
+using static OnlineAuctions.Data.Services.UserService;
 
 namespace OnlineAuctions.Data.Services;
 
@@ -53,20 +53,22 @@ public class BidService : IBidService
                 transaction
             );
 
-            const string sql3 =
-                @"UPDATE dbo.Bidder
-                    SET Balance = Balance - @Value, PendingBalance = PendingBalance + @Value
-                    WHERE NIF = @NIF";
 
-            await _db.Connection.ExecuteAsync(
-                sql3,
-                new
-                {
-                    NIF,
-                    Value = amount,
-                },
-                transaction
-            );
+
+            // const string sql3 =
+            //     @"UPDATE dbo.Bidder
+            //         SET Balance = Balance - @Value, PendingBalance = PendingBalance + @Value
+            //         WHERE NIF = @NIF";
+
+            // await _db.Connection.ExecuteAsync(
+            //     sql3,
+            //     new
+            //     {
+            //         NIF,
+            //         Value = amount,
+            //     },
+            //     transaction
+            // );
 
             const string sql4 =
                 @"SELECT TOP 1 * FROM dbo.Bid b
@@ -142,7 +144,7 @@ public class BidService : IBidService
 
     public async Task<List<BidModel>> GetBids(int auctionId)
     {
-        const string sql = 
+        const string sql =
             @"SELECT * FROM dbo.Bid b
             LEFT JOIN dbo.Bidder ON b.BidderNIF = Bidder.NIF
             LEFT JOIN dbo.[User] ON Bidder.UserID = [User].ID
@@ -158,7 +160,7 @@ public class BidService : IBidService
             },
             new { AuctionId = auctionId },
             splitOn: "NIF"
-        );        
+        );
 
         return data.ToList();
     }

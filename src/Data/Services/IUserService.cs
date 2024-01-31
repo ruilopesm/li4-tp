@@ -27,5 +27,7 @@ namespace OnlineAuctions.Data.Services
         Task Withdraw(string email, decimal value);
 
         Task Deposit(string email, decimal value);
+
+        Task DepositBid(string email, decimal value);
     }
 }

@@ -132,5 +132,13 @@ namespace OnlineAuctions.Data.Services
 
             await _db.SaveData(sql, new { Email = email, Value = value });
         }
+
+        public async Task DepositBid(string email, decimal value)
+        {
+            const string sql = @"
+                UPDATE dbo.Bidder SET Balance = Balance - @Value, PendingBalance = @Value  WHERE UserId = (SELECT Id FROM dbo.[User] WHERE Email = @Email)";
+
+            await _db.SaveData(sql, new { Email = email, Value = value });
+        }
     }
 }
