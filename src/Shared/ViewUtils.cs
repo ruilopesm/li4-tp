@@ -19,6 +19,11 @@ namespace OnlineAuctions.Shared
                 return "Termina " + prettyPrinted;
             }
 
+            if (dateTime == now)
+            {   
+                return "Terminou " + prettyPrinted;
+            }
+
             return "Terminou há " + prettyPrinted;
         }
     }
