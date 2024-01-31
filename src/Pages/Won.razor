@@ -117,5 +117,14 @@ else
                 }
             }
         }
+        
+        await Task.Run(async () =>
+        {
+            while (true)
+            {
+                await Task.Delay(1000);
+                await InvokeAsync(StateHasChanged);
+            }
+        });
     }
 }
