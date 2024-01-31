@@ -200,7 +200,7 @@ else
         else if (bidder != null)
         {
             <div class="col-start-3 row-start-5">
-                @if (bidder.Balance < auction.CurrentPrice)
+                @if (bidder.Balance < auction.CurrentPrice || auction.IsCancelled)
                 {
                     <input class="border border-solid rounded-xl w-full p-3 text-gray-700" type="text" placeholder="Valor a licitar (100.00)" disabled />
                 }
@@ -215,7 +215,7 @@ else
                 }
             </div>
 
-            @if (bidder.Balance < auction.CurrentPrice)
+            @if (bidder.Balance < auction.CurrentPrice || auction.IsCancelled)
             {
                 <button class="col-start-3 row-start-6 bg-pcs-gray cursor-not-allowed rounded-lg flex justify-center items-center -mt-2" type="submit">
                     <p class="text-white text-xl font-bold p-3">Licitar</p>
