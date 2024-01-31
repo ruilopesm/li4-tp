@@ -180,5 +180,29 @@ namespace OnlineAuctions.Data.Services
 
             return data.Any();
         }
+
+        public async Task CancelAuction(int id)
+        {
+            const string sql = @"UPDATE dbo.Auction SET IsCancelled = 1 WHERE ID = @ID";
+
+            await _db.Connection.ExecuteAsync(sql, new { ID = id });
+
+            const string sql2 = 
+                @"SELECT TOP 1 * FROM dbo.Bid b
+                LEFT JOIN dbo.Bidder bd ON b.BidderNIF = bd.NIF
+                WHERE AuctionID = @ID 
+                ORDER BY [Date] DESC";
+
+            var bid = await _db.Connection.QueryFirstOrDefaultAsync<dynamic>(sql2, new { ID = id });
+
+            if (bid != null)
+            {
+                const string sql3 = 
+                    @"UPDATE dbo.Bidder SET PendingBalance = PendingBalance - @Amount, Balance = Balance + @Amount
+                    WHERE NIF = @NIF";
+
+                await _db.Connection.ExecuteAsync(sql3, new { Amount = bid.Value, NIF = bid.BidderNIF });
+            }
+        }
     }
 }

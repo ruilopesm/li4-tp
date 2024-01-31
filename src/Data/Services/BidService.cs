@@ -20,101 +20,75 @@ public class BidService : IBidService
             await _db.Connection.OpenAsync();
         }
 
-        using var transaction = _db.Connection.BeginTransaction();
-        try
-        {
-            const string sql =
-                @"INSERT INTO dbo.Bid (AuctionID, BidderNIF, Value) VALUES (@AuctionId, @NIF, @Value); SELECT SCOPE_IDENTITY()";
+        const string insertSql =
+            @"INSERT INTO dbo.Bid (AuctionID, BidderNIF, Value) VALUES (@AuctionId, @NIF, @Value); SELECT SCOPE_IDENTITY()";
 
-            var id = await _db.Connection.ExecuteScalarAsync<int>(
-                sql,
-                new
-                {
-                    AuctionId = auctionId,
-                    NIF,
-                    Value = amount,
-                },
-                transaction
-            );
-
-            const string sql2 =
-                @"UPDATE dbo.Auction
-                    SET CurrentPrice = @Value
-                    WHERE ID = @AuctionId";
-
-            await _db.Connection.ExecuteAsync(
-                sql2,
-                new
-                {
-                    AuctionId = auctionId,
-                    Value = amount,
-                },
-                transaction
-            );
-
-            const string sql3 =
-                @"UPDATE dbo.Bidder
-                    SET Balance = Balance - @Value, PendingBalance = PendingBalance + @Value
-                    WHERE NIF = @NIF";
-
-            await _db.Connection.ExecuteAsync(
-                sql3,
-                new
-                {
-                    NIF,
-                    Value = amount,
-                },
-                transaction
-            );
-
-            const string sql4 =
-                @"SELECT TOP 1 * FROM dbo.Bid b
-                    LEFT JOIN dbo.Bidder bd ON b.BidderNIF = bd.NIF
-                    LEFT JOIN dbo.[User] u ON bd.UserID = u.ID
-                    WHERE b.AuctionID = @AuctionId
-                    ORDER BY b.[Date] DESC";
-
-            var data = await _db.Connection.QueryAsync<BidModel, BidderModel, BidModel>(
-                sql4,
-                (bid, bidder) =>
-                {
-                    bid.Bidder = bidder;
-                    return bid;
-                },
-                new { AuctionId = auctionId },
-                transaction,
-                splitOn: "NIF"
-            );
-
-            var lastBid = data.FirstOrDefault();
-
-            if (lastBid != null)
+        var id = await _db.Connection.ExecuteScalarAsync<int>(
+            insertSql,
+            new
             {
-                const string sql5 =
-                    @"UPDATE dbo.Bidder
-                        SET Balance = Balance + @Value, PendingBalance = PendingBalance - @Value
-                        WHERE NIF = @NIF";
-
-                await _db.Connection.ExecuteAsync(
-                    sql5,
-                    new
-                    {
-                        lastBid.Bidder.NIF,
-                        lastBid.Value,
-                    },
-                    transaction
-                );
+                AuctionId = auctionId,
+                NIF,
+                Value = amount,
             }
+        );
 
-            transaction.Commit();
+        const string updateAuctionSql =
+            @"UPDATE dbo.Auction
+            SET CurrentPrice = @Value
+            WHERE ID = @AuctionId";
 
-            return (await GetBid(id))!;
-        }
-        catch
+        await _db.Connection.ExecuteAsync(
+            updateAuctionSql,
+            new
+            {
+                AuctionId = auctionId,
+                Value = amount,
+            }
+        );
+
+        const string updateBidderSql =
+            @"UPDATE dbo.Bidder SET Balance = Balance - @Value, PendingBalance = PendingBalance + @Value WHERE NIF = @NIF";
+
+        await _db.Connection.ExecuteAsync(
+            updateBidderSql,
+            new
+            {
+                NIF,
+                Value = amount,
+            }
+        );
+
+        const string selectBidSql =
+            @"SELECT TOP 1 * FROM dbo.Bid b
+            LEFT JOIN dbo.Bidder bd ON b.BidderNIF = bd.NIF
+            WHERE b.AuctionID = @AuctionId
+            ORDER BY b.[Date] DESC";
+
+        var result = await _db.Connection.QueryMultipleAsync(
+            selectBidSql,
+            new { AuctionId = auctionId }
+        );
+
+        var bid = (await result.ReadAsync<BidModel>()).SingleOrDefault();
+        var bidder = (await result.ReadAsync<BidderModel>()).SingleOrDefault();
+
+        if (bid != null)
         {
-            transaction.Rollback();
-            throw;
+            const string updateBidderBalanceSql =
+                @"UPDATE dbo.Bidder SET PendingBalance = PendingBalance - @Value, Balance = Balance + @Value WHERE NIF = @NIF";
+
+            await _db.Connection.ExecuteAsync(
+                updateBidderBalanceSql,
+                new
+                {
+                    bidder?.NIF,
+                    bid?.Value,
+                }
+            );
         }
+
+        return (await GetBid(id))!;
     }
 
     public async Task<BidModel?> GetBid(int id)

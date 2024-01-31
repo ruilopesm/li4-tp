@@ -15,5 +15,7 @@ namespace OnlineAuctions.Data.Services
         Task<AuctionModel> CreateAuction(int productId, DateTime start, DateTime end, decimal startPrice, int publisherId);
 
         Task<bool> HasAdminCreatedAnyAuction(int adminId);
+
+        Task CancelAuction(int id);
     }
 }
