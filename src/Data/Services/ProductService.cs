@@ -41,7 +41,9 @@ public class ProductService : IProductService
     public async Task<List<ProductModel>> GetProducts()
     {
         const string sql =
-            @"SELECT * FROM dbo.Product LEFT JOIN dbo.Model ON Product.ModelID = Model.ID";
+            @"SELECT * FROM dbo.Product 
+            LEFT JOIN dbo.Model ON Product.ModelID = Model.ID
+            WHERE Product.ID NOT IN (SELECT ProductID FROM dbo.Auction)";
 
         var data = await _db.Connection.QueryAsync<ProductModel, ModelModel, ProductModel>(sql, (product, model) =>
         {
